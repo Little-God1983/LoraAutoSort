@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.LoraAutoSort", "UI.LoraAutoSort\UI.LoraAutoSort.csproj", "{40215BB2-497D-4C6B-AE4E-3C59F9A53892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.LoraAutoSort", "Services.LoraAutoSort\Services.LoraAutoSort.csproj", "{C3B77FD3-0ACD-4066-998F-187C873700B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40215BB2-497D-4C6B-AE4E-3C59F9A53892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40215BB2-497D-4C6B-AE4E-3C59F9A53892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40215BB2-497D-4C6B-AE4E-3C59F9A53892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40215BB2-497D-4C6B-AE4E-3C59F9A53892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3B77FD3-0ACD-4066-998F-187C873700B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B77FD3-0ACD-4066-998F-187C873700B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B77FD3-0ACD-4066-998F-187C873700B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B77FD3-0ACD-4066-998F-187C873700B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B050E2F4-9A3E-4C6E-B05F-03A4B7F3391C}
+	EndGlobalSection
+EndGlobal

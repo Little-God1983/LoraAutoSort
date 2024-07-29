@@ -1,0 +1,26 @@
+﻿<Window x:Class="UI.LoraAutoSort.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI.LoraAutoSort"
+        mc:Ignorable="d"
+        Title="LoraAutoSort" Height="450" Width="800">
+    <DockPanel>
+        <!-- Top panel for input controls -->
+        <StackPanel DockPanel.Dock="Top" Margin="10">
+            <Label Content="Base Path:"/>
+            <TextBox x:Name="txtBasePath" Margin="0,5"/>
+            <Button Content="Select Base Path..." Margin="0,5" Click="SelectBasePath"/>
+            <Label Content="Target Path:"/>
+            <TextBox x:Name="txtTargetPath" Margin="0,5"/>
+            <Button Content="Select Target Path..." Margin="0,5" Click="SelectTargetPath"/>
+            <Button x:Name="btnGo" Content="Go" Margin="0,10" Click="btnGo_Click"/>
+        </StackPanel>
+
+        <!-- Textbox to display logs -->
+        <TextBox x:Name="txtLog" DockPanel.Dock="Bottom" Height="200" Margin="10"
+                 IsReadOnly="true" VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+    </DockPanel>
+</Window>

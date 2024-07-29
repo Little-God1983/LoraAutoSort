@@ -1,10 +1,5 @@
 ﻿using JsonFileReader;
 using Services.LoraAutoSort.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.LoraAutoSort
 {
@@ -15,14 +10,19 @@ namespace Services.LoraAutoSort
 
         }
 
-        public List<OperationResult> ComputeFolder(string sourcePath, string targetPath)
+        public List<OperationResult> ComputeFolder(string sourcePath, string targetPath, bool moveInsteadofDelete)
         {
             JsonInfoFileReaderService jsonInfoFileReaderService = new JsonInfoFileReaderService(sourcePath);
             List<ModelClass> models = jsonInfoFileReaderService.GetModelData(sourcePath);
+            if (models == null || models.Count == 0)
+            {
+                return new List<OperationResult>() { new OperationResult() 
+                { 
+                    IsSuccessful = false, Message = "No Models in selected folders" }
+                };
+            }
             FileCopyService fileCopyServicere = new FileCopyService();
-            fileCopyServicere.ProcessModelClasses(models, targetPath);
-
-            return new List<OperationResult>();
+            return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath).ToList();
         }
     }
 }

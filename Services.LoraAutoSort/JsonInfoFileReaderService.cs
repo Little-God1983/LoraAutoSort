@@ -21,7 +21,7 @@ namespace JsonFileReader
                 JsonDocument jdoc = LoadJsonDocument(fileInfo.FullName);
                 modelData.Add(new ModelClass() 
                 { fileInfo = fileInfo,
-                    BaseModel = GetBaseModelName(jdoc), 
+                    DiffusionBaseModel = GetBaseModelName(jdoc), 
                     CivitaiCategory = GetFirstMatchingCategory(jdoc.RootElement) 
                 });
             }

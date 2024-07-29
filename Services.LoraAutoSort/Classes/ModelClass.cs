@@ -2,7 +2,7 @@
 {
     public class ModelClass
     {
-        public string BaseModel { get; set; }
+        public string DiffusionBaseModel { get; set; }
         public FileInfo fileInfo { get; set; }
         public CivitaiBaseCategories CivitaiCategory { get; set; }
     }

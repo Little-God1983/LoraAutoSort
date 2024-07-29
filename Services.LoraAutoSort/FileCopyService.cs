@@ -108,44 +108,70 @@ namespace JsonFileReader
 
         //    return results;
         //}
+        string[] extensions = new string[4] { ".safetensors", ".json", ".preview.png", ".pt" };
 
-        public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models, string targetPath)
+        public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models,string sourcePaht, string targetPath)
         {
             List<OperationResult> results = new List<OperationResult>();
 
             foreach (var model in models)
             {
-                string modelDirectory = Path.Combine(targetPath, model.BaseModel, model.CivitaiCategory.ToString());
+                string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
                 results.Add(EnsureFolderExists(modelDirectory));
 
-                if (model.fileInfo != null && model.fileInfo.Exists)
+                string destFile = Path.Combine(modelDirectory, model.fileInfo.Name);
+                File.Copy(model.fileInfo.FullName, destFile, true);
+
+                foreach (var extension in extensions)
                 {
+                    string fileName = ChangeEnding(model.fileInfo.Name, extension);
+                    destFile= Path.Combine(modelDirectory, fileName);
                     try
                     {
-                        string destFile = Path.Combine(modelDirectory, model.fileInfo.Name);
-                        File.Copy(model.fileInfo.FullName, destFile, true);
+                        if (!File.Exists(extension))
+                        {
+                            File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
+                            results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
+                        }
+                        else
+                        {
 
-                        string fileName = ChangeEnding(model.fileInfo.Name, ".safetensors");
-                        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
-                        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
-
-                        fileName = ChangeEnding(model.fileInfo.Name, ".json");
-                        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
-                        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
-
-                        fileName = ChangeEnding(model.fileInfo.Name, ".preview.png");
-                        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
-                        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
+                        }
                     }
                     catch (Exception ex)
                     {
                         results.Add(new OperationResult { IsSuccessful = false, Message = $"Error copying file '{model.fileInfo.Name}': {ex.Message}" });
                     }
                 }
-                else
-                {
-                    results.Add(new OperationResult { IsSuccessful = false, Message = "File info is null or file does not exist, skipping copy." });
-                }
+
+                //if (model.fileInfo != null && model.fileInfo.Exists)
+                //{
+                //    try
+                //    {
+                //        string destFile = Path.Combine(modelDirectory, model.fileInfo.Name);
+                //        File.Copy(model.fileInfo.FullName, destFile, true);
+
+                //        string fileName = ChangeEnding(model.fileInfo.Name, ".safetensors");
+                //        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
+                //        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
+
+                //        fileName = ChangeEnding(model.fileInfo.Name, ".json");
+                //        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
+                //        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
+
+                //        fileName = ChangeEnding(model.fileInfo.Name, ".preview.png");
+                //        File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
+                //        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        results.Add(new OperationResult { IsSuccessful = false, Message = $"Error copying file '{model.fileInfo.Name}': {ex.Message}" });
+                //    }
+                //}
+                //else
+                //{
+                //    results.Add(new OperationResult { IsSuccessful = false, Message = "File info is null or file does not exist, skipping copy." });
+                //}
             }
 
             return results;

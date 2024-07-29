@@ -37,16 +37,45 @@ namespace UI.LoraAutoSort
 
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    txtTargetPath.Text = dialog.FileName; // Retrieves the selected path
+                    //txtTargetPath.Text = dialog.FileName; // Retrieves the selected path
                 }
             }
+        }
+        private bool ShowConfirmationDialog(string message, string title)
+        {
+            // Configure the message box to be displayed
+            MessageBoxResult result = MessageBox.Show(message, title,
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Question);
+
+            // Check the user's response and return true for Yes, false for No
+            return result == MessageBoxResult.Yes;
         }
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-           ControllerService controllerService = new ControllerService();
-           List<OperationResult> test =  controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text);
 
+           txtLog.Clear();
+           ControllerService controllerService = new ControllerService();
+            if (radioMove == IsActive && ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored", "Are you sure?"))
+            {
+
+            }
+
+            List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, false);
+            // Check if there are any results to display
+            if (results != null && results.Count > 0)
+            {
+                foreach (var result in results)
+                {
+                    // Append each message to the TextBox, each on a new line
+                    txtLog.AppendText(result.Message + Environment.NewLine);
+                }
+            }
+            else
+            {
+               txtLog.AppendText("No operation results to display.");
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace JsonFileReader
             }
         }
 
-        string[] extensions = new string[6] { ".safetensors", ".json", ".preview.png",".preview.jpeg", ".pt", ".cm-info.json" };
+
 
         //public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
         //{

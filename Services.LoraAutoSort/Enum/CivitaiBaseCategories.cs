@@ -16,4 +16,5 @@
     ASSETS,
     ACTION,
     UNKNOWN,
+    UNASSIGNED,
 }

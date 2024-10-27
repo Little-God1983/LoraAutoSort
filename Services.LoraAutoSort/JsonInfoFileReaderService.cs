@@ -1,5 +1,6 @@
 ﻿using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Helper;
+using System.IO;
 using System.Text.Json;
 
 namespace JsonFileReader
@@ -17,20 +18,52 @@ namespace JsonFileReader
         {
             List<ModelClass> modelData = new List<ModelClass>();
             modelData = GroupFilesByPrefix(jsonFilePath);
-            List<FileInfo> fileInfos = GetAllFiles();
-
-            foreach (FileInfo fileInfo in fileInfos)
+            foreach (ModelClass model in modelData)
             {
-
-                //JsonDocument jdoc = LoadJsonDocument(fileInfo.FullName);
-                modelData = new List<ModelClass>();
-
-
-                //fileInfo = fileInfo,
-                //    DiffusionBaseModel = GetBaseModelName(jdoc), 
-                //    CivitaiCategory = GetFirstMatchingCategory(jdoc.RootElement)
+                model.CivitaiCategory = GetMatchingCategory(model);
+                model.DiffusionBaseModel = GetBaseModelName(model);
             }
             return modelData;
+        }
+
+        private CivitaiBaseCategories GetMatchingCategory(ModelClass model)
+        {
+            // Try loading tags from the ".json" file.
+            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".json"));
+
+            // If the category is still UNKNOWN, attempt to load additional tags from ".cm-info.json".
+            uniqueTags.UnionWith(LoadTagsFromFile(model, ".cm-info.json"));
+
+            model.Tags = uniqueTags.ToList();
+
+            // Determine and return the category based on tags.
+            return GetCategoryFromTags(model.Tags);
+        }
+
+        // Helper method to load tags from a specified file extension.
+        private HashSet<string> LoadTagsFromFile(ModelClass model, string extension)
+        {
+            var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == extension);
+            if (file == null)
+            {
+                return new HashSet<string>();
+            }
+
+            JsonDocument jdoc = LoadJsonDocument(file.FullName);
+            return GetTagsFromJson(jdoc.RootElement);
+        }
+
+        private CivitaiBaseCategories GetCategoryFromTags(List<string> tags)
+        {
+            //Implement CustomTag
+            foreach (string tag in tags)
+            {
+                if (Enum.TryParse<CivitaiBaseCategories>(tag.Replace(" ", "_").ToUpper(), out CivitaiBaseCategories category))
+                {
+                    return category; // Return the first match
+                }
+            }
+            return CivitaiBaseCategories.UNKNOWN;
         }
 
         private List<FileInfo> GetAllFiles()
@@ -48,7 +81,7 @@ namespace JsonFileReader
                     //}
                     foreach (var file in dirInfo.GetFiles("*", SearchOption.AllDirectories))
                     {
-                        if (StaticFileTypes.FileEndings.Contains(Path.GetExtension(file.FullName)))
+                        if (StaticFileTypes.ModelExtensions.Contains(Path.GetExtension(file.FullName)))
                         {
                             files.Add(file);
                         }
@@ -61,27 +94,6 @@ namespace JsonFileReader
             }
             return files;
         }
-
-        //private List<FileInfo> GetAllFiles2()
-        //{
-        //    List<FileInfo> files = new List<FileInfo>();
-        //    try
-        //    {
-        //        if (Directory.Exists(_loraInfoBasePath))
-        //        {
-        //            string prefix = Path.Combine(_loraInfoBasePath, "Sugar_Thrillz_Fool_For_You_SDXL");
-
-        //            // Use GetFiles with a search pattern that starts with the prefix
-        //            files.AddRange(Directory.GetFiles(prefix, "*.info"));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //    return files;
-        //}
-
 
         public static List<ModelClass> GroupFilesByPrefix(string rootDirectory)
         {
@@ -110,7 +122,7 @@ namespace JsonFileReader
                 modelClasses.Add(new ModelClass
                 {
                     DiffusionBaseModel = group.Key,
-                    fileInfo = group.Value,
+                    AssociatedFilesInfo = group.Value,
                     CivitaiCategory = CivitaiBaseCategories.UNKNOWN // Set your desired category here
                 });
             }
@@ -134,26 +146,35 @@ namespace JsonFileReader
             return JsonDocument.Parse(jsonData);
         }
 
-        private string GetBaseModelName(JsonDocument doc)
+        private string GetBaseModelName(ModelClass model)
         {
-            JsonElement root = doc.RootElement;
-            return root.GetProperty("baseModel").GetString();
+            var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".json");
+            if (file == null)
+            {
+                JsonDocument jdoc = LoadJsonDocument(file.FullName);
+                JsonElement root = jdoc.RootElement;
+                return root.GetProperty("baseModel").GetString();
+            }
+            return "Unknown";
         }
 
-        private CivitaiBaseCategories GetFirstMatchingCategory(JsonElement root)
+        private HashSet<string> GetTagsFromJson(JsonElement root)
         {
+            HashSet<string> tags = new HashSet<string>();
+
             if (root.TryGetProperty("model", out JsonElement model) && model.TryGetProperty("tags", out JsonElement tagsElement))
             {
                 foreach (JsonElement tagElement in tagsElement.EnumerateArray())
                 {
                     string tag = tagElement.GetString();
-                    if (Enum.TryParse<CivitaiBaseCategories>(tag.Replace(" ", "_").ToUpper(), out CivitaiBaseCategories category))
+                    if (!string.IsNullOrEmpty(tag))
                     {
-                        return category; // Return the first match
+                        tags.Add(tag);
                     }
                 }
             }
-            return CivitaiBaseCategories.UNKNOWN; // Return Unknown if no match is found
+
+            return tags;
         }
 
     }

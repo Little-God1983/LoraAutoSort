@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
+using System.IO;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -55,36 +56,6 @@ namespace UI.LoraSort
             return result == MessageBoxResult.Yes;
         }
 
-        //private void btnGo_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    txtLog.Clear();
-        //    ControllerService controllerService = new ControllerService();
-        //    if ((bool)radioCopy.IsChecked && ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored. Continue anyways?", "Are you sure?"))
-        //    {
-        //        return;
-        //    }
-
-        //    List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, false);
-        //    // Check if there are any results to display
-        //    if (results != null && results.Count > 0)
-        //    {
-        //        foreach (var result in results)
-        //        {
-        //            // Append each message to the TextBox, each on a new line
-        //            txtLog.AppendText(result.Message + Environment.NewLine);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        txtLog.AppendText("No operation results to display.");
-        //    }
-
-
-
-
-        //}
-
         private void AppendLog(string message, bool isError = false)
         {
             // Dispatcher.Invoke is used to ensure thread safety when accessing the UI thread from another thread
@@ -111,6 +82,12 @@ namespace UI.LoraSort
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
+            if(IsPathTheSame())
+            {
+                MessageBox.Show("Select a different target than base path", "Base cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                return;
+            }
+
             rtbLog.Document.Blocks.Clear(); // Clear previous entries
             ControllerService controllerService = new ControllerService();
             bool moveOperation = false;
@@ -125,9 +102,9 @@ namespace UI.LoraSort
                     moveOperation = true;
                 }
             }
-                
+
             List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
-         
+
             if (results != null && results.Count > 0)
             {
                 foreach (var result in results)
@@ -140,6 +117,15 @@ namespace UI.LoraSort
             {
                 AppendLog("No operation results to display.");
             }
+        }
+
+        private bool IsPathTheSame()
+        {
+            return String.Compare(
+                Path.GetFullPath(txtBasePath.Text).TrimEnd('\\'),
+                Path.GetFullPath(txtTargetPath.Text).TrimEnd('\\'),
+                StringComparison.InvariantCultureIgnoreCase
+            ) == 0;
         }
     }
 }

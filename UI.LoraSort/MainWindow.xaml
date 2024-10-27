@@ -12,10 +12,11 @@
             <Label Content="Base Path:"/>
             <TextBox x:Name="txtBasePath" Margin="0,5"/>
             <Button Content="Select Base Path..." Margin="0,5" Click="SelectBasePath"/>
-            
+
             <StackPanel Orientation="Horizontal">
-                <RadioButton x:Name="radioCopy" Content="Copy Files" IsChecked="True" GroupName="OperationType" FontSize="16"/>
-                <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
+                <RadioButton x:Name="radioCopy" Content="Copy Files(Keeps originals)" IsChecked="True" GroupName="OperationType" FontSize="16"/>
+                <RadioButton x:Name="radioMove" Content="Move Files instead" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
+                <CheckBox x:Name="chbOverride" Content="Override Files with same name"/>
             </StackPanel>
 
             <Label Content="Target Path:"/>
@@ -24,12 +25,6 @@
             <Button x:Name="btnGo" Content="Go" Margin="0,10" Click="btnGo_Click"/>
 
         </StackPanel>
-
-
-        <!-- Textbox to display logs -->
-        <TextBox x:Name="txtLog" DockPanel.Dock="Bottom" Height="200" Margin="10"
-              IsReadOnly="true" VerticalScrollBarVisibility="Auto"
-              HorizontalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
 
         <!-- RichTextBox to display logs -->
         <RichTextBox x:Name="rtbLog" DockPanel.Dock="Bottom" Height="200" Margin="10"

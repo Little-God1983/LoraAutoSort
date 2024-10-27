@@ -113,9 +113,21 @@ namespace UI.LoraSort
         {
             rtbLog.Document.Blocks.Clear(); // Clear previous entries
             ControllerService controllerService = new ControllerService();
-
-            List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, false);
-
+            bool moveOperation = false;
+            if (!(bool)radioCopy.IsChecked)
+            {
+                if (!ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored. Continue anyways?", "Are you sure?"))
+                {
+                    return;
+                }
+                else
+                {
+                    moveOperation = true;
+                }
+            }
+                
+            List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
+         
             if (results != null && results.Count > 0)
             {
                 foreach (var result in results)

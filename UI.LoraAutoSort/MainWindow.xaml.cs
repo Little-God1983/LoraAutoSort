@@ -39,6 +39,8 @@ namespace UI.LoraAutoSort
                 {
                     //txtTargetPath.Text = dialog.FileName; // Retrieves the selected path
                 }
+
+                
             }
         }
         private bool ShowConfirmationDialog(string message, string title)
@@ -54,7 +56,7 @@ namespace UI.LoraAutoSort
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-
+            chbOverride.
            txtLog.Clear();
            ControllerService controllerService = new ControllerService();
             if (radioMove == IsActive && ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored", "Are you sure?"))

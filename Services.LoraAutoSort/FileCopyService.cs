@@ -110,7 +110,7 @@ namespace JsonFileReader
         //}
         string[] extensions = new string[4] { ".safetensors", ".json", ".preview.png", ".pt" };
 
-        public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models,string sourcePaht, string targetPath)
+        public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
             List<OperationResult> results = new List<OperationResult>();
 
@@ -119,24 +119,20 @@ namespace JsonFileReader
                 string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
                 results.Add(EnsureFolderExists(modelDirectory));
 
-                string destFile = Path.Combine(modelDirectory, model.fileInfo.Name);
-                File.Copy(model.fileInfo.FullName, destFile, true);
+                string source = model.fileInfo.FullName;
+                string target = Path.Combine(modelDirectory, model.fileInfo.Name);
+                CopyMove(overrideExistingFiles, source, target, moveInsteadOfCopy);
 
                 foreach (var extension in extensions)
                 {
                     string fileName = ChangeEnding(model.fileInfo.Name, extension);
-                    destFile= Path.Combine(modelDirectory, fileName);
+                    source = Path.Combine(model.fileInfo.DirectoryName, fileName);
+                    target = Path.Combine(modelDirectory, fileName);
+
                     try
                     {
-                        if (!File.Exists(extension))
-                        {
-                            File.Copy(Path.Combine(model.fileInfo.DirectoryName, fileName), Path.Combine(modelDirectory, fileName), true);
-                            results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
-                        }
-                        else
-                        {
-
-                        }
+                        CopyMove(overrideExistingFiles, source, target, moveInsteadOfCopy);
+                        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
                     }
                     catch (Exception ex)
                     {
@@ -175,6 +171,18 @@ namespace JsonFileReader
             }
 
             return results;
+        }
+
+        private static void CopyMove(bool overrideExistingFiles, string source, string target, bool moveInsteadOfCopy)
+        {
+            if (moveInsteadOfCopy)
+            {
+                File.Copy(source, target, overrideExistingFiles);
+            }
+            else
+            {
+                File.Move(source, target, overrideExistingFiles);
+            }
         }
 
         private static string ChangeEnding(string fileName, string newEnding)

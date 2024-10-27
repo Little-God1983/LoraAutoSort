@@ -10,7 +10,7 @@ namespace Services.LoraAutoSort
 
         }
 
-        public List<OperationResult> ComputeFolder(string sourcePath, string targetPath, bool moveInsteadofDelete)
+        public List<OperationResult> ComputeFolder(string sourcePath, string targetPath,bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
             JsonInfoFileReaderService jsonInfoFileReaderService = new JsonInfoFileReaderService(sourcePath);
             List<ModelClass> models = jsonInfoFileReaderService.GetModelData(sourcePath);
@@ -22,7 +22,7 @@ namespace Services.LoraAutoSort
                 };
             }
             FileCopyService fileCopyServicere = new FileCopyService();
-            return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath).ToList();
+            return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
         }
     }
 }

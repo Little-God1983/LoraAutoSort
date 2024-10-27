@@ -15,6 +15,7 @@
             <StackPanel Orientation="Horizontal">
                 <RadioButton x:Name="radioCopy" Content="Copy Files" IsChecked="True" GroupName="OperationType" FontSize="16"/>
                 <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
+                <CheckBox x:Name="chbOverride" Content="Override"></CheckBox>
             </StackPanel>
 
             <Label Content="Target Path:"/>

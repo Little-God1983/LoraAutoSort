@@ -11,6 +11,7 @@ namespace JsonFileReader
         {
             _loraInfoBasePath = jsonFilePath;
         }
+
         public List<ModelClass> GetModelData(string jsonFilePath)
         {
             List<ModelClass> modelData = new List<ModelClass>();
@@ -76,7 +77,7 @@ namespace JsonFileReader
                     }
                 }
             }
-            return CivitaiBaseCategories.Unknown; // Return Unknown if no match is found
+            return CivitaiBaseCategories.UNKNOWN; // Return Unknown if no match is found
         }
 
     }

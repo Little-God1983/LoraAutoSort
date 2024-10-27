@@ -1,0 +1,13 @@
+{
+    "description": "<!--\nIt's Friday and what are you drinking? Well, none other than the finest AI-generated beer of course! Don't be left behind by your trendy IPA drinking friends, show them your hipster cred with a delicious Xenomorph Stout, Hydralisk Hefeweizen, or even a straight up Furry Lager!\n\nTrained with ~120 beer can graphics, this LoRA should help create some hilarious/hot/horny beer can labels.\n\nRecommendations for Use\n\nModel: Real Dream - SDXL Pony V7\n\nStrength: 1.0-1.8 (turn it up if a character/concept is not showing up or appears interacting with the can)\n\nTags: beerlabel, [colour/shape/size] beer can, solo {for a single beer can}\n\nNote: I recommend you use draft mode when testing putting characters on cans, as every character LoRA is different and you may have to play around with the weights of both the character LoRA and the Beer Can Label Creator. \n\nDon't worry if you have to turn a character down to 0.6- and the Beer Can Label Creator to 1.6+!\n-->",
+    "sd version": "Unknown",
+    "activation text": "beerlabel",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1722238961,
+            "skeleton_file": false
+        }
+    }
+}

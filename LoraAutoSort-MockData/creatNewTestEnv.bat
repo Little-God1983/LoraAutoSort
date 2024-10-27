@@ -11,9 +11,9 @@ if exist "%basePath%\LAB" (
 )
 
 :: Check if Targer folder exists, then delete it
-if exist "%basePath%\Targer" (
-    echo Deleting folder Targer...
-    rmdir /s /q "%basePath%\Targer"
+if exist "%basePath%\Target" (
+    echo Deleting folder Target...
+    rmdir /s /q "%basePath%\Target"
 ) else (
     echo Folder Targer does not exist, skipping delete step.
 )

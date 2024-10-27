@@ -15,5 +15,5 @@
     ANIMAL,
     ASSETS,
     ACTION,
-    Unknown,
+    UNKNOWN,
 }

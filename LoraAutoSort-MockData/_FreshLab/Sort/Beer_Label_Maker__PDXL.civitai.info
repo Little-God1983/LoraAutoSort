@@ -1,0 +1,310 @@
+{
+    "id": 639842,
+    "modelId": 573953,
+    "name": "V1",
+    "createdAt": "2024-07-12T21:41:23.156Z",
+    "updatedAt": "2024-07-13T04:32:44.975Z",
+    "status": "Published",
+    "publishedAt": "2024-07-13T04:32:44.974Z",
+    "trainedWords": [
+        "beerlabel"
+    ],
+    "trainingStatus": "Approved",
+    "trainingDetails": {
+        "type": "Concept",
+        "params": {
+            "unetLR": 0.0005,
+            "clipSkip": 1,
+            "loraType": "lora",
+            "keepTokens": 0,
+            "networkDim": 32,
+            "numRepeats": 2,
+            "resolution": 1024,
+            "lrScheduler": "cosine",
+            "minSnrGamma": 0,
+            "noiseOffset": 0.03,
+            "targetSteps": 584,
+            "enableBucket": true,
+            "networkAlpha": 32,
+            "optimizerType": "Prodigy",
+            "textEncoderLR": 5e-05,
+            "maxTrainEpochs": 10,
+            "shuffleCaption": false,
+            "trainBatchSize": 5,
+            "flipAugmentation": false,
+            "lrSchedulerNumCycles": 3
+        },
+        "staging": false,
+        "baseModel": "pony",
+        "highPriority": false,
+        "baseModelType": "sdxl",
+        "samplePrompts": [
+            "beerlabel, beer can, tiger",
+            "beerlabel, realistic, brand name imitation",
+            "beerlabel, no humans, simple background, wolf, beer can"
+        ]
+    },
+    "baseModel": "Pony",
+    "baseModelType": null,
+    "earlyAccessEndsAt": null,
+    "earlyAccessConfig": {},
+    "description": null,
+    "air": "urn:air:pony:lora:civitai:573953@639842",
+    "stats": {
+        "downloadCount": 279,
+        "ratingCount": 0,
+        "rating": 0,
+        "thumbsUpCount": 78
+    },
+    "model": {
+        "name": "Beer Can Label Creator [PDXL]",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false,
+        "description": "<!--\nIt's Friday and what are you drinking? Well, none other than the finest AI-generated beer of course! Don't be left behind by your trendy IPA drinking friends, show them your hipster cred with a delicious Xenomorph Stout, Hydralisk Hefeweizen, or even a straight up Furry Lager!\n\nTrained with ~120 beer can graphics, this LoRA should help create some hilarious/hot/horny beer can labels.\n\nRecommendations for Use\n\nModel: Real Dream - SDXL Pony V7\n\nStrength: 1.0-1.8 (turn it up if a character/concept is not showing up or appears interacting with the can)\n\nTags: beerlabel, [colour/shape/size] beer can, solo {for a single beer can}\n\nNote: I recommend you use draft mode when testing putting characters on cans, as every character LoRA is different and you may have to play around with the weights of both the character LoRA and the Beer Can Label Creator. \n\nDon't worry if you have to turn a character down to 0.6- and the Beer Can Label Creator to 1.6+!\n-->",
+        "tags": [
+            "concept",
+            "beer can",
+            "beer can label"
+        ],
+        "allowNoCredit": true,
+        "allowCommercialUse": [
+            "Sell"
+        ],
+        "allowDerivatives": true,
+        "allowDifferentLicense": true
+    },
+    "files": [
+        {
+            "id": 554717,
+            "sizeKB": 223106.98828125,
+            "name": "Beer_Label_Maker__PDXL.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-07-12T23:21:20.807Z",
+            "metadata": {
+                "format": "SafeTensor"
+            },
+            "hashes": {
+                "AutoV1": "66CA0208",
+                "AutoV2": "88F7009F87",
+                "SHA256": "88F7009F87832552824EDF3A125AB49024600A2035D076C64FD20EE5D2DF28FA",
+                "CRC32": "9DA47690",
+                "BLAKE3": "EDF2152EA7858657F622619128BA4E3B1D652833CD9BD18E0EEB85936B5ABD06",
+                "AutoV3": "65FBB499379E"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/639842"
+        },
+        {
+            "id": 554596,
+            "sizeKB": 45688.82421875,
+            "name": "639842_training_data.zip",
+            "type": "Training Data",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-07-12T21:50:44.832Z",
+            "metadata": {
+                "format": "Other"
+            },
+            "hashes": {
+                "AutoV1": "746F8FE5",
+                "AutoV2": "53A7781EE4",
+                "SHA256": "53A7781EE4B6735869FF652E057BF53B09E4E35D7F49C59241D77219FE8DB9F5",
+                "CRC32": "EE84B404",
+                "BLAKE3": "D9707B922A3E9DECFB8A9A8179A88546185049B48332D16436B6B385C09290CB"
+            },
+            "primary": false,
+            "downloadUrl": "https://civitai.com/api/download/models/639842?type=Training%20Data"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/28b825c3-d671-4134-98c7-48b059bff569/width=450/19598362.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UWG]X1W-^-t7%hj[oIof.6ofVufPR$fQV{ay",
+            "type": "image",
+            "metadata": {
+                "hash": "UWG]X1W-^-t7%hj[oIof.6ofVufPR$fQV{ay",
+                "size": 262150,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/da9a7ec6-d5fb-4f5e-8e6b-6bfd86c51f73/width=450/19598355.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UGCGGj^-O69DxvRQ9ZD$?ux[V[M{o{M{RkV[",
+            "type": "image",
+            "metadata": {
+                "hash": "UGCGGj^-O69DxvRQ9ZD$?ux[V[M{o{M{RkV[",
+                "size": 198345,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/aa6958df-9ad6-47d6-8904-75d09087a03e/width=450/19598356.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "U8H_e|_1RXDk.69ZIVagcboM$cxtjzxa9EW-",
+            "type": "image",
+            "metadata": {
+                "hash": "U8H_e|_1RXDk.69ZIVagcboM$cxtjzxa9EW-",
+                "size": 214783,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dc91fd22-2559-49e9-8d31-f2ced893c1cd/width=450/19598360.jpeg",
+            "nsfwLevel": 2,
+            "width": 832,
+            "height": 1216,
+            "hash": "UKFYu%D%Ir~qkC%MM{x]tmIAM{t7M{t8R*ja",
+            "type": "image",
+            "metadata": {
+                "hash": "UKFYu%D%Ir~qkC%MM{x]tmIAM{t7M{t8R*ja",
+                "size": 210230,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9890530e-385a-401d-861d-b3d3d58823bf/width=450/19598353.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UXHo5w-;_NM{-=RjWAM{xuxuRjayofWBofj@",
+            "type": "image",
+            "metadata": {
+                "hash": "UXHo5w-;_NM{-=RjWAM{xuxuRjayofWBofj@",
+                "size": 197210,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4fbad378-50b7-45dc-bfab-99ab3b5c6729/width=450/19598361.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UNFh;b~pEf0L?vozjEM_yDt8VsaJkWogRjae",
+            "type": "image",
+            "metadata": {
+                "hash": "UNFh;b~pEf0L?vozjEM_yDt8VsaJkWogRjae",
+                "size": 221019,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6e941bbe-cde4-4b29-9892-219f13a98e54/width=450/19598357.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UBFFQ$^+u59ZX-Io-VRP~W%2EMW=E0M{x]R*",
+            "type": "image",
+            "metadata": {
+                "hash": "UBFFQ$^+u59ZX-Io-VRP~W%2EMW=E0M{x]R*",
+                "size": 286703,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/206d4b95-7e6c-415c-a147-59bbb3c5ab14/width=450/19598359.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UVLpR4?HloOrx]M{oJaepwW:nNsTSzkCV@t7",
+            "type": "image",
+            "metadata": {
+                "hash": "UVLpR4?HloOrx]M{oJaepwW:nNsTSzkCV@t7",
+                "size": 191620,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/25dac6c4-a2c0-4753-85c1-04016f357207/width=450/19598358.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UJJa$X~qIUE1_3M{%fRj.SofIARPtRozVsoK",
+            "type": "image",
+            "metadata": {
+                "hash": "UJJa$X~qIUE1_3M{%fRj.SofIARPtRozVsoK",
+                "size": 193661,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5c5a1337-a47d-48ac-80e6-78be8901e213/width=450/19602874.jpeg",
+            "nsfwLevel": 1,
+            "width": 832,
+            "height": 1216,
+            "hash": "UDE:SIDj^+xZ.kt7IC%M.lbbxcoy-.s:xIah",
+            "type": "image",
+            "metadata": {
+                "hash": "UDE:SIDj^+xZ.kt7IC%M.lbbxcoy-.s:xIah",
+                "size": 238846,
+                "width": 832,
+                "height": 1216
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": true
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/639842",
+    "creator": {
+        "username": "kftiger",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocKBRj866_Ja0zbdpCLz4MKOrVzPl_begwGgl2JFokmUpZNirg=s96-c"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1722238961,
+            "skeleton_file": false
+        }
+    }
+}

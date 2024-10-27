@@ -23,8 +23,7 @@ namespace Services.LoraAutoSort
                 };
             }
             FileCopyService fileCopyServicere = new FileCopyService();
-            //return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
-            return null;
+            return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
         }
 
         public bool EnoughFreeSpaceOnDisk(string sourcePath, string targetPath)

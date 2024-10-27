@@ -1,6 +1,5 @@
 ﻿using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Helper;
-using System.IO;
 using System.Text.Json;
 
 namespace JsonFileReader
@@ -21,7 +20,9 @@ namespace JsonFileReader
             foreach (ModelClass model in modelData)
             {
                 model.CivitaiCategory = GetMatchingCategory(model);
-                model.DiffusionBaseModel = GetBaseModelName(model);
+                string modelName = GetBaseModelName(model);
+                model.DiffusionBaseModel = modelName == "SDXL" ? "SDXL 1.0":modelName;
+
             }
             return modelData;
         }
@@ -29,10 +30,10 @@ namespace JsonFileReader
         private CivitaiBaseCategories GetMatchingCategory(ModelClass model)
         {
             // Try loading tags from the ".json" file.
-            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".civitai.info"));
+            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".civitai.info","tags"));
 
             // If the category is still UNKNOWN, attempt to load additional tags from ".cm-info.json".
-            uniqueTags.UnionWith(LoadTagsFromFile(model, ".cm-info.json"));
+            uniqueTags.UnionWith(LoadTagsFromFile(model, ".cm-info.json", "Tags"));
 
             model.Tags = uniqueTags.ToList();
 
@@ -41,7 +42,7 @@ namespace JsonFileReader
         }
 
         // Helper method to load tags from a specified file ending.
-        private HashSet<string> LoadTagsFromFile(ModelClass model, string ending)
+        private HashSet<string> LoadTagsFromFile(ModelClass model, string ending, string searchTerm)
         {
             var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(ending));
             if (file == null)
@@ -50,7 +51,7 @@ namespace JsonFileReader
             }
 
             JsonDocument jdoc = LoadJsonDocument(file.FullName);
-            return GetTagsFromJson(jdoc.RootElement);
+            return GetTagsFromJson(jdoc.RootElement, searchTerm);
         }
 
         private CivitaiBaseCategories GetCategoryFromTags(List<string> tags)
@@ -148,34 +149,52 @@ namespace JsonFileReader
 
         private string GetBaseModelName(ModelClass model)
         {
-            var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".json");
-            if (file == null)
+            var fileCivitai = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(".civitai.info"));
+            var fileJson = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".json");
+            if (fileCivitai != null)
             {
-                JsonDocument jdoc = LoadJsonDocument(file.FullName);
+                JsonDocument jdoc = LoadJsonDocument(fileCivitai.FullName);
                 JsonElement root = jdoc.RootElement;
                 return root.GetProperty("baseModel").GetString();
+            }else if(fileJson != null)
+            {
+                JsonDocument jdoc = LoadJsonDocument(fileJson.FullName);
+                JsonElement root = jdoc.RootElement;
+                if (root.TryGetProperty("sd version", out JsonElement tagElement) && tagElement.ValueKind == JsonValueKind.String)
+                {
+                    return tagElement.GetString();
+                }
             }
-            return "Unknown";
+            
+            return "UNKNOWN";
         }
 
-        private HashSet<string> GetTagsFromJson(JsonElement root)
+        private HashSet<string> GetTagsFromJson(JsonElement root,string searchTerm)
         {
             HashSet<string> tags = new HashSet<string>();
 
-            if (root.TryGetProperty("model", out JsonElement model) && model.TryGetProperty("tags", out JsonElement tagsElement))
+            if (root.TryGetProperty("model", out JsonElement model) && model.TryGetProperty(searchTerm, out JsonElement tagsElement))
             {
-                foreach (JsonElement tagElement in tagsElement.EnumerateArray())
-                {
-                    string tag = tagElement.GetString();
-                    if (!string.IsNullOrEmpty(tag))
-                    {
-                        tags.Add(tag);
-                    }
-                }
+                GetTagsFromJsonElement(tags, tagsElement);
+            }
+            else if (root.TryGetProperty(searchTerm, out JsonElement tagElement))
+            {
+                GetTagsFromJsonElement(tags, tagElement);
             }
 
             return tags;
         }
 
+        private static void GetTagsFromJsonElement(HashSet<string> tags, JsonElement tagsElement)
+        {
+            foreach (JsonElement tagElement in tagsElement.EnumerateArray())
+            {
+                string tag = tagElement.GetString();
+                if (!string.IsNullOrEmpty(tag))
+                {
+                    tags.Add(tag);
+                }
+            }
+        }
     }
 }

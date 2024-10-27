@@ -1,0 +1,13 @@
+{
+    "description": "<p><img src=\"https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/783aa156-0767-492d-97a9-9e5fa2390096/width=525/783aa156-0767-492d-97a9-9e5fa2390096.jpeg\" /></p><p>This is probably one of my favorite LoRAs that I've ever made. Trained on 25 images generated with DALLE3 and Mr.ChatGPT's help. The LoRA loves making things spooky with a lot of mist, scary eyes, and undead features. Lower the strength if you don't want things overwhelmingly undead...but works perfectly with max strength otherwise. :)</p><p></p><p><span style=\"color:rgb(193, 194, 197)\">This LoRA was trained on SDXL FaeTastic 2.0, I can't guarantee the best use with other SDXL checkpoints.</span></p><p></p><p><span style=\"color:rgb(193, 194, 197)\">I have been having great success training SDXL LoRAs following these </span><a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.notion.site/SDXL-1-0-Training-Overview-4fb03d5b4cbf482ebe13ffef7bcb8ead\">guidelines</a></p><p></p><h2 id=\"heading-4\"><strong>Please don't upload my resources on third-party websites, if I wanted them there I would upload them myself.</strong></h2><p>Feel free to always message me on Discord (you can find me in the official Civitai discord) for any questions regarding Civitai, Stable Diffusion, or any of my resources!</p>",
+    "sd version": "Unknown",
+    "activation text": "Ghostlystyle",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.11",
+            "last_update": 1730046961,
+            "skeleton_file": false
+        }
+    }
+}

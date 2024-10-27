@@ -1,0 +1,342 @@
+{
+    "id": 16576,
+    "modelId": 13941,
+    "name": "v2",
+    "createdAt": "2023-02-28T09:16:23.924Z",
+    "updatedAt": "2023-03-04T12:07:34.546Z",
+    "status": "Published",
+    "publishedAt": "2023-02-28T09:16:23.924Z",
+    "trainedWords": [],
+    "trainingStatus": null,
+    "trainingDetails": null,
+    "baseModel": "SD 1.5",
+    "baseModelType": "Standard",
+    "earlyAccessTimeFrame": 0,
+    "description": "<!--\nbigger and a bit better\n-->",
+    "air": "urn:air:sd1:lora:civitai:13941@16576",
+    "stats": {
+        "downloadCount": 163357,
+        "ratingCount": 1087,
+        "rating": 4.95,
+        "thumbsUpCount": 1679
+    },
+    "model": {
+        "name": "epi_noiseoffset",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false,
+        "description": "<!--\nUPDATE: v2-pynoise released, read the Version changes/notes\n\nLORA based on the Noise Offset post for better contrast and darker images.\n\n\n\nWeighting depends often on Sampler, kept it in the low-middle range (Maybe i will put up a stronger one).\n\nCustom weighting is needed sometimes.\n\nWorks better if u use good keywords like: `dark studio, rim lighting, two tone lighting, dimly lit, low key` etc.\n\n\n\nDidn't like the color saturation and image compositions from the theovercomer8sContrastFix_sd15 so i made this one.\n\n\n\nUPDATE: v2 is slightly stronger in the whole composition\n\nUpdate 2: added safetensor file\n\n\n\nQuick Comparsion\n-->",
+        "tags": [
+            "dark",
+            "noise offset",
+            "high contrast",
+            "tool"
+        ],
+        "allowNoCredit": true,
+        "allowCommercialUse": [
+            "Image",
+            "RentCivit"
+        ],
+        "allowDerivatives": true,
+        "allowDifferentLicense": true
+    },
+    "files": [
+        {
+            "id": 14333,
+            "sizeKB": 79570.1171875,
+            "name": "epi_noiseoffset2.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2023-03-01T09:12:53.453Z",
+            "metadata": {
+                "format": "SafeTensor",
+                "size": "full",
+                "fp": "fp16"
+            },
+            "hashes": {
+                "AutoV1": "2B07E97F",
+                "AutoV2": "81680C064E",
+                "SHA256": "81680C064E9F50DFCC11EC5E25DA1832F523EC84AFD544F372C7786F3DDCBBAC",
+                "CRC32": "75D88A54",
+                "BLAKE3": "65DC209E97D0D703FD0414A09344662077BDBA32A9354EFECC71D011C4861035",
+                "AutoV3": "D1131F7207D6"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/16576"
+        },
+        {
+            "id": 13989,
+            "sizeKB": 79736.4384765625,
+            "name": "epi_noiseoffset2.pt",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2023-02-28T09:21:14.124Z",
+            "metadata": {
+                "format": "PickleTensor",
+                "size": "full",
+                "fp": "fp16"
+            },
+            "hashes": {
+                "AutoV1": "5E1481B8",
+                "AutoV2": "3775AAD8A0",
+                "SHA256": "3775AAD8A02DC5CA4E411F812B9B68B7539DB2A4074B0577CE9B033B5779C0B1",
+                "CRC32": "CCB599BE",
+                "BLAKE3": "A98700D41202C0DAAEBDA6A136E08DDEE1DA55DB1C62E350A464AD8904B4F9AE"
+            },
+            "primary": false,
+            "downloadUrl": "https://civitai.com/api/download/models/16576?type=Model&format=PickleTensor&size=full&fp=fp16"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1068e7d8-e7ed-49a9-ae61-ae7e7cbb0f00/width=450/167154.jpeg",
+            "nsfwLevel": 1,
+            "width": 512,
+            "height": 768,
+            "hash": "UA84b?El0f~V%LShNb$%9axZ-VE2Mxs9n%Rj",
+            "type": "image",
+            "metadata": {
+                "hash": "UA84b?El0f~V%LShNb$%9axZ-VE2Mxs9n%Rj",
+                "width": 512,
+                "height": 768
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 2467180841,
+                "Model": "epi_hyperphotogodess",
+                "steps": 28,
+                "prompt": "portrait of a award winning photo of hugh laurie posing in a dark studio, (rim lighting,:1.4) two tone lighting, sharp focus, teal hue, octane, unreal, dimly lit, low key,  <lora:epiNoiseoffset_v2:1>",
+                "sampler": "DDIM",
+                "cfgScale": 5,
+                "resources": [
+                    {
+                        "name": "epi_noiseoffset2",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "negativePrompt": "asian, chinese, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/22f5f5b4-d106-4019-32f3-ed3d64ac1800/width=450/178275.jpeg",
+            "nsfwLevel": 1,
+            "width": 1024,
+            "height": 1536,
+            "hash": "UAAvXk02o~rqr]bFNHxZ03~ARPozELxaxFNH",
+            "type": "image",
+            "metadata": {
+                "hash": "UAAvXk02o~rqr]bFNHxZ03~ARPozELxaxFNH",
+                "width": 1024,
+                "height": 1536
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 810934608,
+                "Model": "epi_hyperphotogodess",
+                "steps": 28,
+                "prompt": "product shot of ultra realistic juicy cheeseburger against a dark background, two tone lighting, advertisement, octane, unreal  <lora:epiNoiseoffset_v2:1>",
+                "sampler": "DDIM",
+                "cfgScale": 5,
+                "resources": [
+                    {
+                        "name": "epiNoiseoffset_v2",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Superscale-SP_178000_G",
+                "negativePrompt": "text, error, cropped, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, deformed, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
+                "Denoising strength": "0.5"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/bd17d3db-aa7a-429f-8b87-7063f0615000/width=450/167153.jpeg",
+            "nsfwLevel": 1,
+            "width": 512,
+            "height": 768,
+            "hash": "UFDu#t~BR$s,?H={E2I;5Q9wIVaK0fIp-pof",
+            "type": "image",
+            "metadata": {
+                "hash": "UFDu#t~BR$s,?H={E2I;5Q9wIVaK0fIp-pof",
+                "width": 512,
+                "height": 768
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 1684828904,
+                "Model": "epi_hyperphotogodess",
+                "steps": 30,
+                "prompt": "steampunk woman, highly detailed face and body portrait by wlop. fantasy art from dnd extremely beautiful style of ilya kuvshinov on greg rutkowski in the shell 1 9 7 0 s oil painting full length illustration sharp focus norman rockwell trending pixiv fanbox concept quality cinema model madison beer as ariana grande popart thomas <lora:epiNoiseoffset_v2:1>",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "epi_noiseoffset2",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "negativePrompt": "asian, chinese, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/11466716-a836-4772-7f10-be3e382bb700/width=450/167152.jpeg",
+            "nsfwLevel": 1,
+            "width": 512,
+            "height": 768,
+            "hash": "UOD+rk~W%$o{xIxb={xCITOEV?xubYrqo}W?",
+            "type": "image",
+            "metadata": {
+                "hash": "UOD+rk~W%$o{xIxb={xCITOEV?xubYrqo}W?",
+                "width": 512,
+                "height": 768
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 4081488779,
+                "Model": "epi_hyperphotogodess",
+                "steps": 28,
+                "prompt": "cell shading, digital art, bloom, dark and gloomy full body 8k unity render, female teen cyborg, Blue yonder hair, wearing broken battle armor, at cluttered and messy shack , action shot, tattered torn shirt, porcelain cracked skin, skin pores, detailed intricate iris, very dark lighting, heavy shadows, detailed, detailed face, (vibrant, dramatic, dark, sharp focus, 8k), donglu <lora:epiNoiseoffset_v2:1>",
+                "sampler": "DDIM",
+                "cfgScale": 6,
+                "resources": [
+                    {
+                        "name": "epi_noiseoffset2",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "negativePrompt": "text, error, cropped, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, deformed, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b35e93dd-c8c3-4e6c-88ba-87f5aac11500/width=450/178281.jpeg",
+            "nsfwLevel": 2,
+            "width": 1024,
+            "height": 1536,
+            "hash": "UA7Un|00R%-=_N9Fn#xvs:NGxZkC%2IUt7tR",
+            "type": "image",
+            "metadata": {
+                "hash": "UA7Un|00R%-=_N9Fn#xvs:NGxZkC%2IUt7tR",
+                "width": 1024,
+                "height": 1536
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 4081488777,
+                "Model": "epi_hyperphotogodess",
+                "steps": 28,
+                "prompt": "cell shading, digital art, dark and gloomy full body 8k unity render, female teen cyborg, Blue yonder hair, wearing broken battle armor, at cluttered and messy shack , action shot, tattered torn shirt, porcelain cracked skin, skin pores, detailed intricate iris, very dark lighting, heavy shadows, detailed, detailed face, (vibrant, dramatic, dark, sharp focus, 8k)  <lora:epiNoiseoffset_v2:2>",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 6,
+                "resources": [
+                    {
+                        "name": "epiNoiseoffset_v2",
+                        "type": "lora",
+                        "weight": 2
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Superscale-SP_178000_G",
+                "negativePrompt": "asian, chinese, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature",
+                "Face restoration": "CodeFormer",
+                "Denoising strength": "0.5"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dbc8b8b2-a489-46be-501e-5fd423ca3c00/width=450/178280.jpeg",
+            "nsfwLevel": 1,
+            "width": 1024,
+            "height": 1536,
+            "hash": "U67BG$~qIU4no~tRIUDjIoM{-p-:4nIVtR%M",
+            "type": "image",
+            "metadata": {
+                "hash": "U67BG$~qIU4no~tRIUDjIoM{-p-:4nIVtR%M",
+                "width": 1024,
+                "height": 1536
+            },
+            "availability": "Public",
+            "meta": {
+                "Size": "512x768",
+                "seed": 1025307883,
+                "Model": "epi_hyperphotogodess",
+                "steps": 30,
+                "prompt": "night, moon Cinematic light, intricate detail, detailed facial features, high detail, sharp focus, smooth, aesthetic, extremely detailed, (by greg rutkowski:1), (by luis royo:1), by artgerm, Stephen Kasner, John Picacio <lora:epiNoiseoffset_v2:1>",
+                "sampler": "DPM++ 2M Karras",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "epiNoiseoffset_v2",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "a89f142591",
+                        "name": "epi_hyperphotogodess",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "a89f142591",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Superscale-SP_178000_G",
+                "negativePrompt": "lowres, (((bad anatomy))), bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face, mutation,deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms, extra legs, malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit",
+                "Denoising strength": "0.5"
+            }
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/16576",
+    "creator": {
+        "username": "epinikion",
+        "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/529b3628-8929-4ef6-b63f-16d2999faa41/width=96/epinikion.jpeg"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1719471909,
+            "skeleton_file": false
+        }
+    }
+}

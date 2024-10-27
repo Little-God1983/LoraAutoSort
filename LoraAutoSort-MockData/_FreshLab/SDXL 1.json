@@ -1,0 +1,13 @@
+{
+    "description": "<!--\nFollow me to make sure you see new poses and Nobodys when I post them. Things move fast on this site, it's easy to miss.\n\nEmbedding to get the Atompunk style aesthetic to any image quickly and easily. Images were generated using the legendary A to Zovya RPG Artist's Tools V2 model.\n\nMost models have a strong asian style to them, this model does a pretty good job of removing that, but you might find you need to put \"asian\" in the negative prompt to help it out.\n\n\n\nDo you have requests? I've been putting in many more hours lately with this. That's my problem, not yours. But if you'd like to tip me, buy me a beer. Beer encourages me to ignore work and make AI models instead. Tip and make a request. I'll give it a shot if I can. Here at Ko-Fi\n-->",
+    "sd version": "SDXL",
+    "activation text": "AtompunkSDXL",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1720796111,
+            "skeleton_file": false
+        }
+    }
+}

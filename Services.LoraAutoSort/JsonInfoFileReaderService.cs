@@ -37,7 +37,7 @@ namespace JsonFileReader
                 if (Directory.Exists(_loraInfoBasePath))
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(_loraInfoBasePath);
-                    foreach (var file in dirInfo.GetFiles("*.info"))
+                    foreach (var file in dirInfo.GetFiles("*.info", SearchOption.AllDirectories))
                     {
                         files.Add(file);
                     }

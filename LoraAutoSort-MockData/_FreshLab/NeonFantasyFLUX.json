@@ -1,0 +1,13 @@
+{
+    "description": "<h2 id=\"update:-kyu5taxb2\">UPDATE:</h2><p>I made a new version with a larger dataset, It's still not really where I want it to be but I'll keep working on it. As always happy generating!</p><p></p><p>Also please don't reupload my models, someone posted a couple of them on moescape and I can't claim them or anything. I'm doing this all out of my pocket and I mostly make my own images and it takes a lot of time so every bit of support helps.</p><p></p><p></p><p>This model produces a mix of dark fantasy and 90s and early 2000s anime style but made to have clean lines like modern anime.</p><p></p><p>I made another spinoff of this model with a different style you can find it here:<a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/827126/neonfantasynocturne-style-ponyxl\">https://civitai.com/models/827126/neonfantasynocturne-style-ponyxl</a></p><p></p><p><strong><span style=\"color:rgb(250, 176, 5)\">If you want to support me financially or request a custom LoRa you can do so here:</span></strong> <a target=\"_blank\" rel=\"ugc\" href=\"https://ko-fi.com/n3o_wav3\">KoFi</a></p><p></p><h1 id=\"ponyxl-q1tpgp0xi\"><strong><span style=\"color:rgb(230, 73, 128)\">PonyXL</span></strong></h1><h2 id=\"usage:-vwp1n4wfl\">Usage:</h2><p><span style=\"color:rgb(250, 82, 82)\">Trigger word: </span><strong><span style=\"color:rgb(250, 82, 82)\">ne0nfant4sy</span></strong></p><p><span style=\"color:rgb(18, 184, 134)\">Strength: I use 1 but feel free to experiment.</span></p><p><span style=\"color:rgb(18, 184, 134)\">I recommend using </span><strong><span style=\"color:rgb(18, 184, 134)\">Prefect Pony XL v3, T-ponynai3 </span></strong><span style=\"color:rgb(18, 184, 134)\">and</span><strong><span style=\"color:rgb(18, 184, 134)\"> Base PonyXL</span></strong></p><p><img src=\"https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a57995b9-dbec-41f4-a6fc-162e917f8c75/width=525/a57995b9-dbec-41f4-a6fc-162e917f8c75.jpeg\" /></p><h1 id=\"flux-et2iucsvh\"><strong><span style=\"color:rgb(64, 192, 87)\">FLUX</span></strong></h1><h2 id=\"usage:-987mymnfe\">Usage:</h2><p><span style=\"color:rgb(250, 82, 82)\">Trigger word: </span><strong><span style=\"color:rgb(250, 82, 82)\">ne0nfant4sy</span></strong></p><p></p><p>Strength: I found that 0.8 works best in my testings but feel free to experiment 1 is also good but maybe a bit less stable.</p><p></p><p>You can use PonyXL prompting as well as the usual FLUX prompting.</p>",
+    "sd version": "Unknown",
+    "activation text": "ne0nfant4sy",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.11",
+            "last_update": 1730049088,
+            "skeleton_file": false
+        }
+    }
+}

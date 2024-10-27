@@ -1,0 +1,85 @@
+{
+    "id": 151868,
+    "modelId": 137559,
+    "name": "v1.0",
+    "createdAt": "2023-08-30T15:03:13.138Z",
+    "updatedAt": "2023-08-30T15:11:43.029Z",
+    "status": "Published",
+    "publishedAt": "2023-08-30T15:11:43.022Z",
+    "trainedWords": [
+        "atom eve"
+    ],
+    "trainingStatus": null,
+    "trainingDetails": null,
+    "baseModel": "SDXL 1.0",
+    "baseModelType": null,
+    "earlyAccessTimeFrame": 0,
+    "description": null,
+    "air": "urn:air:sdxl:lora:civitai:137559@151868",
+    "stats": {
+        "downloadCount": 352,
+        "ratingCount": 40,
+        "rating": 5,
+        "thumbsUpCount": 59
+    },
+    "model": {
+        "name": "Atom Eve (Invincible) SDXL",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false
+    },
+    "files": [
+        {
+            "id": 113056,
+            "sizeKB": 223105.05078125,
+            "name": "AtomEveSDXL.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2023-08-30T15:05:51.986Z",
+            "metadata": {
+                "format": "SafeTensor",
+                "size": null,
+                "fp": null
+            },
+            "hashes": {
+                "AutoV1": "BD1A6A12",
+                "AutoV2": "5C300130BB",
+                "SHA256": "5C300130BBD2810795FA8654645562B38D58BE5AF49CF5CC3970E89B4BA0527B",
+                "CRC32": "AD0ABF48",
+                "BLAKE3": "F0778B85BCB26107D226593F21DA8368140FD0CAE354420FFAD8CE14518CF950",
+                "AutoV3": "191CF834B3A3"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/151868"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0d1cb579-7f90-4266-b763-8e0962d1cd04/width=450/2278338.jpeg",
+            "nsfwLevel": 1,
+            "width": 1536,
+            "height": 2048,
+            "hash": "UKIEhN4.OBt9?GNG4.xa?wRQng?HOrROVsEk",
+            "type": "image",
+            "metadata": {
+                "hash": "UKIEhN4.OBt9?GNG4.xa?wRQng?HOrROVsEk",
+                "size": 4072505,
+                "width": 1536,
+                "height": 2048
+            },
+            "availability": "Public",
+            "meta": {
+                "seed": 861391264365749,
+                "steps": 20,
+                "prompt": "Hyperdetailed anime style image of atom eve a teenager wearing a yellow shirt and a denim jacket and jeans in the city streets.\natom eve, civilian outfit,  1girl, solo, long hair, flat chest, looking at viewer, green eyes, standing, orange hair, lips, hands on hips, necklace\nbreathtaking masterpiece",
+                "sampler": "UniPC",
+                "cfgScale": 6,
+                "negativePrompt": "text, watermark, bad quality, worst quality, loli, realistic, unaestheticXLv1, unaestheticXLv13, nude"
+            }
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/151868"
+}

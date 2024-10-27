@@ -1,0 +1,515 @@
+{
+    "id": 626601,
+    "modelId": 562478,
+    "name": "V1 Pony",
+    "createdAt": "2024-07-07T11:21:54.241Z",
+    "updatedAt": "2024-07-07T16:52:53.765Z",
+    "status": "Published",
+    "publishedAt": "2024-07-07T16:52:53.762Z",
+    "trainedWords": [],
+    "trainingStatus": "Approved",
+    "trainingDetails": {
+        "type": "Style",
+        "params": {
+            "unetLR": 0.0005,
+            "clipSkip": 1,
+            "loraType": "lora",
+            "keepTokens": 0,
+            "networkDim": 32,
+            "numRepeats": 6,
+            "resolution": 1024,
+            "lrScheduler": "cosine",
+            "minSnrGamma": 0,
+            "noiseOffset": 0.03,
+            "targetSteps": 816,
+            "enableBucket": true,
+            "networkAlpha": 32,
+            "optimizerType": "Prodigy",
+            "textEncoderLR": 5e-05,
+            "maxTrainEpochs": 20,
+            "shuffleCaption": false,
+            "trainBatchSize": 5,
+            "flipAugmentation": false,
+            "lrSchedulerNumCycles": 3
+        },
+        "staging": false,
+        "baseModel": "pony",
+        "highPriority": false,
+        "baseModelType": "sdxl",
+        "samplePrompts": [
+            "",
+            "",
+            ""
+        ]
+    },
+    "baseModel": "Pony",
+    "baseModelType": null,
+    "earlyAccessEndsAt": null,
+    "earlyAccessConfig": {},
+    "description": null,
+    "air": "urn:air:pony:lora:civitai:562478@626601",
+    "stats": {
+        "downloadCount": 85,
+        "ratingCount": 0,
+        "rating": 0,
+        "thumbsUpCount": 14
+    },
+    "model": {
+        "name": "Alien Landscapes",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false,
+        "description": "<!--\nThis model was trained on 55 images of alien landscapes, partly generated dalle3 images.\n\nWorks well between 0.5 and 1 with 30-60 steps.\n-->",
+        "tags": [
+            "style",
+            "landscape"
+        ],
+        "allowNoCredit": false,
+        "allowCommercialUse": [
+            "RentCivit"
+        ],
+        "allowDerivatives": true,
+        "allowDifferentLicense": false
+    },
+    "files": [
+        {
+            "id": 542230,
+            "sizeKB": 223100.82421875,
+            "name": "Alien_Landscapes.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-07-07T16:50:55.887Z",
+            "metadata": {
+                "format": "SafeTensor"
+            },
+            "hashes": {
+                "AutoV1": "980D0A3B",
+                "AutoV2": "B9A5364980",
+                "SHA256": "B9A53649803F6D350B6525562015065E74A251ED2B71BA9BFE64AD6C7F1A78DA",
+                "CRC32": "AD34A55F",
+                "BLAKE3": "58246AB5A710F8FB9C813274349B77724B8848329224AA5CC110EB059F7C9ABE",
+                "AutoV3": "887D46F54B4B"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/626601"
+        },
+        {
+            "id": 541472,
+            "sizeKB": 17866.49609375,
+            "name": "626601_training_data.zip",
+            "type": "Training Data",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-07-07T11:25:30.190Z",
+            "metadata": {
+                "format": "Other"
+            },
+            "hashes": {
+                "AutoV1": "7D2A2827",
+                "AutoV2": "DD1151CE91",
+                "SHA256": "DD1151CE916C193B429AA6A5F44A4AC541BEF659A2B9EC5825A2E036A57D8666",
+                "CRC32": "5D0CC2B6",
+                "BLAKE3": "0669147787397D8211ACCB3619FEF600AFE60A7C4C867B61FB04E0799AD5A582"
+            },
+            "primary": false,
+            "downloadUrl": "https://civitai.com/api/download/models/626601?type=Training%20Data"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ffb7555d-2770-46ea-b2e1-831562a9bbd4/width=450/18847326.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UAC@BD0NqGO@u69b-mSy00^KE3tR4V^*TK#8",
+            "type": "image",
+            "metadata": {
+                "hash": "UAC@BD0NqGO@u69b-mSy00^KE3tR4V^*TK#8",
+                "size": 1793662,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 2629713636913491500,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, ocean, crystal, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, ocean, crystal",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/51a3485e-9cf8-4189-ab8d-8b006bda567d/width=450/18847317.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UPHeOIM}V@EM3?E3$$xZIB$yRkNdDj$zVsj[",
+            "type": "image",
+            "metadata": {
+                "hash": "UPHeOIM}V@EM3?E3$$xZIB$yRkNdDj$zVsj[",
+                "size": 1740845,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 7607908136501742000,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, animal in desert, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, animal in desert",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e2054de9-e1be-49cd-9068-3485a232625d/width=450/18847319.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UMBgSqI.MIS#^nM_RibbrGNZo|n%Xng2aKs.",
+            "type": "image",
+            "metadata": {
+                "hash": "UMBgSqI.MIS#^nM_RibbrGNZo|n%Xng2aKs.",
+                "size": 1798331,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 5608365253370564000,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, animal in forest, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, animal in forest",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/18ecaf99-3d22-43e0-91d7-576a3e28fa04/width=450/18847320.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UMBgSqI.MIS#^nM_RibbrGNZo|n%Xng2aKs.",
+            "type": "image",
+            "metadata": {
+                "hash": "UMBgSqI.MIS#^nM_RibbrGNZo|n%Xng2aKs.",
+                "size": 1798331,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 5608365253370564000,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, animal in forest, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, animal in forest",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ad8a8cb7-9880-4a95-a0db-9af9f569c3a4/width=450/18847321.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UDAL8[R;M0jE.mWGbqi^8zs.x@oM9vousptR",
+            "type": "image",
+            "metadata": {
+                "hash": "UDAL8[R;M0jE.mWGbqi^8zs.x@oM9vousptR",
+                "size": 1816646,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 5608365253370564000,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, animal in forest, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, animal in forest",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/bc124ebb-de4e-4a5d-870b-1425b6b76907/width=450/18847327.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UC9+4uMdQ8uP.TIVf+tS8wkWt+VZE1xVVsoM",
+            "type": "image",
+            "metadata": {
+                "hash": "UC9+4uMdQ8uP.TIVf+tS8wkWt+VZE1xVVsoM",
+                "size": 1777628,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 6655802131764487000,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, animal underwater, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, animal underwater",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c01f6d01-52fe-464d-b18b-fa35a7558f87/width=450/18847329.jpeg",
+            "nsfwLevel": 1,
+            "width": 1152,
+            "height": 896,
+            "hash": "UGD0rxE44V~9B?xYwIIq4Ws,%fIWQ.t7Xnbv",
+            "type": "image",
+            "metadata": {
+                "hash": "UGD0rxE44V~9B?xYwIIq4Ws,%fIWQ.t7Xnbv",
+                "size": 1813334,
+                "width": 1152,
+                "height": 896
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "Default (model)",
+                "Size": "1152x896",
+                "seed": 2629713636913491500,
+                "Model": "cyberrealisticPony_v40",
+                "steps": 30,
+                "hashes": {
+                    "model": "8e30e3a147",
+                    "lora:Alien_Landscapes": "b9a5364980"
+                },
+                "prompt": "alienlandscapeslora, ocean, crystal, Alien Landscape, ethereal bioluminescent plants, floating mountains, vibrant colors, surreal and otherworldly, intricate alien flora and fauna, mysterious atmosphere, score_9, score_8_up, score_7_up, alienlandscapeslora, ocean, crystal",
+                "Version": "Fooocus v2.4.3",
+                "sampler": "DPM++ 2M SDE Karras",
+                "cfgScale": 7,
+                "clipSkip": 2,
+                "Scheduler": "karras",
+                "Sharpness": "2",
+                "resources": [
+                    {
+                        "hash": "b9a5364980",
+                        "name": "Alien_Landscapes",
+                        "type": "lora"
+                    },
+                    {
+                        "hash": "8e30e3a147",
+                        "name": "cyberrealisticPony_v40",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "8e30e3a147",
+                "Raw prompt": {},
+                "Performance": "Speed",
+                "ADM Guidance": {},
+                "Lora weights": {
+                    "Alien_Landscapes": "1.0"
+                },
+                "negativePrompt": "mundane, lifeless, dull, earthly, score_5_up, score_4_up, score_3_up, monochrome, censored, username,text,watermark",
+                "Raw negative prompt": {}
+            }
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/626601",
+    "creator": {
+        "username": "zwaetschge",
+        "image": "https://lh3.googleusercontent.com/a/AGNmyxYgGrCd4x3swPFrB7UKcSwOcrGLtUziCdEgCUqULvw=s96-c"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1721650082,
+            "skeleton_file": false
+        }
+    }
+}

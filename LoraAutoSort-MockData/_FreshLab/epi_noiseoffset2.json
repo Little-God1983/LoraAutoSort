@@ -1,0 +1,13 @@
+{
+    "description": "<!--\nUPDATE: v2-pynoise released, read the Version changes/notes\n\nLORA based on the Noise Offset post for better contrast and darker images.\n\n\n\nWeighting depends often on Sampler, kept it in the low-middle range (Maybe i will put up a stronger one).\n\nCustom weighting is needed sometimes.\n\nWorks better if u use good keywords like: `dark studio, rim lighting, two tone lighting, dimly lit, low key` etc.\n\n\n\nDidn't like the color saturation and image compositions from the theovercomer8sContrastFix_sd15 so i made this one.\n\n\n\nUPDATE: v2 is slightly stronger in the whole composition\n\nUpdate 2: added safetensor file\n\n\n\nQuick Comparsion\n-->",
+    "notes": "<!--\nbigger and a bit better\n-->",
+    "sd version": "SD1",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1719471909,
+            "skeleton_file": false
+        }
+    }
+}

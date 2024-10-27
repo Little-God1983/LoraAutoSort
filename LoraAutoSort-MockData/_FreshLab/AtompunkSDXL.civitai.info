@@ -1,0 +1,503 @@
+{
+    "id": 630664,
+    "modelId": 26250,
+    "name": "SDXL V1",
+    "createdAt": "2024-07-08T22:40:01.869Z",
+    "updatedAt": "2024-07-08T22:42:38.362Z",
+    "status": "Published",
+    "publishedAt": "2024-07-08T22:42:38.357Z",
+    "trainedWords": [
+        "AtompunkSDXL"
+    ],
+    "trainingStatus": null,
+    "trainingDetails": null,
+    "baseModel": "SDXL 1.0",
+    "baseModelType": null,
+    "earlyAccessTimeFrame": 0,
+    "description": null,
+    "air": "urn:air:sdxl:embedding:civitai:26250@630664",
+    "stats": {
+        "downloadCount": 311,
+        "ratingCount": 0,
+        "rating": 0,
+        "thumbsUpCount": 72
+    },
+    "model": {
+        "name": "Atompunk Style",
+        "type": "TextualInversion",
+        "nsfw": false,
+        "poi": false,
+        "description": "<!--\nFollow me to make sure you see new poses and Nobodys when I post them. Things move fast on this site, it's easy to miss.\n\nEmbedding to get the Atompunk style aesthetic to any image quickly and easily. Images were generated using the legendary A to Zovya RPG Artist's Tools V2 model.\n\nMost models have a strong asian style to them, this model does a pretty good job of removing that, but you might find you need to put \"asian\" in the negative prompt to help it out.\n\n\n\nDo you have requests? I've been putting in many more hours lately with this. That's my problem, not yours. But if you'd like to tip me, buy me a beer. Beer encourages me to ignore work and make AI models instead. Tip and make a request. I'll give it a shot if I can. Here at Ko-Fi\n-->",
+        "tags": [
+            "futuristic",
+            "fallout",
+            "1950s",
+            "atompunk",
+            "scifi",
+            "textual inversion",
+            "style",
+            "retrofuturism",
+            "retro future",
+            "embedding",
+            "atomic heart",
+            "zstyle",
+            "post-war"
+        ],
+        "allowNoCredit": false,
+        "allowCommercialUse": [
+            "Image"
+        ],
+        "allowDerivatives": true,
+        "allowDifferentLicense": false
+    },
+    "files": [
+        {
+            "id": 545357,
+            "sizeKB": 56.1484375,
+            "name": "AtompunkSDXL.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-07-08T22:46:21.789Z",
+            "metadata": {
+                "format": "SafeTensor",
+                "size": null,
+                "fp": null
+            },
+            "hashes": {
+                "AutoV2": "2E1D4EE097",
+                "SHA256": "2E1D4EE097F91DFA5CC48C4A20FE35E20112B33B359A1B062D1D0A45987D4F9D",
+                "CRC32": "C6EB58BF",
+                "BLAKE3": "E0876AAB080E7A377910E342D62F0AE8B8594091159963D252E244ED801ADF5E",
+                "AutoV3": "563491FACA73"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/630664"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/afbd2a11-1974-4811-b9bf-a9cd98b8f52a/width=450/19019690.jpeg",
+            "nsfwLevel": 1,
+            "width": 1000,
+            "height": 1500,
+            "hash": "UVIXEXg4wIxZDiWAbvjZV?s9xGWq.mayV@kC",
+            "type": "image",
+            "metadata": {
+                "hash": "UVIXEXg4wIxZDiWAbvjZV?s9xGWq.mayV@kC",
+                "size": 2613238,
+                "width": 1000,
+                "height": 1500
+            },
+            "availability": "Public",
+            "meta": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/abf28ed6-dbd7-45a5-bbb5-b3f837294bb7/width=450/19019685.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "UBI4^OnA4:~B3o4;Bq-UU^X79$rDH{?FIXEN",
+            "type": "image",
+            "metadata": {
+                "hash": "UBI4^OnA4:~B3o4;Bq-UU^X79$rDH{?FIXEN",
+                "size": 1491285,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 1000582865,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "(a colorful action movie poster:1.2) of a 50s scifi woman wearing a polished aluminum suit standing in a alien deserted moon landscape with a jetpack, a glass dome helmet, perfect hair (AtompunkSDXL)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9d8178c3-64e9-4a61-9c57-f76146baada0/width=450/19019688.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "U9HLVX8w%0Rj1Ut,tl$$0VsSE2x[%5ZhIAR*",
+            "type": "image",
+            "metadata": {
+                "hash": "U9HLVX8w%0Rj1Ut,tl$$0VsSE2x[%5ZhIAR*",
+                "size": 1475127,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 3317161048,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "(movie poster:1.2) 50s style retro killer iron robot from_below from_side spaceship above explosions in the sky powerful dutch angle (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3a7c80a1-5b0f-4555-a74e-8963da69df51/width=450/19019682.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "U7G[[@%hQ8n3;I-p%~og00nlm+R*}sK6?Hv|",
+            "type": "image",
+            "metadata": {
+                "hash": "U7G[[@%hQ8n3;I-p%~og00nlm+R*}sK6?Hv|",
+                "size": 1348344,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 2801423038,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "family living on a large spacious space station orbiting earth carpeting large windows controls levers (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/cfaf623e-faeb-4bd3-9538-02241ef7c8dc/width=450/19019684.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "UEF6IMysITMcB=EMF3$fGHxZTen~Y6a0i^o}",
+            "type": "image",
+            "metadata": {
+                "hash": "UEF6IMysITMcB=EMF3$fGHxZTen~Y6a0i^o}",
+                "size": 1390717,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 2252177700,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "a close-up portrait painting of a 50s scifi woman wearing a polished aluminum suit standing in a desert moon landscape with a jetpack, a glass dome helmet, perfect hair\n(AtompunkSDXL)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field) (duplicate) (watermark) (label) (signature) (text) (cropped)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2836f64d-59d7-405a-a99c-c02986a65bd0/width=450/19019683.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "UBHn{LPEDN$w0o-;-.Z~00DNI9Os+ZNG~UM}",
+            "type": "image",
+            "metadata": {
+                "hash": "UBHn{LPEDN$w0o-;-.Z~00DNI9Os+ZNG~UM}",
+                "size": 1393800,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 1020078190,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "family living on a space station orbiting earth large dome windows controls levers (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/af9d11ee-d585-4b1e-a244-39905da420cf/width=450/19019686.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "UlF~q5NfbwxCG1SiWDn#RPkXaeslZ~RkbHfP",
+            "type": "image",
+            "metadata": {
+                "hash": "UlF~q5NfbwxCG1SiWDn#RPkXaeslZ~RkbHfP",
+                "size": 1271534,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 1282943415,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "painting of a large abandoned roadside gas station with a route 66 highway shield, with a rocket sign and scifi cars in the parking lot\n(AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "(photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field) (duplicate) (watermark) (label) (signature) (text) (cropped)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c1436d34-d6d0-4783-805c-bf1249c5707c/width=450/19019687.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "U8H2cfyXHqoNS*Vu~oxC00kV8{H?ryyE?aNZ",
+            "type": "image",
+            "metadata": {
+                "hash": "U8H2cfyXHqoNS*Vu~oxC00kV8{H?ryyE?aNZ",
+                "size": 1562024,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 1020078193,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "family living on a space station orbiting earth large dome windows controls levers (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9fafffac-c826-4cdb-8566-a8faabe9f669/width=450/19019689.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "U9J@K=?a:A%f_hxY9_IV05Qm0#v~},PU2Kbu",
+            "type": "image",
+            "metadata": {
+                "hash": "U9J@K=?a:A%f_hxY9_IV05Qm0#v~},PU2Kbu",
+                "size": 1360649,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 3317161047,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "(movie poster:1.2) 50s style retro killer iron robot from_below from_side spaceship above explosions in the sky powerful dutch angle (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f896dad7-d8f8-4604-8fba-9aa847aed7fb/width=450/19019691.jpeg",
+            "nsfwLevel": 1,
+            "width": 768,
+            "height": 1152,
+            "hash": "UBHezg?u4.qs*IVs-ox@00%Nsj9|:NT0NyV{",
+            "type": "image",
+            "metadata": {
+                "hash": "UBHezg?u4.qs*IVs-ox@00%Nsj9|:NT0NyV{",
+                "size": 1447868,
+                "width": 768,
+                "height": 1152
+            },
+            "availability": "Public",
+            "meta": {
+                "VAE": "sdxl_vae_0.9.safetensors",
+                "Size": "768x1152",
+                "seed": 2546103115,
+                "Model": "Cor-Epica_by-Zovya_V0",
+                "steps": 20,
+                "hashes": {
+                    "vae": "63aeecb90f",
+                    "model": "fcf7d472d9"
+                },
+                "prompt": "vectorstyle, family living on a large spacious space station orbiting earth carpeting large windows controls levers (AtompunkSDXL:1.5)",
+                "Version": "v1.9.3",
+                "sampler": "DPM++ 2S a",
+                "cfgScale": 7,
+                "TI hashes": {
+                    "AtompunkSDXL": "2e1d4ee097f9"
+                },
+                "resources": [
+                    {
+                        "hash": "fcf7d472d9",
+                        "name": "Cor-Epica_by-Zovya_V0",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "fcf7d472d9",
+                "Schedule type": "Karras",
+                "negativePrompt": "gun rifle (photo photography photograph realistic) (monochrome) (disfigured) (grain) (dark) (lowpoly) (CG) (3d) (blurry) (out-of-focus) (depth_of_field)",
+                "Downcast alphas_cumprod": "True"
+            }
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/630664",
+    "creator": {
+        "username": "Zovya",
+        "image": "https://avatars.githubusercontent.com/u/110301217?v=4"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1720796111,
+            "skeleton_file": false
+        }
+    }
+}

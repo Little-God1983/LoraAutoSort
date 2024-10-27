@@ -1,0 +1,12 @@
+{
+    "description": "<!--\nThis model was trained on 55 images of alien landscapes, partly generated dalle3 images.\n\nWorks well between 0.5 and 1 with 30-60 steps.\n-->",
+    "sd version": "Unknown",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.10",
+            "last_update": 1721650082,
+            "skeleton_file": false
+        }
+    }
+}

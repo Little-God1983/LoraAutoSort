@@ -1,0 +1,513 @@
+{
+    "id": 798521,
+    "modelId": 714022,
+    "name": "FLUX",
+    "createdAt": "2024-09-02T15:24:36.592Z",
+    "updatedAt": "2024-10-15T15:22:19.928Z",
+    "status": "Published",
+    "publishedAt": "2024-09-02T15:36:17.985Z",
+    "trainedWords": [
+        "ne0nfant4sy"
+    ],
+    "trainingStatus": null,
+    "trainingDetails": null,
+    "baseModel": "Flux.1 D",
+    "baseModelType": null,
+    "earlyAccessEndsAt": null,
+    "earlyAccessConfig": null,
+    "description": null,
+    "uploadType": "Created",
+    "air": "urn:air:flux1:lora:civitai:714022@798521",
+    "stats": {
+        "downloadCount": 1207,
+        "ratingCount": 0,
+        "rating": 0,
+        "thumbsUpCount": 203
+    },
+    "model": {
+        "name": "NeonFantasy style FLUX, PonyXL",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false,
+        "description": "<h2 id=\"update:-kyu5taxb2\">UPDATE:</h2><p>I made a new version with a larger dataset, It's still not really where I want it to be but I'll keep working on it. As always happy generating!</p><p></p><p>Also please don't reupload my models, someone posted a couple of them on moescape and I can't claim them or anything. I'm doing this all out of my pocket and I mostly make my own images and it takes a lot of time so every bit of support helps.</p><p></p><p></p><p>This model produces a mix of dark fantasy and 90s and early 2000s anime style but made to have clean lines like modern anime.</p><p></p><p>I made another spinoff of this model with a different style you can find it here:<a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/827126/neonfantasynocturne-style-ponyxl\">https://civitai.com/models/827126/neonfantasynocturne-style-ponyxl</a></p><p></p><p><strong><span style=\"color:rgb(250, 176, 5)\">If you want to support me financially or request a custom LoRa you can do so here:</span></strong> <a target=\"_blank\" rel=\"ugc\" href=\"https://ko-fi.com/n3o_wav3\">KoFi</a></p><p></p><h1 id=\"ponyxl-q1tpgp0xi\"><strong><span style=\"color:rgb(230, 73, 128)\">PonyXL</span></strong></h1><h2 id=\"usage:-vwp1n4wfl\">Usage:</h2><p><span style=\"color:rgb(250, 82, 82)\">Trigger word: </span><strong><span style=\"color:rgb(250, 82, 82)\">ne0nfant4sy</span></strong></p><p><span style=\"color:rgb(18, 184, 134)\">Strength: I use 1 but feel free to experiment.</span></p><p><span style=\"color:rgb(18, 184, 134)\">I recommend using </span><strong><span style=\"color:rgb(18, 184, 134)\">Prefect Pony XL v3, T-ponynai3 </span></strong><span style=\"color:rgb(18, 184, 134)\">and</span><strong><span style=\"color:rgb(18, 184, 134)\"> Base PonyXL</span></strong></p><p><img src=\"https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a57995b9-dbec-41f4-a6fc-162e917f8c75/width=525/a57995b9-dbec-41f4-a6fc-162e917f8c75.jpeg\" /></p><h1 id=\"flux-et2iucsvh\"><strong><span style=\"color:rgb(64, 192, 87)\">FLUX</span></strong></h1><h2 id=\"usage:-987mymnfe\">Usage:</h2><p><span style=\"color:rgb(250, 82, 82)\">Trigger word: </span><strong><span style=\"color:rgb(250, 82, 82)\">ne0nfant4sy</span></strong></p><p></p><p>Strength: I found that 0.8 works best in my testings but feel free to experiment 1 is also good but maybe a bit less stable.</p><p></p><p>You can use PonyXL prompting as well as the usual FLUX prompting.</p>",
+        "tags": [
+            "anime",
+            "mythical",
+            "dark fantasy",
+            "style",
+            "fantasy",
+            "monster",
+            "landscape",
+            "retro anime",
+            "creature",
+            "90s anime"
+        ],
+        "allowNoCredit": false,
+        "allowCommercialUse": [
+            "RentCivit"
+        ],
+        "allowDerivatives": false,
+        "allowDifferentLicense": true
+    },
+    "files": [
+        {
+            "id": 712092,
+            "sizeKB": 598403.546875,
+            "name": "NeonFantasyFLUX.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-09-02T23:17:38.327Z",
+            "metadata": {
+                "format": "SafeTensor",
+                "size": null,
+                "fp": null
+            },
+            "hashes": {
+                "AutoV1": "D3E11918",
+                "AutoV2": "BE2D23AB3D",
+                "SHA256": "BE2D23AB3D047337031B0B588E242CA20043F6757D0FAC7A175160DE1E18139E",
+                "CRC32": "01212142",
+                "BLAKE3": "11A3F388F471B41FCEB5D7B4D7D268C68474031D882C4BEF22219D308CBEC67E",
+                "AutoV3": "D726639B15C0"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/798521"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d0263e55-ee96-4efd-9a0b-ba2530bf00f8/width=450/27405835.jpeg",
+            "nsfwLevel": 1,
+            "width": 1536,
+            "height": 1536,
+            "hash": "UD7W20HXpeWV4=yEa$jD-oS*eln3PXn3n2Nf",
+            "type": "image",
+            "metadata": {
+                "hash": "UD7W20HXpeWV4=yEa$jD-oS*eln3PXn3n2Nf",
+                "size": 3169027,
+                "width": 1536,
+                "height": 1536
+            },
+            "meta": {
+                "Size": "1024x1024",
+                "seed": 1861376444,
+                "Model": "flux_dev",
+                "steps": 20,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A colossal, dragon-like creature resembling a cat with one golden eye and one blue eye dominates the scene. It has large, bat-like wings and sharp spikes protruding from its body. Below it, a small, cloaked figure stands on a branch, facing the enormous creature with a sword in hand. The sky is bright blue with scattered clouds.\n <lora:NeonFantasyFLUX:1>, ne0nfant4sy",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 1
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Hires steps": "10",
+                "Hires upscale": "1.5",
+                "Schedule type": "Simple",
+                "Hires upscaler": "4x-AnimeSharp",
+                "Denoising strength": "0.4",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/568107ca-5b78-43bc-a6ff-c39ea4a5f0ac/width=450/27405293.jpeg",
+            "nsfwLevel": 1,
+            "width": 2358,
+            "height": 1326,
+            "hash": "UDCiHx%#^*Jopw%MxuoM~BS$xta}-Usnt7Sh",
+            "type": "image",
+            "metadata": {
+                "hash": "UDCiHx%#^*Jopw%MxuoM~BS$xta}-Usnt7Sh",
+                "size": 3794281,
+                "width": 2358,
+                "height": 1326
+            },
+            "meta": null,
+            "availability": "Public",
+            "hasMeta": false,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6c646a65-99a8-497c-94f3-84b408e45b91/width=450/27405294.jpeg",
+            "nsfwLevel": 1,
+            "width": 3576,
+            "height": 2012,
+            "hash": "U6C=^.%e%d9b~of+xZ$%-AE1$ikX9dr=nlkX",
+            "type": "image",
+            "metadata": {
+                "hash": "U6C=^.%e%d9b~of+xZ$%-AE1$ikX9dr=nlkX",
+                "size": 8713021,
+                "width": 3576,
+                "height": 2012
+            },
+            "meta": null,
+            "availability": "Public",
+            "hasMeta": false,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6ca0a88b-889b-40e0-ac9a-65394a5bed8c/width=450/27405295.jpeg",
+            "nsfwLevel": 1,
+            "width": 3576,
+            "height": 2012,
+            "hash": "USMPm#xt5pjdpyt7S$bIRWe=jckW=DayxDX9",
+            "type": "image",
+            "metadata": {
+                "hash": "USMPm#xt5pjdpyt7S$bIRWe=jckW=DayxDX9",
+                "size": 7780376,
+                "width": 3576,
+                "height": 2012
+            },
+            "meta": null,
+            "availability": "Public",
+            "hasMeta": false,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f65af246-c749-4a92-a83d-4beb71e842df/width=450/27405400.jpeg",
+            "nsfwLevel": 1,
+            "width": 896,
+            "height": 1152,
+            "hash": "UDB.WISh=yj@1NNcEixE}rsmn~s.9_R*RkR,",
+            "type": "image",
+            "metadata": {
+                "hash": "UDB.WISh=yj@1NNcEixE}rsmn~s.9_R*RkR,",
+                "size": 1319252,
+                "width": 896,
+                "height": 1152
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 1165508800,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "Ironclad Giant, A massive humanoid creature encased in thick, rusted iron armor. Its eyes burn with a fiery glow, and it wields a gigantic, jagged sword that drips with molten metal. The Ironclad Giant is an unstoppable force of destruction, crushing everything in its path.,\n<lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Schedule type": "Simple",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/88bcf857-ee49-4062-bfa5-1351f3a98d94/width=450/27405197.jpeg",
+            "nsfwLevel": 1,
+            "width": 1344,
+            "height": 1728,
+            "hash": "UoFh^pE1Rkt7~pM|WBj[-:WCWVayxtoJfPay",
+            "type": "image",
+            "metadata": {
+                "hash": "UoFh^pE1Rkt7~pM|WBj[-:WCWVayxtoJfPay",
+                "size": 2986759,
+                "width": 1344,
+                "height": 1728
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 782825161,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A group of warriors standing on the edge of a cliff, looking out over a battlefield where two massive armies clash below.,\n <lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Hires steps": "10",
+                "Hires upscale": "1.5",
+                "Schedule type": "Simple",
+                "Hires upscaler": "4x-AnimeSharp",
+                "Denoising strength": "0.38",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f9f731ef-9a35-4fde-99c9-2071a024aaad/width=450/27405800.jpeg",
+            "nsfwLevel": 1,
+            "width": 896,
+            "height": 1152,
+            "hash": "UCCi8Ds.9ws.04R+j@a|,:oeNHfk}=azxYoL",
+            "type": "image",
+            "metadata": {
+                "hash": "UCCi8Ds.9ws.04R+j@a|,:oeNHfk}=azxYoL",
+                "size": 1583755,
+                "width": 896,
+                "height": 1152
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 295003167,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A young sorcerer standing in the middle of a magic circle, with runes glowing on the ground and magical energy swirling around him.,\n <lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Schedule type": "Simple",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/24bbeeda-b0b8-480c-9f71-3ba740f303d3/width=450/27405802.jpeg",
+            "nsfwLevel": 1,
+            "width": 1344,
+            "height": 1728,
+            "hash": "U87eJEM^AKkrGKtS-WbcPDRO#%xC=vtS9tW?",
+            "type": "image",
+            "metadata": {
+                "hash": "U87eJEM^AKkrGKtS-WbcPDRO#%xC=vtS9tW?",
+                "size": 2831662,
+                "width": 1344,
+                "height": 1728
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 3823309210,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A snowy mountain peak where a group of adventurers is huddled around a campfire, with a glowing entrance to an ancient cave nearby.,\n <lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Hires steps": "10",
+                "Hires prompt": {
+                    "NeonFantasyFLUX": "0.8> ne0nfant4sy"
+                },
+                "Hires upscale": "1.5",
+                "Schedule type": "Simple",
+                "Hires upscaler": "4x-AnimeSharp",
+                "Denoising strength": "0.38",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/943e5b86-63d7-4f2c-aaf1-f46825776a3b/width=450/27405803.jpeg",
+            "nsfwLevel": 1,
+            "width": 1344,
+            "height": 1728,
+            "hash": "U48qBD564o-o3Z-B#8JUITNdRQ%1veoLE3bb",
+            "type": "image",
+            "metadata": {
+                "hash": "U48qBD564o-o3Z-B#8JUITNdRQ%1veoLE3bb",
+                "size": 3326492,
+                "width": 1344,
+                "height": 1728
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 2774155979,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A queen in a flowing gown of gold and silver stands on a balcony overlooking a vast, glittering city. The city is built on a series of interconnected floating islands, each one illuminated by glowing crystals. Below her, the people bustle about, unaware of the dark storm brewing on the horizon.,\n <lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Hires steps": "10",
+                "Hires prompt": {
+                    "NeonFantasyFLUX": "0.8> ne0nfant4sy"
+                },
+                "Hires upscale": "1.5",
+                "Schedule type": "Simple",
+                "Hires upscaler": "4x-AnimeSharp",
+                "Denoising strength": "0.38",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/43c520db-3b94-4ace-a3cb-6e5c133733b6/width=450/27405805.jpeg",
+            "nsfwLevel": 1,
+            "width": 1344,
+            "height": 1728,
+            "hash": "UAGZ5A100~}q11w^}qI=0~5,=dJ8Fc]-9^t5",
+            "type": "image",
+            "metadata": {
+                "hash": "UAGZ5A100~}q11w^}qI=0~5,=dJ8Fc]-9^t5",
+                "size": 2271687,
+                "width": 1344,
+                "height": 1728
+            },
+            "meta": {
+                "Size": "896x1152",
+                "seed": 782825162,
+                "Model": "flux_dev",
+                "steps": 30,
+                "hashes": {
+                    "model": "06f96f89f6",
+                    "lora:NeonFantasyFLUX": "d726639b15c0"
+                },
+                "prompt": "A phoenix soaring through a sky ablaze with the colors of dawn, leaving a trail of fire and sparks in its wake.,\n <lora:NeonFantasyFLUX:0.8> ne0nfant4sy,",
+                "Version": "f2.0.1v1.10.1-previous-463-g32cb4a1e",
+                "sampler": "Euler",
+                "cfgScale": 1,
+                "resources": [
+                    {
+                        "hash": "d726639b15c0",
+                        "name": "NeonFantasyFLUX",
+                        "type": "lora",
+                        "weight": 0.8
+                    },
+                    {
+                        "hash": "06f96f89f6",
+                        "name": "flux_dev",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "06f96f89f6",
+                "Hires steps": "10",
+                "Hires prompt": {
+                    "NeonFantasyFLUX": "0.8> ne0nfant4sy"
+                },
+                "Hires upscale": "1.5",
+                "Schedule type": "Simple",
+                "Hires upscaler": "4x-AnimeSharp",
+                "Denoising strength": "0.38",
+                "Distilled CFG Scale": "3",
+                "Diffusion in Low Bits": "Automatic (fp16 LoRA)"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/798521",
+    "creator": {
+        "username": "NeoWave",
+        "image": "https://lh3.googleusercontent.com/a/AEdFTp7tFRtvOwH0QV6Z4FTMEXo8YgvXN2dqJdg1XIMBlA=s96-c"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.11",
+            "last_update": 1730049088,
+            "skeleton_file": false
+        }
+    }
+}

@@ -84,12 +84,19 @@ namespace UI.LoraSort
         {
             if(IsPathTheSame())
             {
-                MessageBox.Show("Select a different target than base path", "Base cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                return;
+            }
+            ControllerService controllerService = new ControllerService();
+            
+            if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
+            {
+                MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
                 return;
             }
 
             rtbLog.Document.Blocks.Clear(); // Clear previous entries
-            ControllerService controllerService = new ControllerService();
+            
             bool moveOperation = false;
             if (!(bool)radioCopy.IsChecked)
             {

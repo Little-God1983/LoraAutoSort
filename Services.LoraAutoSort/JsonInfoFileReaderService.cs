@@ -29,7 +29,7 @@ namespace JsonFileReader
         private CivitaiBaseCategories GetMatchingCategory(ModelClass model)
         {
             // Try loading tags from the ".json" file.
-            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".json"));
+            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".civitai.info"));
 
             // If the category is still UNKNOWN, attempt to load additional tags from ".cm-info.json".
             uniqueTags.UnionWith(LoadTagsFromFile(model, ".cm-info.json"));
@@ -40,10 +40,10 @@ namespace JsonFileReader
             return GetCategoryFromTags(model.Tags);
         }
 
-        // Helper method to load tags from a specified file extension.
-        private HashSet<string> LoadTagsFromFile(ModelClass model, string extension)
+        // Helper method to load tags from a specified file ending.
+        private HashSet<string> LoadTagsFromFile(ModelClass model, string ending)
         {
-            var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == extension);
+            var file = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(ending));
             if (file == null)
             {
                 return new HashSet<string>();

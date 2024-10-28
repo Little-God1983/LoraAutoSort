@@ -19,9 +19,10 @@ namespace JsonFileReader
             modelData = GroupFilesByPrefix(jsonFilePath);
             foreach (ModelClass model in modelData)
             {
+                if(model.SkipFile == true) { continue; }
                 model.CivitaiCategory = GetMatchingCategory(model);
-                string modelName = GetBaseModelName(model);
-                model.DiffusionBaseModel = modelName == "SDXL" ? "SDXL 1.0":modelName;
+                string baseModelName = GetBaseModelName(model);
+                model.DiffusionBaseModel = baseModelName == "SDXL" ? "SDXL 1.0":baseModelName;
 
             }
             return modelData;
@@ -120,12 +121,16 @@ namespace JsonFileReader
 
             foreach (var group in fileGroups)
             {
-                modelClasses.Add(new ModelClass
+                ModelClass model = new ModelClass
                 {
-                    DiffusionBaseModel = group.Key,
+                    ModelName = group.Key,
                     AssociatedFilesInfo = group.Value,
                     CivitaiCategory = CivitaiBaseCategories.UNKNOWN // Set your desired category here
-                });
+                };
+
+                //If <= 1 That means there is no MetaData so the file will be skipped
+                if (model.AssociatedFilesInfo.Count <= 1) { model.SkipFile = true; }
+                modelClasses.Add(model);
             }
 
             return modelClasses;

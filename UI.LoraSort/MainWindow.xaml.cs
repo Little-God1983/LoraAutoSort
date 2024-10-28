@@ -58,27 +58,29 @@ namespace UI.LoraSort
 
         private void AppendLog(string message, bool isError = false)
         {
-            // Dispatcher.Invoke is used to ensure thread safety when accessing the UI thread from another thread
             Dispatcher.Invoke(() =>
             {
-                TextRange rangeOfText = new TextRange(rtbLog.Document.ContentEnd, rtbLog.Document.ContentEnd);
-                rangeOfText.Text = message + Environment.NewLine;
+                // Create a new paragraph for each log entry
+                Paragraph paragraph = new Paragraph(new Run(message));
 
+                // Apply color based on error status
                 if (isError)
                 {
-                    // Set the foreground color to red for errors
-                    rangeOfText.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Red);
+                    paragraph.Foreground = Brushes.Red;
                 }
                 else
                 {
-                    // Set the foreground color to black for normal messages
-                    rangeOfText.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+                    paragraph.Foreground = Brushes.Black;
                 }
+
+                // Add the paragraph to the RichTextBox
+                rtbLog.Document.Blocks.Add(paragraph);
 
                 // Scroll to the end of the RichTextBox to ensure the last entry is visible
                 rtbLog.ScrollToEnd();
             });
         }
+
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {

@@ -34,6 +34,11 @@ namespace JsonFileReader
 
             foreach (var model in models)
             {
+                if(model.SkipFile)
+                {
+                    results.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' has no metaData => File is skipped." });
+                    continue;
+                }
                 string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
                 results.Add(EnsureFolderExists(modelDirectory));
 
@@ -51,25 +56,7 @@ namespace JsonFileReader
                         results.Add(new OperationResult { IsSuccessful = false, Message = $"Error copying file '{modelFile.Name}': {ex.Message}" });
                     }
                 }
-
-                //foreach (var extension in extensions)
-                //{
-                //    string fileName = ChangeEnding(model.fileInfo.Name, extension);
-                //    source = Path.Combine(model.fileInfo.DirectoryName, fileName);
-                //    target = Path.Combine(modelDirectory, fileName);
-
-                //    try
-                //    {
-                //        CopyMove(overrideExistingFiles, source, target, moveInsteadOfCopy);
-                //        results.Add(new OperationResult { IsSuccessful = true, Message = $"File '{fileName}' copied to '{modelDirectory}'." });
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        results.Add(new OperationResult { IsSuccessful = false, Message = $"Error copying file '{model.fileInfo.Name}': {ex.Message}" });
-                //    }
-                //}
             }
-
             return results;
         }
 

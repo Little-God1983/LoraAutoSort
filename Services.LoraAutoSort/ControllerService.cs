@@ -1,4 +1,9 @@
-﻿using JsonFileReader;
+﻿/*
+ * Licensed under the terms found in the LICENSE file in the root directory.
+ * For non-commercial use only. See LICENSE for details.
+ */
+
+using JsonFileReader;
 using Services.LoraAutoSort.Classes;
 
 namespace Services.LoraAutoSort

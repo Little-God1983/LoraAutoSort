@@ -1,4 +1,9 @@
-﻿namespace Services.LoraAutoSort.Helper
+﻿/*
+ * Licensed under the terms found in the LICENSE file in the root directory.
+ * For non-commercial use only. See LICENSE for details.
+ */
+
+namespace Services.LoraAutoSort.Helper
 {
     internal static class StaticFileTypes
     {

@@ -1,4 +1,9 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿/*
+ * Licensed under the terms found in the LICENSE file in the root directory.
+ * For non-commercial use only. See LICENSE for details.
+ */
+
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
 using System.IO;

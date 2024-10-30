@@ -6,10 +6,12 @@
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
+using UI.LoraSort.ViewModels;
 
 namespace UI.LoraSort
 {
@@ -18,11 +20,13 @@ namespace UI.LoraSort
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        public MainViewModel ViewModel { get; set; }
         private void SelectBasePath(object sender, RoutedEventArgs e)
         {
             using (var dialog = new CommonOpenFileDialog())
@@ -141,5 +145,35 @@ namespace UI.LoraSort
                 StringComparison.InvariantCultureIgnoreCase
             ) == 0;
         }
+
+        public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; } = new ObservableCollection<CustomTagMap>();
+        public void MoveMappingUp(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            if (index > 0)
+            {
+                CustomTagMappings.Move(index, index - 1);
+                UpdatePriorities();
+            }
+        }
+
+        public void MoveMappingDown(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            if (index < CustomTagMappings.Count - 1)
+            {
+                CustomTagMappings.Move(index, index + 1);
+                UpdatePriorities();
+            }
+        }
+
+        private void UpdatePriorities()
+        {
+            for (int i = 0; i < CustomTagMappings.Count; i++)
+            {
+                CustomTagMappings[i].Priority = i;
+            }
+        }
+
     }
 }

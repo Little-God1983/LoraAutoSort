@@ -9,5 +9,8 @@ namespace Services.LoraAutoSort.Classes
     {
         public List<string> LookForTag { get; set; } = new List<string>();
         public string MapToFolder { get; set; }
+        public int Priority { get; set; }
+
     }
+
 }

@@ -1,64 +1,111 @@
-﻿<!--
- * Licensed under the terms found in the LICENSE file in the root directory.
- * For non-commercial use only. See LICENSE for details.
- -->
-
-<Window x:Class="UI.LoraSort.MainWindow"
+﻿<Window x:Class="UI.LoraSort.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UI.LoraSort"
+        xmlns:local="clr-namespace:UI.LoraSort.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
-    <DockPanel>
-        <!-- Top panel for input controls -->
-        <StackPanel DockPanel.Dock="Top" Margin="10">
-            <TextBlock Text="No Warranty: This software is provided 'as is', without any warranty of any kind, express or implied."
-                   Foreground="Red"
-                   FontWeight="Bold"
-                   TextWrapping="Wrap"
-                   Margin="10" />
-            
-            <!-- LoRA Source Path Group -->
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                <StackPanel>
-                    <Label Content="Your LoRA Source Path (e.g.:&quot;D:\stable-diffusion-webui\models\Lora&quot;):"/>
-                    <Button Content="Select LoRA Path..." Click="SelectBasePath"/>
-                    <TextBox x:Name="txtBasePath" IsReadOnly="True" Margin="0,5"/>
-                </StackPanel>
-            </Border>
+        Title="MainWindow" Height="800" Width="1000"
+        MinHeight="800" MinWidth="1000">
 
-            <!-- Operation Type Group -->
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                <StackPanel>
-                    <Label Content="Operation Type:" FontWeight="Bold" FontSize="14"/>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton x:Name="radioCopy" Content="Copy Files (Keeps originals)" IsChecked="True" GroupName="OperationType" FontSize="16"/>
-                        <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
-                        <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <!-- Use a Grid layout instead of DockPanel -->
+    <Grid>
+        <!-- Define rows and columns -->
+        <Grid.RowDefinitions>
+            <!-- Adjusted row heights -->
+            <RowDefinition Height="3*" />
+            <!-- Main content (75% height) -->
+            <!-- Optional GridSplitter row -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <!-- Logs at the bottom (25% height) -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <!-- Left side -->
+            <ColumnDefinition Width="*" />
+            <!-- Right side -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Left side: Controls -->
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- All your existing controls go here -->
+                <TextBlock Text="No Warranty: This software is provided 'as is', without any warranty of any kind, express or implied."
+                           Foreground="Red"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"
+                           Margin="10" />
+
+                <!-- LoRA Source Path Group -->
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
+                    <StackPanel>
+                        <Label Content="Your LoRA Source Path (e.g.:&quot;D:\stable-diffusion-webui\models\Lora&quot;):"/>
+                        <Button Content="Select LoRA Path..." Click="SelectBasePath"/>
+                        <TextBox x:Name="txtBasePath" IsReadOnly="True" Margin="0,5"/>
                     </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
 
-            <!-- LoRA Target Path Group -->
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                <StackPanel>
-                    <Label Content="LoRA Target Path:"/>
-                    <Button Content="Select Target Path..." Click="SelectTargetPath"/>
-                    <TextBox x:Name="txtTargetPath" Margin="0,5" IsReadOnly="True"/>
+                <!-- Operation Type Group -->
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
+                    <StackPanel>
+                        <Label Content="Operation Type:" FontWeight="Bold" FontSize="14"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton x:Name="radioCopy" Content="Copy Files (Keeps originals)" IsChecked="True" GroupName="OperationType" FontSize="16"/>
+                            <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
+                            <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
 
-                </StackPanel>
-            </Border>
-            <Border>
-                <Button x:Name="btnGo" Height="50" Content="Go" Margin="0,10" Click="btnGo_Click"/>
-            </Border>
-        </StackPanel>
-        <Border>
+                <!-- LoRA Target Path Group -->
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
+                    <StackPanel>
+                        <Label Content="LoRA Target Path:"/>
+                        <Button Content="Select Target Path..." Click="SelectTargetPath"/>
+                        <TextBox x:Name="txtTargetPath" Margin="0,5" IsReadOnly="True"/>
+                    </StackPanel>
+                </Border>
+                <Border>
+                    <Button x:Name="btnGo" Height="50" Content="Go" Margin="0,10" Click="btnGo_Click"/>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Right side: ListView -->
+        <ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CustomTagMappings}" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Tags" DisplayMemberBinding="{Binding LookForTag}" />
+                    <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
+                    <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Up" Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                                    <Button Content="Down" Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Optional GridSplitter -->
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray"/>
+
+        <!-- Logs at the bottom, spanning both columns -->
+        <Border Grid.Row="2" Grid.ColumnSpan="2">
             <!-- RichTextBox to display logs -->
-            <RichTextBox x:Name="rtbLog" DockPanel.Dock="Bottom" Margin="10"
-                 IsReadOnly="true" VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto">
+            <RichTextBox x:Name="rtbLog" Margin="10"
+                         IsReadOnly="true" VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>
@@ -67,6 +114,5 @@
                 <FlowDocument />
             </RichTextBox>
         </Border>
-    </DockPanel>
-
+    </Grid>
 </Window>

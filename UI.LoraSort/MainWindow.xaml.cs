@@ -93,13 +93,19 @@ namespace UI.LoraSort
 
         private void btnGo_Click(object sender, RoutedEventArgs e)
         {
-            if(IsPathTheSame())
+            if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
+            {
+                MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                return;
+            }
+
+            if (IsPathTheSame())
             {
                 MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
                 return;
             }
             ControllerService controllerService = new ControllerService();
-            
+
             if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
             {
                 MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
@@ -107,7 +113,7 @@ namespace UI.LoraSort
             }
 
             rtbLog.Document.Blocks.Clear(); // Clear previous entries
-            
+
             bool moveOperation = false;
             if (!(bool)radioCopy.IsChecked)
             {

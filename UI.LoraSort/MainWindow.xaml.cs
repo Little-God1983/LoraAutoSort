@@ -221,33 +221,23 @@ namespace UI.LoraSort
         }
 
         public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; } = new ObservableCollection<CustomTagMap>();
-        //public void MoveMappingUp(CustomTagMap map)
-        //{
-        //    int index = CustomTagMappings.IndexOf(map);
-        //    if (index > 0)
-        //    {
-        //        CustomTagMappings.Move(index, index - 1);
-        //        UpdatePriorities();
-        //    }
-        //}
-
-        //public void MoveMappingDown(CustomTagMap map)
-        //{
-        //    int index = CustomTagMappings.IndexOf(map);
-        //    if (index < CustomTagMappings.Count - 1)
-        //    {
-        //        CustomTagMappings.Move(index, index + 1);
-        //        UpdatePriorities();
-        //    }
-        //}
-
-        //private void UpdatePriorities()
-        //{
-        //    for (int i = 0; i < CustomTagMappings.Count; i++)
-        //    {
-        //        CustomTagMappings[i].Priority = i;
-        //    }
-        //}
-
+        private void btnEditMapping_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the mapping from the Button's CommandParameter.
+            if (((FrameworkElement)sender).DataContext is CustomTagMap mapping)
+            {
+                EditMappingWindow editWindow = new EditMappingWindow(mapping)
+                {
+                    Owner = this
+                };
+                bool? result = editWindow.ShowDialog();
+                if (result == true)
+                {
+                    // If your CustomTagMap implements INotifyPropertyChanged,
+                    // the ListView will update automatically. Otherwise, force a refresh:
+                    lvMappings.Items.Refresh();
+                }
+            }
+        }
     }
 }

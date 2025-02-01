@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI.LoraSort.ViewModels"
+        xmlns:conv="clr-namespace:UI.LoraSort"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1000"
         MinHeight="800" MinWidth="1000">
+
+    <Window.Resources>
+        <!-- Use the converter from the 'conv' namespace -->
+        <conv:TagsDisplayConverter x:Key="TagsDisplayConverter" />
+    </Window.Resources>
 
     <Window.DataContext>
         <local:MainViewModel />
@@ -85,22 +91,34 @@
             </Grid.RowDefinitions>
 
             <!-- ListView with a name for code access -->
+            <!-- ListView with a name for code access -->
             <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Tags" DisplayMemberBinding="{Binding LookForTag}" />
+                        <!-- Use a CellTemplate for the Tags column with our converter -->
+                        <GridViewColumn Header="Tags">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LookForTag, Converter={StaticResource TagsDisplayConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
                         <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
                         <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
-                        <GridViewColumn>
+                        <!-- Actions column: Up, Down, and Edit -->
+                        <GridViewColumn Header="Actions">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="Up" 
                                               Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                              CommandParameter="{Binding}"/>
+                                              CommandParameter="{Binding}" />
                                         <Button Content="Down" 
                                               Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                              CommandParameter="{Binding}"/>
+                                              CommandParameter="{Binding}" Margin="5,0,0,0" />
+                                        <Button Content="Edit" Click="btnEditMapping_Click" 
+                                              CommandParameter="{Binding}" Margin="5,0,0,0"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

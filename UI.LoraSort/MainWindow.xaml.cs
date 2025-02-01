@@ -25,7 +25,75 @@ namespace UI.LoraSort
         public MainWindow()
         {
             InitializeComponent();
+            // Optionally set the DataContext to this if you plan to bind CustomTagMappings directly.
+            // Otherwise, add CustomTagMappings to your MainViewModel.
+            this.DataContext = this;
         }
+        /// <summary>
+        /// Opens the NewMappingWindow to create a new mapping.
+        /// </summary>
+        private void btnAddMapping_Click(object sender, RoutedEventArgs e)
+        {
+            NewMappingWindow newMappingWindow = new NewMappingWindow();
+            bool? result = newMappingWindow.ShowDialog();
+
+            if (result == true && newMappingWindow.CreatedMapping != null)
+            {
+                // Add the new mapping to your collection.
+                CustomTagMappings.Add(newMappingWindow.CreatedMapping);
+                // Optionally, you can update priorities here.
+                UpdatePriorities();
+            }
+        }
+        /// <summary>
+        /// Deletes the selected mapping from the ListView.
+        /// </summary>
+        private void btnDeleteMapping_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvMappings.SelectedItem is CustomTagMap mapping)
+            {
+                if (MessageBox.Show("Are you sure you want to delete the selected mapping?",
+                                    "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    CustomTagMappings.Remove(mapping);
+                    UpdatePriorities();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a mapping to delete.", "No Mapping Selected", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        // (Existing methods MoveMappingUp, MoveMappingDown, UpdatePriorities, etc.)
+        public void MoveMappingUp(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            if (index > 0)
+            {
+                CustomTagMappings.Move(index, index - 1);
+                UpdatePriorities();
+            }
+        }
+
+        public void MoveMappingDown(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            if (index < CustomTagMappings.Count - 1)
+            {
+                CustomTagMappings.Move(index, index + 1);
+                UpdatePriorities();
+            }
+        }
+
+        private void UpdatePriorities()
+        {
+            for (int i = 0; i < CustomTagMappings.Count; i++)
+            {
+                CustomTagMappings[i].Priority = i;
+            }
+        }
+
         public MainViewModel ViewModel { get; set; }
         private void SelectBasePath(object sender, RoutedEventArgs e)
         {
@@ -153,33 +221,33 @@ namespace UI.LoraSort
         }
 
         public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; } = new ObservableCollection<CustomTagMap>();
-        public void MoveMappingUp(CustomTagMap map)
-        {
-            int index = CustomTagMappings.IndexOf(map);
-            if (index > 0)
-            {
-                CustomTagMappings.Move(index, index - 1);
-                UpdatePriorities();
-            }
-        }
+        //public void MoveMappingUp(CustomTagMap map)
+        //{
+        //    int index = CustomTagMappings.IndexOf(map);
+        //    if (index > 0)
+        //    {
+        //        CustomTagMappings.Move(index, index - 1);
+        //        UpdatePriorities();
+        //    }
+        //}
 
-        public void MoveMappingDown(CustomTagMap map)
-        {
-            int index = CustomTagMappings.IndexOf(map);
-            if (index < CustomTagMappings.Count - 1)
-            {
-                CustomTagMappings.Move(index, index + 1);
-                UpdatePriorities();
-            }
-        }
+        //public void MoveMappingDown(CustomTagMap map)
+        //{
+        //    int index = CustomTagMappings.IndexOf(map);
+        //    if (index < CustomTagMappings.Count - 1)
+        //    {
+        //        CustomTagMappings.Move(index, index + 1);
+        //        UpdatePriorities();
+        //    }
+        //}
 
-        private void UpdatePriorities()
-        {
-            for (int i = 0; i < CustomTagMappings.Count; i++)
-            {
-                CustomTagMappings[i].Priority = i;
-            }
-        }
+        //private void UpdatePriorities()
+        //{
+        //    for (int i = 0; i < CustomTagMappings.Count; i++)
+        //    {
+        //        CustomTagMappings[i].Priority = i;
+        //    }
+        //}
 
     }
 }

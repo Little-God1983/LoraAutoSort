@@ -12,34 +12,32 @@
         <local:MainViewModel />
     </Window.DataContext>
 
-    <!-- Use a Grid layout instead of DockPanel -->
+    <!-- Main Grid with three rows and two columns -->
     <Grid>
-        <!-- Define rows and columns -->
         <Grid.RowDefinitions>
-            <!-- Adjusted row heights -->
+            <!-- Row 0: Main content -->
             <RowDefinition Height="3*" />
-            <!-- Main content (75% height) -->
-            <!-- Optional GridSplitter row -->
+            <!-- Row 1: GridSplitter -->
             <RowDefinition Height="Auto" />
+            <!-- Row 2: Logs -->
             <RowDefinition Height="1*" />
-            <!-- Logs at the bottom (25% height) -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
             <!-- Left side -->
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
             <!-- Right side -->
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Left side: Controls -->
         <ScrollViewer Grid.Row="0" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <!-- All your existing controls go here -->
+                <!-- Existing controls here -->
                 <TextBlock Text="No Warranty: This software is provided 'as is', without any warranty of any kind, express or implied."
-                           Foreground="Red"
-                           FontWeight="Bold"
-                           TextWrapping="Wrap"
-                           Margin="10" />
+                         Foreground="Red"
+                         FontWeight="Bold"
+                         TextWrapping="Wrap"
+                         Margin="10" />
 
                 <!-- LoRA Source Path Group -->
                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
@@ -70,42 +68,62 @@
                         <TextBox x:Name="txtTargetPath" Margin="0,5" IsReadOnly="True"/>
                     </StackPanel>
                 </Border>
+
                 <Border>
                     <Button x:Name="btnGo" Height="50" Content="Go" Margin="0,10" Click="btnGo_Click"/>
                 </Border>
             </StackPanel>
         </ScrollViewer>
 
-        <!-- Right side: ListView -->
-        <ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CustomTagMappings}" Margin="10">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Tags" DisplayMemberBinding="{Binding LookForTag}" />
-                    <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
-                    <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Up" Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
-                                    <Button Content="Down" Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <!-- Right side: Custom Mappings List and Buttons -->
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <!-- Row for the ListView -->
+                <RowDefinition Height="*" />
+                <!-- Row for the Buttons -->
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <!-- Optional GridSplitter -->
-        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray"/>
+            <!-- ListView with a name for code access -->
+            <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Tags" DisplayMemberBinding="{Binding LookForTag}" />
+                        <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
+                        <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Up" 
+                                              Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              CommandParameter="{Binding}"/>
+                                        <Button Content="Down" 
+                                              Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
-        <!-- Logs at the bottom, spanning both columns -->
+            <!-- Buttons panel below the ListView -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button x:Name="btnAddMapping" Content="Add Mapping" Width="100" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
+                <Button x:Name="btnDeleteMapping" Content="Delete Mapping" Width="100" Click="btnDeleteMapping_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- GridSplitter spanning both columns, placed in main grid row 1 -->
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray" />
+
+        <!-- Logs at the bottom, spanning both columns, in main grid row 2 -->
         <Border Grid.Row="2" Grid.ColumnSpan="2">
-            <!-- RichTextBox to display logs -->
             <RichTextBox x:Name="rtbLog" Margin="10"
-                         IsReadOnly="true" VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto">
+                       IsReadOnly="true" VerticalScrollBarVisibility="Auto"
+                       HorizontalScrollBarVisibility="Auto">
                 <RichTextBox.Resources>
                     <Style TargetType="{x:Type Paragraph}">
                         <Setter Property="Margin" Value="0"/>

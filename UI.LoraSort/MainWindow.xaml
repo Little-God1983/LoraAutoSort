@@ -84,14 +84,13 @@
         <!-- Right side: Custom Mappings List and Buttons -->
         <Grid Grid.Row="0" Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <!-- Row for the ListView -->
+                <!-- Row 0: ListView -->
                 <RowDefinition Height="*" />
-                <!-- Row for the Buttons -->
+                <!-- Row 1: Buttons -->
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- ListView with a name for code access -->
-            <!-- ListView with a name for code access -->
+            <!-- ListView in row 0 -->
             <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}">
                 <ListView.View>
                     <GridView>
@@ -127,11 +126,25 @@
                 </ListView.View>
             </ListView>
 
-            <!-- Buttons panel below the ListView -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                <Button x:Name="btnAddMapping" Content="Add Mapping" Width="100" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
-                <Button x:Name="btnDeleteMapping" Content="Delete Mapping" Width="100" Click="btnDeleteMapping_Click"/>
-            </StackPanel>
+            <!-- Button Panel in row 1 -->
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- First row: Add and Remove -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="btnAddMapping" Content="Add Mapping" Width="100" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
+                    <Button x:Name="btnDeleteMapping" Content="Remove Mapping" Width="100" Click="btnDeleteMapping_Click"/>
+                </StackPanel>
+
+                <!-- Second row: Save and Load -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Button x:Name="btnSaveMapping" Content="Save All Mappings" Width="100" Margin="0,0,10,0" Click="btnSaveMapping_Click"/>
+                    <Button x:Name="btnLDeleteMapping" Content="Delete All Mappings" Width="100" Click="btnDeleteAllMappings_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
 
         <!-- GridSplitter spanning both columns, placed in main grid row 1 -->

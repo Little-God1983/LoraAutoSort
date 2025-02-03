@@ -20,8 +20,6 @@ namespace UI.LoraSort
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -236,6 +234,40 @@ namespace UI.LoraSort
                     // If your CustomTagMap implements INotifyPropertyChanged,
                     // the ListView will update automatically. Otherwise, force a refresh:
                     lvMappings.Items.Refresh();
+                }
+            }
+        }
+        private void btnSaveMapping_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteAllMappings_Click(object sender, RoutedEventArgs e)
+        {
+            // Ask for confirmation.
+            MessageBoxResult result = MessageBox.Show("Do you really want to delete all mappings from disk?",
+                                                      "Confirm Delete",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    // Define the path where the mappings are stored.
+                    string filePath = "mappings.xml";  // Replace with your actual file path
+
+                    // Create an instance of the service and call the delete method.
+                    CustomTagMapXmlService service = new CustomTagMapXmlService();
+                    service.DeleteAllMappings(filePath);
+
+                    // Optionally clear the ObservableCollection if you're also showing it in the UI.
+                    CustomTagMappings.Clear();
+
+                    MessageBox.Show("All mappings have been deleted.", "Deletion Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting mappings: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

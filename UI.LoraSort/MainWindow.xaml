@@ -12,6 +12,7 @@
     <Window.Resources>
         <!-- Use the converter from the 'conv' namespace -->
         <conv:TagsDisplayConverter x:Key="TagsDisplayConverter" />
+        <conv:IndexToPriorityConverter x:Key="IndexToPriorityConverter" />
     </Window.Resources>
 
     <Window.DataContext>
@@ -104,7 +105,22 @@
                         </GridViewColumn>
 
                         <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
-                        <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" />
+                        <GridViewColumn Header="Priority">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource IndexToPriorityConverter}">
+                                                <!-- Binding to the current item -->
+                                                <Binding />
+                                                <!-- Binding to the ItemsSource of the ListView (the entire collection) -->
+                                                <Binding RelativeSource="{RelativeSource AncestorType=ListView}" Path="ItemsSource" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <!-- Actions column: Up, Down, and Edit -->
                         <GridViewColumn Header="Actions">
                             <GridViewColumn.CellTemplate>

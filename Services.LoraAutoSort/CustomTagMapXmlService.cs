@@ -6,12 +6,13 @@ namespace Services.LoraAutoSort
 {
     public class CustomTagMapXmlService
     {
+        string filePath = AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
         /// Saves the given collection of CustomTagMap objects to an XML file.
         /// </summary>
         /// <param name="mappings">The observable collection of mappings to save.</param>
         /// <param name="filePath">The full file path where the XML should be saved.</param>
-        public void SaveMappings(ObservableCollection<CustomTagMap> mappings, string filePath)
+        public void SaveMappings(ObservableCollection<CustomTagMap> mappings)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace Services.LoraAutoSort
         /// </summary>
         /// <param name="filePath">The full file path from which to load the XML.</param>
         /// <returns>An ObservableCollection of CustomTagMap objects.</returns>
-        public ObservableCollection<CustomTagMap> LoadMappings(string filePath)
+        public ObservableCollection<CustomTagMap> LoadMappings()
         {
             try
             {

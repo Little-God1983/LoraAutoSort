@@ -9,7 +9,9 @@ using Services.LoraAutoSort.Classes;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using UI.LoraSort.ViewModels;
 
@@ -20,13 +22,32 @@ namespace UI.LoraSort
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; }
+        // ICommand properties for moving items
+        public ICommand MoveUpCommand { get; }
+        public ICommand MoveDownCommand { get; }
+
         public MainWindow()
         {
             InitializeComponent();
             // Optionally set the DataContext to this if you plan to bind CustomTagMappings directly.
             // Otherwise, add CustomTagMappings to your MainViewModel.
+            CustomTagMappings = LoadMapping();
+
+            // Initialize commands. 
+            MoveUpCommand = new RelayCommand<CustomTagMap>(MoveMappingUp, CanMoveUp);
+            MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown, CanMoveDown);
+
             this.DataContext = this;
         }
+
+        private ObservableCollection<CustomTagMap> LoadMapping()
+        {
+           CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
+            return xmlService.LoadMappings();
+        }
+
+
         /// <summary>
         /// Opens the NewMappingWindow to create a new mapping.
         /// </summary>
@@ -64,13 +85,15 @@ namespace UI.LoraSort
         }
 
         // (Existing methods MoveMappingUp, MoveMappingDown, UpdatePriorities, etc.)
+        // Method called by MoveUpCommand.
         public void MoveMappingUp(CustomTagMap map)
         {
             int index = CustomTagMappings.IndexOf(map);
             if (index > 0)
             {
                 CustomTagMappings.Move(index, index - 1);
-                UpdatePriorities();
+                // No need to update a separate priority property now.
+                CollectionViewSource.GetDefaultView(CustomTagMappings).Refresh();
             }
         }
 
@@ -80,8 +103,22 @@ namespace UI.LoraSort
             if (index < CustomTagMappings.Count - 1)
             {
                 CustomTagMappings.Move(index, index + 1);
-                UpdatePriorities();
+                // No need to update a separate priority property now.
+                CollectionViewSource.GetDefaultView(CustomTagMappings).Refresh();
             }
+        }
+
+        // Optional: Implement the CanExecute predicates.
+        private bool CanMoveUp(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            return index > 0;
+        }
+
+        private bool CanMoveDown(CustomTagMap map)
+        {
+            int index = CustomTagMappings.IndexOf(map);
+            return index < CustomTagMappings.Count - 1;
         }
 
         private void UpdatePriorities()
@@ -218,7 +255,7 @@ namespace UI.LoraSort
             ) == 0;
         }
 
-        public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; } = new ObservableCollection<CustomTagMap>();
+
         private void btnEditMapping_Click(object sender, RoutedEventArgs e)
         {
             // Get the mapping from the Button's CommandParameter.
@@ -237,9 +274,11 @@ namespace UI.LoraSort
                 }
             }
         }
+
         private void btnSaveMapping_Click(object sender, RoutedEventArgs e)
         {
-
+            CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
+            xmlService.SaveMappings(CustomTagMappings);
         }
 
         private void btnDeleteAllMappings_Click(object sender, RoutedEventArgs e)

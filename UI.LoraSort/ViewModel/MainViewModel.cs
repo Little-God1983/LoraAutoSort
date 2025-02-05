@@ -1,7 +1,6 @@
 ﻿using Services.LoraAutoSort.Classes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using UI.LoraSort.Utilities;
 
 namespace UI.LoraSort.ViewModels
 {

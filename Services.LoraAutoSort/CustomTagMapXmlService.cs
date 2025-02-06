@@ -6,7 +6,7 @@ namespace Services.LoraAutoSort
 {
     public class CustomTagMapXmlService
     {
-        string filePath = AppDomain.CurrentDomain.BaseDirectory;
+        string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "mappings.xml");
         /// <summary>
         /// Saves the given collection of CustomTagMap objects to an XML file.
         /// </summary>

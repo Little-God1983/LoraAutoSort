@@ -64,6 +64,10 @@
                             <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
                             <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
                         </StackPanel>
+                        <Label Content="Special:" FontWeight="Bold" FontSize="14"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16" Margin="20,0,0,0"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -92,7 +96,7 @@
             </Grid.RowDefinitions>
 
             <!-- ListView in row 0 -->
-            <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}">
+            <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}" IsEnabled="{Binding ElementName=chbCustom, Path=IsChecked}">
                 <ListView.View>
                     <GridView>
                         <!-- Use a CellTemplate for the Tags column with our converter -->
@@ -164,7 +168,7 @@
         </Grid>
 
         <!-- GridSplitter spanning both columns, placed in main grid row 1 -->
-        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray" />
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
 
         <!-- Logs at the bottom, spanning both columns, in main grid row 2 -->
         <Border Grid.Row="2" Grid.ColumnSpan="2">

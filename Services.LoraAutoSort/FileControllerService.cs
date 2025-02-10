@@ -5,12 +5,13 @@
 
 using JsonFileReader;
 using Services.LoraAutoSort.Classes;
+using System.Security.Cryptography;
 
 namespace Services.LoraAutoSort
 {
-    public class ControllerService
+    public class FileControllerService
     {
-        public ControllerService()
+        public FileControllerService()
         {
 
         }
@@ -65,6 +66,16 @@ namespace Services.LoraAutoSort
             DriveInfo drive = new DriveInfo(Path.GetPathRoot(folderPath));
             return drive.AvailableFreeSpace;
         }
-
+        public string ComputeFileHash(string filePath)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filePath))
+                {
+                    byte[] hashBytes = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
     }
 }

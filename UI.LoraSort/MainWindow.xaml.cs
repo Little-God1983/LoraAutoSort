@@ -207,7 +207,7 @@ namespace UI.LoraSort
                 MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
                 return;
             }
-            ControllerService controllerService = new ControllerService();
+            FileControllerService controllerService = new FileControllerService();
 
             if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
             {

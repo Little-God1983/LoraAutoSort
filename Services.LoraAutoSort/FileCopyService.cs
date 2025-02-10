@@ -39,7 +39,7 @@ namespace JsonFileReader
 
             foreach (var model in models)
             {
-                if(model.SkipFile)
+                if(model.NoMetaData)
                 {
                     results.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' has no metaData => File is skipped." });
                     continue;

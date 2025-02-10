@@ -24,7 +24,30 @@ namespace JsonFileReader
             modelData = GroupFilesByPrefix(jsonFilePath);
             foreach (ModelClass model in modelData)
             {
-                if(model.SkipFile == true) { continue; }
+                if(model.NoMetaData == true)
+                {
+                    continue;
+
+                    // Replace with the actual path to your safetensors file.
+                    string filePath = @"C:\path\to\your\model.safetensors";
+                    // Optionally, provide your Civitai API key.
+                    string apiKey = "YOUR_API_KEY";
+
+                    CivitaiMetaDataService service = new CivitaiMetaDataService();
+                    try
+                    {
+                        //string modelInfo = await service.GetModelInformationAsync(filePath, apiKey);
+                        //Console.WriteLine("Full Model Information:");
+                        //Console.WriteLine(modelInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+
+                }
+
+
                 model.CivitaiCategory = GetMatchingCategory(model);
                 string baseModelName = GetBaseModelName(model);
                 model.DiffusionBaseModel = baseModelName == "SDXL 1.0" ? "SDXL":baseModelName;
@@ -134,7 +157,7 @@ namespace JsonFileReader
                 };
 
                 //If <= 1 That means there is no MetaData so the file will be skipped
-                if (model.AssociatedFilesInfo.Count <= 1) { model.SkipFile = true; }
+                if (model.AssociatedFilesInfo.Count <= 1) { model.NoMetaData = true; }
                 modelClasses.Add(model);
             }
 

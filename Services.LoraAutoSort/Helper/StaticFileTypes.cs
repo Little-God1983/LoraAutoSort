@@ -15,6 +15,13 @@ namespace Services.LoraAutoSort.Helper
             ".pt"
         ];
 
-        public static readonly string[] GeneralExtensions = [".safetensors", ".json", ".preview.png", ".preview.jpeg", ".pt", ".cm-info.json"];
+        public static readonly string[] GeneralExtensions = [
+        ".preview.png",
+        ".preview.jpeg",
+        ".cm-info.json",
+        ".civitai.info",
+        ".safetensors",
+        ".json",
+        ".pt"];
     }
 }

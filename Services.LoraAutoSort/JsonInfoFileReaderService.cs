@@ -27,7 +27,7 @@ namespace JsonFileReader
                 if(model.SkipFile == true) { continue; }
                 model.CivitaiCategory = GetMatchingCategory(model);
                 string baseModelName = GetBaseModelName(model);
-                model.DiffusionBaseModel = baseModelName == "SDXL" ? "SDXL 1.0":baseModelName;
+                model.DiffusionBaseModel = baseModelName == "SDXL 1.0" ? "SDXL":baseModelName;
 
             }
             return modelData;
@@ -112,7 +112,7 @@ namespace JsonFileReader
             foreach (var filePath in files)
             {
                 var fileInfo = new FileInfo(filePath);
-                var prefix = GetPrefix(fileInfo.Name).ToLower();
+                var prefix = ExtractBaseName(fileInfo.Name).ToLower();
 
                 if (!fileGroups.ContainsKey(prefix))
                 {
@@ -146,9 +146,24 @@ namespace JsonFileReader
             // Extract the prefix from the file name (everything before the last underscore)
             //var lastUnderscoreIndex = fileName.LastIndexOf('_');
             //return lastUnderscoreIndex > 0 ? fileName.Substring(0, lastUnderscoreIndex) : fileName;
-            return fileName.Split('.').First();
+           return Path.GetFileNameWithoutExtension(fileName);
+            //return fileName.Split('.').First();
         }
+        static string ExtractBaseName(string fileName)
+        {
+            // Order the known extensions descending by length.
+            var extension = StaticFileTypes.GeneralExtensions
+                .OrderByDescending(e => e.Length)
+                .FirstOrDefault(e => fileName.EndsWith(e, StringComparison.OrdinalIgnoreCase));
 
+            if (extension != null)
+            {
+                return fileName.Substring(0, fileName.Length - extension.Length);
+            }
+
+            // If no extension is matched, return the original filename.
+            return fileName;
+        }
 
         private JsonDocument LoadJsonDocument(string filePath)
         {

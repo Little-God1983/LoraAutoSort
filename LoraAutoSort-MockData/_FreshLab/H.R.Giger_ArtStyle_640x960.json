@@ -1,0 +1,12 @@
+{
+    "description": "<ul><li><p>Stylization by illustrator H.R.Giger.</p></li><li><p>158 images, from different years of creativity, were used to train the model.</p></li><li><p>the training of the LoRA was on the <strong>CyberRealistic 3.1</strong> model.</p></li><li><p>I'm Render on<strong> - EndlessReality</strong></p></li><li><p>Training with a resolution of 640x960</p></li></ul>",
+    "sd version": "SD1",
+    "preferred weight": 0,
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.13",
+            "last_update": 1737678101,
+            "skeleton_file": false
+        }
+    }
+}

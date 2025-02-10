@@ -1,0 +1,599 @@
+{
+    "id": 305762,
+    "modelId": 271259,
+    "name": "v1.0",
+    "createdAt": "2024-01-20T08:58:54.596Z",
+    "updatedAt": "2024-02-08T03:46:42.408Z",
+    "status": "Published",
+    "publishedAt": "2024-01-20T09:05:00.466Z",
+    "trainedWords": [],
+    "trainingStatus": null,
+    "trainingDetails": null,
+    "baseModel": "SD 1.5",
+    "baseModelType": null,
+    "earlyAccessEndsAt": null,
+    "earlyAccessConfig": {},
+    "description": null,
+    "uploadType": "Created",
+    "usageControl": "Download",
+    "air": "urn:air:sd1:lora:civitai:271259@305762",
+    "stats": {
+        "downloadCount": 719,
+        "ratingCount": 69,
+        "rating": 5,
+        "thumbsUpCount": 115
+    },
+    "model": {
+        "name": "H.R.Giger - ArtStyle",
+        "type": "LORA",
+        "nsfw": false,
+        "poi": false,
+        "description": "<ul><li><p>Stylization by illustrator H.R.Giger.</p></li><li><p>158 images, from different years of creativity, were used to train the model.</p></li><li><p>the training of the LoRA was on the <strong>CyberRealistic 3.1</strong> model.</p></li><li><p>I'm Render on<strong> - EndlessReality</strong></p></li><li><p>Training with a resolution of 640x960</p></li></ul>",
+        "tags": [
+            "art",
+            "giger",
+            "style",
+            "artist",
+            "illustration style",
+            "h,r.giger"
+        ],
+        "allowNoCredit": true,
+        "allowCommercialUse": [],
+        "allowDerivatives": true,
+        "allowDifferentLicense": true
+    },
+    "files": [
+        {
+            "id": 241555,
+            "sizeKB": 147570.5234375,
+            "name": "H.R.Giger_ArtStyle_640x960.safetensors",
+            "type": "Model",
+            "pickleScanResult": "Success",
+            "pickleScanMessage": "No Pickle imports",
+            "virusScanResult": "Success",
+            "virusScanMessage": null,
+            "scannedAt": "2024-01-20T09:00:54.347Z",
+            "metadata": {
+                "format": "SafeTensor",
+                "size": null,
+                "fp": null
+            },
+            "hashes": {
+                "AutoV1": "6B5DAE10",
+                "AutoV2": "28D5975105",
+                "SHA256": "28D5975105482151BE6986432B06F16C4B6D3F3C3EF5EFEEC6FEF2CB5F7926AD",
+                "CRC32": "A6CCB005",
+                "BLAKE3": "8542C16F31D0DB588C532DF06C3A2270BA56686076DF104B10BB28C7A30A435E",
+                "AutoV3": "D9C967CC2E3D"
+            },
+            "primary": true,
+            "downloadUrl": "https://civitai.com/api/download/models/305762"
+        }
+    ],
+    "images": [
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ee541448-f1ef-4a82-a2e3-1de14508d523/width=450/5686855.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U371vJDO00tR?b-;4mD%00%N%MaySO8__4?c",
+            "type": "image",
+            "metadata": {
+                "hash": "U371vJDO00tR?b-;4mD%00%N%MaySO8__4?c",
+                "size": 4237352,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073982,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/26793c3c-841f-4ff6-b625-8a5cfc23798b/width=450/5686876.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "UA7K@[ae4may_Nf6D%aytSayWAkCtSayoJof",
+            "type": "image",
+            "metadata": {
+                "hash": "UA7K@[ae4may_Nf6D%aytSayWAkCtSayoJof",
+                "size": 4404343,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 1897523651,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, (intricate details:0.9), (hdr, hyperdetailed:1.2), art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c91d093b-965d-499b-8a99-fcec60a76e13/width=450/5686879.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U14B|Cxa00a~?cogIUWBDij[?cV@9Et7%MRP",
+            "type": "image",
+            "metadata": {
+                "hash": "U14B|Cxa00a~?cogIUWBDij[?cV@9Et7%MRP",
+                "size": 3471110,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2834285242,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "\"Module": "none",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3c72041e-91ad-4f91-bc81-80e1aaeee152/width=450/5686875.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U65#quaeD%bH_4WAM_ofxuWAWBt7xuj[M_ay",
+            "type": "image",
+            "metadata": {
+                "hash": "U65#quaeD%bH_4WAM_ofxuWAWBt7xuj[M_ay",
+                "size": 3413390,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 111725146,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "\"Module": "none",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36"
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/15a0bf05-1efe-4838-95bb-7c6d5819ef03/width=450/5686874.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U39aX54T?^%NDiadRjbI8_%M4TkDV?WBM{oL",
+            "type": "image",
+            "metadata": {
+                "hash": "U39aX54T?^%NDiadRjbI8_%M4TkDV?WBM{oL",
+                "size": 4063163,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073974,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5ee5b17c-1b14-43c4-9b01-af82e2ab54cc/width=450/5686877.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U47nn7?c00M{smV@9ERP.TofMwe.WDj]x^kC",
+            "type": "image",
+            "metadata": {
+                "hash": "U47nn7?c00M{smV@9ERP.TofMwe.WDj]x^kC",
+                "size": 4179845,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073975,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f086174b-8f32-401d-90e3-8780cec05f0c/width=450/5686880.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "UA71vJofRkWBDiays:ofIAayoJj[_NkCR+WB",
+            "type": "image",
+            "metadata": {
+                "hash": "UA71vJofRkWBDiays:ofIAayoJj[_NkCR+WB",
+                "size": 4067572,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073976,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f79d2593-4cd6-49dc-9b27-165730ba6abf/width=450/5686878.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "UB84rY-=IoM{_4%gbHNG%MxuozRj?bxuM_Rj",
+            "type": "image",
+            "metadata": {
+                "hash": "UB84rY-=IoM{_4%gbHNG%MxuozRj?bxuM_Rj",
+                "size": 3935216,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073978,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a03bbcf2-f49a-486e-9541-e78c7dbf5b5f/width=450/5686881.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U48EMOs:bItR?waz?bt7D%az9Eof9Efj00WV",
+            "type": "image",
+            "metadata": {
+                "hash": "U48EMOs:bItR?waz?bt7D%az9Eof9Efj00WV",
+                "size": 3994056,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073981,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        },
+        {
+            "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f9150f5b-25bd-4d69-b07c-8951c6db6300/width=450/5686883.jpeg",
+            "nsfwLevel": 8,
+            "width": 1280,
+            "height": 1920,
+            "hash": "U47UJ3-;00D%ITRiD$ogE2j]~qt700Ri.8t7",
+            "type": "image",
+            "metadata": {
+                "hash": "U47UJ3-;00D%ITRiD$ogE2j]~qt700Ri.8t7",
+                "size": 4196371,
+                "width": 1280,
+                "height": 1920
+            },
+            "meta": {
+                "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+                "Size": "640x960",
+                "seed": 2088073983,
+                "Model": "endlessreality_v6",
+                "steps": 35,
+                "hashes": {
+                    "model": "f68230e569"
+                },
+                "prompt": "(dark theme:0.9), naked woman warrior, full lenght, in the dark and fantastic worlds  <lora:H.R.Giger_ArtStyle_640x960:0.85>, (hdr:1.22), muted colors, complex background, hyperrealism, hyperdetailed, amandine van ray, slate atmosphere, cinematic, dimmed colors, dark shot, muted colors, film grainy, lut, spooky, art by angus mckie",
+                "Version": "1.7.0",
+                "sampler": "DPM++ 2M Karras",
+                "VAE hash": "21ee2acc78",
+                "cfgScale": 7,
+                "resources": [
+                    {
+                        "name": "H.R.Giger_ArtStyle_640x960",
+                        "type": "lora",
+                        "weight": 0.85
+                    },
+                    {
+                        "hash": "f68230e569",
+                        "name": "endlessreality_v6",
+                        "type": "model"
+                    }
+                ],
+                "Model hash": "f68230e569",
+                "Hires steps": "8",
+                "Hires upscale": "2",
+                "Hires upscaler": "4x_NMKD-Siax_200k",
+                "negativePrompt": "dof, [deformed | disfigured], poorly drawn, [bad : wrong] anatomy, [extra | missing | floating | disconnected] limb, (mutated hands and fingers), blurry",
+                "Denoising strength": "0.36",
+                "\"H.R.Giger_ArtStyle_640x960": "d9c967cc2e3d\""
+            },
+            "availability": "Public",
+            "hasMeta": true,
+            "onSite": false,
+            "remixOfId": null
+        }
+    ],
+    "downloadUrl": "https://civitai.com/api/download/models/305762",
+    "creator": {
+        "username": "garand343635",
+        "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e0bb3487-e47c-411c-d5c5-5092ef190c00/width=96/garand343635.jpeg"
+    },
+    "extensions": {
+        "sd_civitai_helper": {
+            "version": "1.8.13",
+            "last_update": 1737678101,
+            "skeleton_file": false
+        }
+    }
+}

@@ -194,7 +194,7 @@ namespace UI.LoraSort
         }
 
 
-        private void btnGo_Click(object sender, RoutedEventArgs e)
+        private async void btnGo_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
             {
@@ -230,7 +230,7 @@ namespace UI.LoraSort
                 }
             }
 
-            List<OperationResult> results = controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
+            List<OperationResult> results = await controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
 
             if (results != null && results.Count > 0)
             {

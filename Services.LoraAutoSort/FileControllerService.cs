@@ -16,10 +16,10 @@ namespace Services.LoraAutoSort
 
         }
 
-        public List<OperationResult> ComputeFolder(string sourcePath, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
+        public async Task<List<OperationResult>> ComputeFolder(string sourcePath, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
             JsonInfoFileReaderService jsonInfoFileReaderService = new JsonInfoFileReaderService(sourcePath);
-            List<ModelClass> models = jsonInfoFileReaderService.GetModelData(sourcePath);
+            List<ModelClass> models = await jsonInfoFileReaderService.GetModelData(sourcePath);
 
             if (models == null || models.Count == 0)
             {

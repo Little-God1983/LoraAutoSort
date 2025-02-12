@@ -6,6 +6,7 @@
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Helper;
 using Serilog;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -24,7 +25,7 @@ namespace JsonFileReader
         /// </summary>
         /// <param name="filePath">The path to the safetensor file.</param>
         /// <returns>A JsonElement representing the metadata.</returns>
-        public static JsonElement ParseSafetensorsMetadata(FileInfo file)
+        public static string ParseSafetensorsMetadata(FileInfo file)
         {
             Log.Information("Reading metadata from file '{FileName}'", file.FullName);
 
@@ -69,21 +70,7 @@ namespace JsonFileReader
                     Log.Debug("Header JSON: {HeaderJson}", headerJson);
 
                     // Parse the JSON.
-                    using (JsonDocument document = JsonDocument.Parse(headerJson))
-                    {
-                        JsonElement root = document.RootElement;
-                        if (root.TryGetProperty("__metadata__", out JsonElement metadata))
-                        {
-                            Log.Debug("Metadata found under '__metadata__' property. Returning metadata.");
-                            // Clone the metadata so it is valid even after the document is disposed.
-                            return metadata.Clone();
-                        }
-                        else
-                        {
-                            Log.Error("The header does not contain a '__metadata__' property in file {FileName}", file.FullName);
-                            throw new Exception("The header does not contain a '__metadata__' property.");
-                        }
-                    }
+                    return GetMetaDataFromJson(file, headerJson);
                 }
             }
             catch (Exception ex)
@@ -95,52 +82,67 @@ namespace JsonFileReader
             {
                 Log.Debug("Finished attempting to read metadata from file '{FileName}'", file.FullName);
             }
-            //// Open the file for reading in binary mode.
-            //using (FileStream fs = File.OpenRead(file.FullName))
-            //{
-            //    if (file.Length < 8)
-            //    {
-            //        throw new Exception("The file is too short to contain the header length.");
-            //    }
-
-            //    // Read the first 8 bytes which encode the header length as a little-endian UInt64.
-            //    byte[] headerLengthBytes = new byte[8];
-            //    int readCount = fs.Read(headerLengthBytes, 0, 8);
-            //    if (readCount != 8)
-            //        throw new Exception("Failed to read the header length from the file.");
-
-            //    // Convert the 8 bytes into an unsigned 64-bit integer.
-            //    ulong headerLength = BitConverter.ToUInt64(headerLengthBytes, 0);
-
-            //    // Read the header bytes.
-            //    byte[] headerBytes = new byte[headerLength];
-            //    readCount = fs.Read(headerBytes, 0, (int)headerLength);
-            //    if (readCount != (int)headerLength)
-            //        throw new Exception("Failed to read the full header from the file.");
-
-            //    // Decode the header as a UTF-8 string.
-            //    string headerJson = Encoding.UTF8.GetString(headerBytes);
-
-            //    // Parse the JSON.
-            //    using (JsonDocument document = JsonDocument.Parse(headerJson))
-            //    {
-            //        JsonElement root = document.RootElement;
-            //        if (root.TryGetProperty("__metadata__", out JsonElement metadata))
-            //        {
-            //            // Clone the metadata so it is valid even after the document is disposed.
-            //            return metadata.Clone();
-            //        }
-            //        else
-            //        {
-            //            throw new Exception("The header does not contain a '__metadata__' property.");
-            //        }
-            //    }
-            //}
         }
 
-
-        public List<ModelClass> GetModelData(string jsonFilePath)
+        private static string GetMetaDataFromJson(FileInfo file, string headerJson)
         {
+            using (JsonDocument document = JsonDocument.Parse(headerJson))
+            {
+                JsonElement root = document.RootElement;
+                if (root.TryGetProperty("__metadata__", out JsonElement metadata))
+                {
+                    Log.Debug("Metadata found under '__metadata__' property. Returning metadata.");
+                    string modelHash = String.Empty;
+                    if (metadata.TryGetProperty("ss_new_sd_model_hash", out JsonElement modelHashElement))
+                    {
+                        modelHash = modelHashElement.GetString();
+                        Log.Debug("Model Hash (ss_new_sd_model_hash): " + modelHash);
+                    }
+                    else
+                    {
+                        Log.Error("The model has could not be found under a '__metadata__' property in file {FileName}", file.FullName);
+                        throw new Exception("The model has could not be found under a '__metadata__' property in file");
+                    }
+                    return modelHash;
+                }
+                else
+                {
+                    Log.Error("The header does not contain a '__metadata__' property in file {FileName}", file.FullName);
+                    throw new Exception("The header does not contain a '__metadata__' property.");
+                }
+            }
+        }
+
+        private static string ComputeSHA256(string filePath)
+        {
+            // Validate input
+            if (!File.Exists(filePath))
+            {
+                Log.Error("File Not found {FileName}", filePath);
+                throw new FileNotFoundException("File not found.", filePath);
+            }
+
+            // Open the file as a stream and compute the hash
+            using (FileStream stream = File.OpenRead(filePath))
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(stream);
+
+                // Convert the byte array to a hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    sb.Append(b.ToString("x2")); // Lowercase hex
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public async Task<List<ModelClass>> GetModelData(string jsonFilePath)
+        {
+            //TODO: improve this logic instead of  checking for no data
+            // Try to read from info first and if not 
             List<ModelClass> modelData = new List<ModelClass>();
             modelData = GroupFilesByPrefix(jsonFilePath);
             foreach (ModelClass model in modelData)
@@ -149,37 +151,28 @@ namespace JsonFileReader
                 {
                     try
                     {
+                        FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
+                        if (SafetensorsFileInfo == null) { continue; }
 
+                        //string SafetensorModelHash = ParseSafetensorsMetadata(SafetensorsFileInfo);
+                        string SHA256FromSafetensorsFile = ComputeSHA256(SafetensorsFileInfo.FullName);
+                        CivitaiMetaDataService service = new CivitaiMetaDataService();
+                        //First API call to get info from the specific model version, some loras have a Pony, Flux, SDXL version
+                        string modelVersionInfoApiResponse = await service.GetModelVersionInformationFromCivitaiAsync(SHA256FromSafetensorsFile);
+                        string modelId = service.GetModelId(modelVersionInfoApiResponse);
+                        model.DiffusionBaseModel = service.GetBaseModel(modelVersionInfoApiResponse);
+
+                        //Second API call to get basic info about the model like tags etc. These are stored on the model page not on the version page
+                        string modelInfoApiResponse = await service.GetModelInformationFromCivitaiAsync(modelId);
+                        model.Tags = service.GetTagsFromModelInfo(modelInfoApiResponse);
+                        model.NoMetaData = false;
+                        
                     }
                     catch (Exception ex)
                     {
                         model.ErrorOnRetrievingMetaData = true;
                     }
-                    FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
-                    if (SafetensorsFileInfo == null) { continue; }
-
-                    var SafetensorMetaData = ParseSafetensorsMetadata(SafetensorsFileInfo);
-
-                    continue;
-                    // Replace with the actual path to your safetensors file.
-                    string filePath = @"C:\path\to\your\model.safetensors";
-                    // Optionally, provide your Civitai API key.
-                    string apiKey = "YOUR_API_KEY";
-
-                    CivitaiMetaDataService service = new CivitaiMetaDataService();
-                    try
-                    {
-                        //string modelInfo = await service.GetModelInformationAsync(filePath, apiKey);
-                        //Console.WriteLine("Full Model Information:");
-                        //Console.WriteLine(modelInfo);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                    }
-
                 }
-
 
                 model.CivitaiCategory = GetMatchingCategory(model);
                 string baseModelName = GetBaseModelName(model);

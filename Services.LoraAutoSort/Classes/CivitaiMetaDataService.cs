@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Diagnostics;
+using Serilog;
 
 namespace Services.LoraAutoSort.Classes
 {
@@ -20,6 +22,28 @@ namespace Services.LoraAutoSort.Classes
         /// (Optional) Your Civitai API key; if provided, it will be used in the Authorization header.
         /// </param>
         /// <returns>A JSON string containing the model information from the Civitai API.</returns>
+        public async Task<string> GetModelVersionInformationFromCivitaiAsync(string sha256Hash)
+        {
+
+            // Step 4: Build the API endpoint URL.
+            string apiUrl = $"https://civitai.com/api/v1/model-versions/by-hash/{sha256Hash}";
+            Log.Debug("Constructed API URL: " + apiUrl);
+
+            // Step 5: Call the Civitai API.
+            using (HttpClient client = new HttpClient())
+            {
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Error("API call failed with status code: " + response.StatusCode + $"for SHA256Hash {sha256Hash}");
+                    throw new Exception("API call failed with status code: " + response.StatusCode);
+                }
+
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return apiResponse;
+            }
+        }
         public async Task<string> GetModelInformationAsync(string safetensorsFilePath, string apiKey = null)
         {
             // Step 1: Extract the JSON metadata from the safetensors file.
@@ -128,17 +152,65 @@ namespace Services.LoraAutoSort.Classes
                 return Encoding.UTF8.GetString(headerBytes);
             }
         }
+
+        internal string GetBaseModel(string modelInfoApiResponse)
+        {
+            using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
+            return doc.RootElement.GetProperty("modelId").ToString();
+        }
+
+        internal string GetModelId(string modelInfoApiResponse)
+        {
+            using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
+            return doc.RootElement.GetProperty("baseModel").ToString();
+        }
+
+        internal async Task<string> GetModelInformationFromCivitaiAsync(string modelId)
+        {
+            // Step 4: Build the API endpoint URL.
+            string apiUrl = $"https://civitai.com/api/v1/models/{modelId}";
+            Log.Debug("Constructed API URL: " + apiUrl);
+
+            // Step 5: Call the Civitai API.
+            using (HttpClient client = new HttpClient())
+            {
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Error("API call failed with status code: " + response.StatusCode + $"for ModelId {modelId}");
+                    throw new Exception("API call failed with status code: " + response.StatusCode);
+                }
+
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return apiResponse;
+            }
+        }
+
+        internal List<string> GetTagsFromModelInfo(string modelInfoApiResponse)
+        {
+            var tags = new List<string>();
+
+            using (JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse))
+            {
+                JsonElement root = doc.RootElement;
+
+                // Check if 'tags' property exists and is an array
+                if (root.TryGetProperty("tags", out JsonElement tagsElement) &&
+                    tagsElement.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (JsonElement tagValue in tagsElement.EnumerateArray())
+                    {
+                        string tagString = tagValue.GetString();
+                        if (!string.IsNullOrWhiteSpace(tagString))
+                        {
+                            tags.Add(tagString);
+                        }
+                    }
+                }
+            }
+
+            return tags;
+        }
     }
 }
-
-
-//public async Task<JsonObject> GetLoraModelInfoAsync(string modelId)
-//{
-//    string url = $"https://civitai.com/api/v1/model-versions/{modelId}";
-//    using (HttpClient client = new HttpClient())
-//    {
-//        var response = await client.GetStringAsync(url);
-//        JsonNode node = JsonNode.Parse(response);
-//        return node?.AsObject();
-//    }
-//}

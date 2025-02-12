@@ -5,6 +5,8 @@
 
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Helper;
+using System.IO;
+using System.Text;
 using System.Text.Json;
 
 namespace JsonFileReader
@@ -17,17 +19,70 @@ namespace JsonFileReader
         {
             _loraInfoBasePath = jsonFilePath;
         }
+        /// <summary>
+        /// Parses the safetensor file at the given path and returns the __metadata__ JSON element.
+        /// </summary>
+        /// <param name="filePath">The path to the safetensor file.</param>
+        /// <returns>A JsonElement representing the metadata.</returns>
+        public static JsonElement ParseSafetensorsMetadata(FileInfo file)
+        {
+            // Open the file for reading in binary mode.
+            using (FileStream fs = File.OpenRead(file.FullName))
+            {
+                if (file.Length < 8)
+                {
+                    throw new Exception("The file is too short to contain the header length.");
+                }
+
+                // Read the first 8 bytes which encode the header length as a little-endian UInt64.
+                byte[] headerLengthBytes = new byte[8];
+                int readCount = fs.Read(headerLengthBytes, 0, 8);
+                if (readCount != 8)
+                    throw new Exception("Failed to read the header length from the file.");
+
+                // Convert the 8 bytes into an unsigned 64-bit integer.
+                ulong headerLength = BitConverter.ToUInt64(headerLengthBytes, 0);
+
+                // Read the header bytes.
+                byte[] headerBytes = new byte[headerLength];
+                readCount = fs.Read(headerBytes, 0, (int)headerLength);
+                if (readCount != (int)headerLength)
+                    throw new Exception("Failed to read the full header from the file.");
+
+                // Decode the header as a UTF-8 string.
+                string headerJson = Encoding.UTF8.GetString(headerBytes);
+
+                // Parse the JSON.
+                using (JsonDocument document = JsonDocument.Parse(headerJson))
+                {
+                    JsonElement root = document.RootElement;
+                    if (root.TryGetProperty("__metadata__", out JsonElement metadata))
+                    {
+                        // Clone the metadata so it is valid even after the document is disposed.
+                        return metadata.Clone();
+                    }
+                    else
+                    {
+                        throw new Exception("The header does not contain a '__metadata__' property.");
+                    }
+                }
+            }
+        }
+
 
         public List<ModelClass> GetModelData(string jsonFilePath)
         {
-            List<ModelClass> modelData = new List<ModelClass>();
+            List<ModelClass> modelData = new List<ModelClass>(); 
             modelData = GroupFilesByPrefix(jsonFilePath);
             foreach (ModelClass model in modelData)
             {
                 if(model.NoMetaData == true)
                 {
+                   
+                    FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
+                    if (SafetensorsFileInfo == null) { continue; }
+                    var SafetensorMetaData = ParseSafetensorsMetadata(SafetensorsFileInfo);
                     continue;
-
                     // Replace with the actual path to your safetensors file.
                     string filePath = @"C:\path\to\your\model.safetensors";
                     // Optionally, provide your Civitai API key.

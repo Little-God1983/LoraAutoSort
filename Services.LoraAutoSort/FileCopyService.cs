@@ -44,6 +44,12 @@ namespace JsonFileReader
                     operationResults.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' has no metaData => File is skipped." });
                     continue;
                 }
+                else if (model.ErrorOnRetrievingMetaData)
+                {
+                    operationResults.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' Error on retrieving Meta Data. Check application log for infos" });
+                    continue;
+                }
+
                 string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
                 operationResults.Add(EnsureFolderExists(modelDirectory));
 

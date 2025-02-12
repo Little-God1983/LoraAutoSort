@@ -5,7 +5,7 @@
 
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Helper;
-using System.IO;
+using Serilog;
 using System.Text;
 using System.Text.Json;
 
@@ -26,62 +26,140 @@ namespace JsonFileReader
         /// <returns>A JsonElement representing the metadata.</returns>
         public static JsonElement ParseSafetensorsMetadata(FileInfo file)
         {
-            // Open the file for reading in binary mode.
-            using (FileStream fs = File.OpenRead(file.FullName))
+            Log.Information("Reading metadata from file '{FileName}'", file.FullName);
+
+            try
             {
-                if (file.Length < 8)
+                // Open the file for reading in binary mode.
+                Log.Debug("Opening file {FileName} for reading...", file.FullName);
+                using (FileStream fs = File.OpenRead(file.FullName))
                 {
-                    throw new Exception("The file is too short to contain the header length.");
-                }
-
-                // Read the first 8 bytes which encode the header length as a little-endian UInt64.
-                byte[] headerLengthBytes = new byte[8];
-                int readCount = fs.Read(headerLengthBytes, 0, 8);
-                if (readCount != 8)
-                    throw new Exception("Failed to read the header length from the file.");
-
-                // Convert the 8 bytes into an unsigned 64-bit integer.
-                ulong headerLength = BitConverter.ToUInt64(headerLengthBytes, 0);
-
-                // Read the header bytes.
-                byte[] headerBytes = new byte[headerLength];
-                readCount = fs.Read(headerBytes, 0, (int)headerLength);
-                if (readCount != (int)headerLength)
-                    throw new Exception("Failed to read the full header from the file.");
-
-                // Decode the header as a UTF-8 string.
-                string headerJson = Encoding.UTF8.GetString(headerBytes);
-
-                // Parse the JSON.
-                using (JsonDocument document = JsonDocument.Parse(headerJson))
-                {
-                    JsonElement root = document.RootElement;
-                    if (root.TryGetProperty("__metadata__", out JsonElement metadata))
+                    if (file.Length < 8)
                     {
-                        // Clone the metadata so it is valid even after the document is disposed.
-                        return metadata.Clone();
+                        Log.Error("File {FileName} is too short (length={FileLength}) to contain the header length.",
+                                  file.FullName, file.Length);
+                        throw new Exception("The file is too short to contain the header length.");
                     }
-                    else
+
+                    // Read the first 8 bytes which encode the header length as a little-endian UInt64.
+                    Log.Debug("Reading first 8 bytes for header length from {FileName}", file.FullName);
+                    byte[] headerLengthBytes = new byte[8];
+                    int readCount = fs.Read(headerLengthBytes, 0, 8);
+                    if (readCount != 8)
                     {
-                        throw new Exception("The header does not contain a '__metadata__' property.");
+                        Log.Error("Failed to read the header length (expected 8 bytes, got {BytesRead}).", readCount);
+                        throw new Exception("Failed to read the header length from the file.");
+                    }
+
+                    ulong headerLength = BitConverter.ToUInt64(headerLengthBytes, 0);
+                    Log.Debug("Header length is {HeaderLength} bytes", headerLength);
+
+                    // Read the header bytes.
+                    byte[] headerBytes = new byte[headerLength];
+                    readCount = fs.Read(headerBytes, 0, (int)headerLength);
+                    if (readCount != (int)headerLength)
+                    {
+                        Log.Error("Failed to read the full header from the file. Expected {ExpectedBytes}, got {BytesRead}.",
+                                  headerLength, readCount);
+                        throw new Exception("Failed to read the full header from the file.");
+                    }
+
+                    // Decode the header as a UTF-8 string.
+                    string headerJson = Encoding.UTF8.GetString(headerBytes);
+                    Log.Debug("Header JSON: {HeaderJson}", headerJson);
+
+                    // Parse the JSON.
+                    using (JsonDocument document = JsonDocument.Parse(headerJson))
+                    {
+                        JsonElement root = document.RootElement;
+                        if (root.TryGetProperty("__metadata__", out JsonElement metadata))
+                        {
+                            Log.Debug("Metadata found under '__metadata__' property. Returning metadata.");
+                            // Clone the metadata so it is valid even after the document is disposed.
+                            return metadata.Clone();
+                        }
+                        else
+                        {
+                            Log.Error("The header does not contain a '__metadata__' property in file {FileName}", file.FullName);
+                            throw new Exception("The header does not contain a '__metadata__' property.");
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error occurred while reading metadata from file '{FileName}'", file.FullName);
+                throw; // Rethrow so the caller can handle/observe it as needed.
+            }
+            finally
+            {
+                Log.Debug("Finished attempting to read metadata from file '{FileName}'", file.FullName);
+            }
+            //// Open the file for reading in binary mode.
+            //using (FileStream fs = File.OpenRead(file.FullName))
+            //{
+            //    if (file.Length < 8)
+            //    {
+            //        throw new Exception("The file is too short to contain the header length.");
+            //    }
+
+            //    // Read the first 8 bytes which encode the header length as a little-endian UInt64.
+            //    byte[] headerLengthBytes = new byte[8];
+            //    int readCount = fs.Read(headerLengthBytes, 0, 8);
+            //    if (readCount != 8)
+            //        throw new Exception("Failed to read the header length from the file.");
+
+            //    // Convert the 8 bytes into an unsigned 64-bit integer.
+            //    ulong headerLength = BitConverter.ToUInt64(headerLengthBytes, 0);
+
+            //    // Read the header bytes.
+            //    byte[] headerBytes = new byte[headerLength];
+            //    readCount = fs.Read(headerBytes, 0, (int)headerLength);
+            //    if (readCount != (int)headerLength)
+            //        throw new Exception("Failed to read the full header from the file.");
+
+            //    // Decode the header as a UTF-8 string.
+            //    string headerJson = Encoding.UTF8.GetString(headerBytes);
+
+            //    // Parse the JSON.
+            //    using (JsonDocument document = JsonDocument.Parse(headerJson))
+            //    {
+            //        JsonElement root = document.RootElement;
+            //        if (root.TryGetProperty("__metadata__", out JsonElement metadata))
+            //        {
+            //            // Clone the metadata so it is valid even after the document is disposed.
+            //            return metadata.Clone();
+            //        }
+            //        else
+            //        {
+            //            throw new Exception("The header does not contain a '__metadata__' property.");
+            //        }
+            //    }
+            //}
         }
 
 
         public List<ModelClass> GetModelData(string jsonFilePath)
         {
-            List<ModelClass> modelData = new List<ModelClass>(); 
+            List<ModelClass> modelData = new List<ModelClass>();
             modelData = GroupFilesByPrefix(jsonFilePath);
             foreach (ModelClass model in modelData)
             {
-                if(model.NoMetaData == true)
+                if (model.NoMetaData == true)
                 {
-                   
+                    try
+                    {
+
+                    }
+                    catch (Exception ex)
+                    {
+                        model.ErrorOnRetrievingMetaData = true;
+                    }
                     FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
                     if (SafetensorsFileInfo == null) { continue; }
+
                     var SafetensorMetaData = ParseSafetensorsMetadata(SafetensorsFileInfo);
+
                     continue;
                     // Replace with the actual path to your safetensors file.
                     string filePath = @"C:\path\to\your\model.safetensors";
@@ -105,7 +183,7 @@ namespace JsonFileReader
 
                 model.CivitaiCategory = GetMatchingCategory(model);
                 string baseModelName = GetBaseModelName(model);
-                model.DiffusionBaseModel = baseModelName == "SDXL 1.0" ? "SDXL":baseModelName;
+                model.DiffusionBaseModel = baseModelName == "SDXL 1.0" ? "SDXL" : baseModelName;
 
             }
             return modelData;
@@ -114,7 +192,7 @@ namespace JsonFileReader
         private CivitaiBaseCategories GetMatchingCategory(ModelClass model)
         {
             // Try loading tags from the ".json" file.
-            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".civitai.info","tags"));
+            var uniqueTags = new HashSet<string>(LoadTagsFromFile(model, ".civitai.info", "tags"));
 
             // If the category is still UNKNOWN, attempt to load additional tags from ".cm-info.json".
             uniqueTags.UnionWith(LoadTagsFromFile(model, ".cm-info.json", "Tags"));
@@ -224,7 +302,7 @@ namespace JsonFileReader
             // Extract the prefix from the file name (everything before the last underscore)
             //var lastUnderscoreIndex = fileName.LastIndexOf('_');
             //return lastUnderscoreIndex > 0 ? fileName.Substring(0, lastUnderscoreIndex) : fileName;
-           return Path.GetFileNameWithoutExtension(fileName);
+            return Path.GetFileNameWithoutExtension(fileName);
             //return fileName.Split('.').First();
         }
         static string ExtractBaseName(string fileName)
@@ -259,7 +337,8 @@ namespace JsonFileReader
                 JsonDocument jdoc = LoadJsonDocument(fileCivitai.FullName);
                 JsonElement root = jdoc.RootElement;
                 return root.GetProperty("baseModel").GetString();
-            }else if(fileJson != null)
+            }
+            else if (fileJson != null)
             {
                 JsonDocument jdoc = LoadJsonDocument(fileJson.FullName);
                 JsonElement root = jdoc.RootElement;
@@ -268,11 +347,11 @@ namespace JsonFileReader
                     return tagElement.GetString();
                 }
             }
-            
+
             return "UNKNOWN";
         }
 
-        private HashSet<string> GetTagsFromJson(JsonElement root,string searchTerm)
+        private HashSet<string> GetTagsFromJson(JsonElement root, string searchTerm)
         {
             HashSet<string> tags = new HashSet<string>();
 

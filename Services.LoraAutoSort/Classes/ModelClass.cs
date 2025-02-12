@@ -13,5 +13,6 @@ namespace Services.LoraAutoSort.Classes
         public List<string> Tags { get; set; } = new List<string>();
         public CivitaiBaseCategories CivitaiCategory { get; set; } = CivitaiBaseCategories.UNASSIGNED;
         public bool NoMetaData { get; set; }
+        public bool ErrorOnRetrievingMetaData { get; internal set; } = false;
     }
 }

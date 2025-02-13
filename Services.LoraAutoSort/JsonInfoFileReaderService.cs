@@ -141,45 +141,56 @@ namespace JsonFileReader
 
         public async Task<List<ModelClass>> GetModelData(string jsonFilePath)
         {
-            //TODO: improve this logic instead of  checking for no data
-            // Try to read from info first and if not 
-            List<ModelClass> modelData = new List<ModelClass>();
-            modelData = GroupFilesByPrefix(jsonFilePath);
-            foreach (ModelClass model in modelData)
+            
+            List<ModelClass> modelDataList = new List<ModelClass>();
+            modelDataList = GroupFilesByPrefix(jsonFilePath);
+            foreach (ModelClass model in modelDataList)
             {
                 if (model.NoMetaData == true)
                 {
-                    try
+                    await UpdateModelDataFromCivitaiAPI(model);
+                }
+                else
+                {
+                    // Try to read from local file info first 
+                    model.CivitaiCategory = GetMatchingCategory(model);
+                    model.DiffusionBaseModel = GetBaseModelName(model);
+                    // If local file info is insufficient try via online API
+                    if (model.DiffusionBaseModel == "UNKNOWN" || model.CivitaiCategory == CivitaiBaseCategories.UNKNOWN)
                     {
-                        FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
-                        if (SafetensorsFileInfo == null) { continue; }
-
-                        //string SafetensorModelHash = ParseSafetensorsMetadata(SafetensorsFileInfo);
-                        string SHA256FromSafetensorsFile = ComputeSHA256(SafetensorsFileInfo.FullName);
-                        CivitaiMetaDataService service = new CivitaiMetaDataService();
-                        //First API call to get info from the specific model version, some loras have a Pony, Flux, SDXL version
-                        string modelVersionInfoApiResponse = await service.GetModelVersionInformationFromCivitaiAsync(SHA256FromSafetensorsFile);
-                        string modelId = service.GetModelId(modelVersionInfoApiResponse);
-                        model.DiffusionBaseModel = service.GetBaseModel(modelVersionInfoApiResponse);
-
-                        //Second API call to get basic info about the model like tags etc. These are stored on the model page not on the version page
-                        string modelInfoApiResponse = await service.GetModelInformationFromCivitaiAsync(modelId);
-                        model.Tags = service.GetTagsFromModelInfo(modelInfoApiResponse);
-                        model.NoMetaData = false;
-                        
-                    }
-                    catch (Exception ex)
-                    {
-                        model.ErrorOnRetrievingMetaData = true;
+                        await UpdateModelDataFromCivitaiAPI(model);
                     }
                 }
+            }
+            return modelDataList;
+        }
 
-                model.CivitaiCategory = GetMatchingCategory(model);
-                string baseModelName = GetBaseModelName(model);
-                model.DiffusionBaseModel = baseModelName == "SDXL 1.0" ? "SDXL" : baseModelName;
+        private async Task UpdateModelDataFromCivitaiAPI(ModelClass model)
+        {
+            try
+            {
+                FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
+                if (SafetensorsFileInfo == null) { return; }
+
+                //string SafetensorModelHash = ParseSafetensorsMetadata(SafetensorsFileInfo);
+                string SHA256FromSafetensorsFile = ComputeSHA256(SafetensorsFileInfo.FullName);
+                CivitaiMetaDataService service = new CivitaiMetaDataService();
+                //First API call to get info from the specific model version, some loras have a Pony, Flux, SDXL version
+                string modelVersionInfoApiResponse = await service.GetModelVersionInformationFromCivitaiAsync(SHA256FromSafetensorsFile);
+                string modelId = service.GetModelId(modelVersionInfoApiResponse);
+                model.DiffusionBaseModel = service.GetBaseModelName(modelVersionInfoApiResponse);
+
+                //Second API call to get basic info about the model like tags etc. These are stored on the model page not on the version page
+                string modelInfoApiResponse = await service.GetModelInformationFromCivitaiAsync(modelId);
+                model.Tags = service.GetTagsFromModelInfo(modelInfoApiResponse);
+                model.NoMetaData = false;
+                model.CivitaiCategory = GetCategoryFromTags(model.Tags);
 
             }
-            return modelData;
+            catch (Exception ex)
+            {
+                model.ErrorOnRetrievingMetaData = true;
+            }
         }
 
         private CivitaiBaseCategories GetMatchingCategory(ModelClass model)

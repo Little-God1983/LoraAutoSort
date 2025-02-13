@@ -7,7 +7,14 @@ namespace Services.LoraAutoSort.Classes
 {
     public class ModelClass
     {
-        public string DiffusionBaseModel { get; set; }
+        private string diffusionBaseModel;
+
+        public string DiffusionBaseModel
+        {
+            get => diffusionBaseModel;
+            set => diffusionBaseModel = value == "SDXL 1.0" ? "SDXL" : value;
+        }
+
         public string ModelName { get; set; }
         public List<FileInfo> AssociatedFilesInfo { get; set; }
         public List<string> Tags { get; set; } = new List<string>();

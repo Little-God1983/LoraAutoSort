@@ -153,16 +153,16 @@ namespace Services.LoraAutoSort.Classes
             }
         }
 
-        internal string GetBaseModel(string modelInfoApiResponse)
+        internal string GetBaseModelName(string modelInfoApiResponse)
         {
             using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
-            return doc.RootElement.GetProperty("modelId").ToString();
+            return doc.RootElement.GetProperty("baseModel").ToString();
         }
 
         internal string GetModelId(string modelInfoApiResponse)
         {
             using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
-            return doc.RootElement.GetProperty("baseModel").ToString();
+            return doc.RootElement.GetProperty("modelId").ToString();
         }
 
         internal async Task<string> GetModelInformationFromCivitaiAsync(string modelId)

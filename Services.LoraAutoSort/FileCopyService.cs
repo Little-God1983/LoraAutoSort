@@ -35,7 +35,7 @@ namespace JsonFileReader
             }
         }
 
-        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
+        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken)
         {
             int totalModels = models.Count;
             int currentModel = 0;
@@ -43,6 +43,9 @@ namespace JsonFileReader
 
             foreach (var model in models)
             {
+                // Throw if cancellation is requested
+                cancellationToken.ThrowIfCancellationRequested();
+
                 // Update progress based on model index.
                 int percentage = (int)((double)currentModel / totalModels * 100);
 

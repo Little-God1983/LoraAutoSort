@@ -18,16 +18,18 @@ namespace Services.LoraAutoSort
 
         public async Task ComputeFolder(IProgress<ProgressReport> progress,
                                         string sourcePath, string targetPath,
-                                        bool moveInsteadOfCopy, bool overrideExistingFiles)
+                                        bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken)
         {
             progress?.Report(new ProgressReport
             {
                 Percentage = 0,
                 StatusMessage = "Starting processing..."
             });
+            // Throw if cancellation is requested
+            cancellationToken.ThrowIfCancellationRequested();
 
             var jsonReader = new JsonInfoFileReaderService(sourcePath);
-            List<ModelClass> models = await jsonReader.GetModelData(progress, sourcePath);
+            List<ModelClass> models = await jsonReader.GetModelData(progress, sourcePath, cancellationToken);
 
 
             if (models == null || models.Count == 0)
@@ -46,7 +48,7 @@ namespace Services.LoraAutoSort
             // ProcessModelClasses now reports progress and uses our new ProgressReport type.
             await Task.Run(() =>
             {
-                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles);
+                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles,cancellationToken);
             });
 
             progress?.Report(new ProgressReport

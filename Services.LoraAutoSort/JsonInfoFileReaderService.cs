@@ -142,7 +142,7 @@ namespace JsonFileReader
             }
         }
 
-        public async Task<List<ModelClass>> GetModelData(IProgress<ProgressReport>? progress, string jsonFilePath)
+        public async Task<List<ModelClass>> GetModelData(IProgress<ProgressReport>? progress, string jsonFilePath, CancellationToken cancellationToken)
         {
             
             List<ModelClass> modelDataList = new List<ModelClass>();
@@ -155,6 +155,9 @@ namespace JsonFileReader
 
             foreach (ModelClass model in modelDataList)
             {
+                // Throw if cancellation is requested
+                cancellationToken.ThrowIfCancellationRequested();
+
                 if (model.NoMetaData == true)
                 {
 

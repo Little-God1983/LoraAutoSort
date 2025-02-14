@@ -50,7 +50,7 @@
                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
                     <StackPanel>
                         <Label Content="Your LoRA Source Path (e.g.:&quot;D:\stable-diffusion-webui\models\Lora&quot;):"/>
-                        <Button Content="Select LoRA Path..." Click="SelectBasePath"/>
+                        <Button x:Name ="btnBasePath" Content="Select LoRA Path..." Click="SelectBasePath"/>
                         <TextBox x:Name="txtBasePath" IsReadOnly="True" Margin="0,5"/>
                     </StackPanel>
                 </Border>
@@ -75,13 +75,13 @@
                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
                     <StackPanel>
                         <Label Content="LoRA Target Path:"/>
-                        <Button Content="Select Target Path..." Click="SelectTargetPath"/>
+                        <Button x:Name="btnTargetPath" Content="Select Target Path..." Click="SelectTargetPath"/>
                         <TextBox x:Name="txtTargetPath" Margin="0,5" IsReadOnly="True"/>
                     </StackPanel>
                 </Border>
 
                 <Border>
-                    <Button x:Name="btnGo" Height="50" Content="Go" Margin="0,10" Click="btnGo_Click"/>
+                    <Button x:Name="btnGoCancel" Height="50" Content="Go" Margin="0,10" Click="btnGoCancel_Click"/>
                 </Border>
                 <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Height="25" />
                 <TextBlock x:Name="txtStatus" Margin="0,35,0,0" FontSize="14"/>

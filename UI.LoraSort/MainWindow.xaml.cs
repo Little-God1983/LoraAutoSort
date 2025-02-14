@@ -2,7 +2,6 @@
  * Licensed under the terms found in the LICENSE file in the root directory.
  * For non-commercial use only. See LICENSE for details.
  */
-
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
@@ -14,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using UI.LoraSort.ViewModels;
+using Serilog;
 
 namespace UI.LoraSort
 {
@@ -22,6 +22,9 @@ namespace UI.LoraSort
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CancellationTokenSource _cts;
+        private bool _isProcessing = false;
+
         public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; }
         // ICommand properties for moving items
         public ICommand MoveUpCommand { get; }
@@ -181,62 +184,96 @@ namespace UI.LoraSort
             });
         }
 
-
-
-        private async void btnGo_Click(object sender, RoutedEventArgs e)
+        private async void btnGoCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
+            if(!_isProcessing)
             {
-                MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                return;
-            }
-
-            if (IsPathTheSame())
-            {
-                MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                return;
-            }
-            FileControllerService controllerService = new FileControllerService();
-
-            if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
-            {
-                MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                return;
-            }
-
-            rtbLog.Document.Blocks.Clear(); // Clear previous entries
-
-            bool moveOperation = false;
-            if (!(bool)radioCopy.IsChecked)
-            {
-                if (!ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored. Continue anyways?", "Are you sure?"))
+                // Create a new CTS for this run
+                _cts = new CancellationTokenSource();
+                if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
                 {
+                    MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
                     return;
                 }
-                else
+
+                // Switch UI states
+                _isProcessing = true;
+                btnGoCancel.Content = "Cancel"; // Button shows "Cancel" now
+                rtbLog.Document.Blocks.Clear(); // Clear old logs
+                btnTargetPath.IsEnabled = false;
+                btnBasePath.IsEnabled = false;
+
+                if (IsPathTheSame())
                 {
-                    moveOperation = true;
+                    MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                    return;
                 }
-            }
+                FileControllerService controllerService = new FileControllerService();
 
-            // This is executed on the UI thread.
-            var progressIndicator = new Progress<ProgressReport>(report =>
-            {
-                // Even though Progress<T> should already marshal back to the UI thread,
-                // we explicitly ensure it by using the Dispatcher.
-                Application.Current.Dispatcher.Invoke(() =>
+                if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
                 {
-                    if (report.Percentage.HasValue)
-                    {
-                        progressBar.Value = report.Percentage.Value;
-                    }
-                    txtStatus.Text = report.StatusMessage;
-                    bool isError = report.IsSuccessful.HasValue && !report.IsSuccessful.Value;
-                    AppendLog(report.StatusMessage, isError);
-                });
-            });
+                    MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                    return;
+                }
 
-            await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
+                rtbLog.Document.Blocks.Clear(); // Clear previous entries
+
+                bool moveOperation = false;
+                if (!(bool)radioCopy.IsChecked)
+                {
+                    if (!ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored. Continue anyways?", "Are you sure?"))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        moveOperation = true;
+                    }
+                }
+
+                try
+                {
+                    var progressIndicator = new Progress<ProgressReport>(report =>
+                    {
+                        // Even though Progress<T> should already marshal back to the UI thread,
+                        // we explicitly ensure it by using the Dispatcher.
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            if (report.Percentage.HasValue)
+                            {
+                                progressBar.Value = report.Percentage.Value;
+                            }
+                            txtStatus.Text = report.StatusMessage;
+                            bool isError = report.IsSuccessful.HasValue && !report.IsSuccessful.Value;
+                            AppendLog(report.StatusMessage, isError);
+                        });
+                    });
+                    await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // This is expected if user cancels
+                    AppendLog("Operation was canceled by user.", isError: false);
+                }
+                catch (Exception ex)
+                {
+                    // Other exceptions
+                   Log.Error($"Unexpected error: {ex.Message}");
+                }
+                finally
+                {
+                    // Reset UI
+                    _isProcessing = false;
+                    btnTargetPath.IsEnabled = true;
+                    btnBasePath.IsEnabled = true;
+                    btnGoCancel.Content = "Go";
+                }
+                // This is executed on the UI thread.
+            }
+            else
+            {
+                _cts.Cancel();
+            }
         }
 
         private bool IsPathTheSame()

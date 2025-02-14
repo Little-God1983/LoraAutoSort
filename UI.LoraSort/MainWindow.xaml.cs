@@ -219,20 +219,24 @@ namespace UI.LoraSort
                 }
             }
 
-            List<OperationResult> results = await controllerService.ComputeFolder(txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
-
-            if (results != null && results.Count > 0)
+            // This is executed on the UI thread.
+            var progressIndicator = new Progress<ProgressReport>(report =>
             {
-                foreach (var result in results)
+                // Even though Progress<T> should already marshal back to the UI thread,
+                // we explicitly ensure it by using the Dispatcher.
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    // Call the AppendLog method, passing true if the operation was not successful
-                    AppendLog(result.Message, !result.IsSuccessful);
-                }
-            }
-            else
-            {
-                AppendLog("No operation results to display.");
-            }
+                    if (report.Percentage.HasValue)
+                    {
+                        progressBar.Value = report.Percentage.Value;
+                    }
+                    txtStatus.Text = report.StatusMessage;
+                    bool isError = report.IsSuccessful.HasValue && !report.IsSuccessful.Value;
+                    AppendLog(report.StatusMessage, isError);
+                });
+            });
+
+            await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked);
         }
 
         private bool IsPathTheSame()

@@ -49,7 +49,10 @@ namespace Services.LoraAutoSort
 
             var fileCopyService = new FileCopyService();
             // ProcessModelClasses now reports progress and uses our new ProgressReport type.
-            fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
+            await Task.Run(() =>
+            {
+                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles);
+            });
 
             progress?.Report(new ProgressReport
             {

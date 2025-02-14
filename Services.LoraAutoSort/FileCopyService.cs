@@ -30,24 +30,21 @@ namespace JsonFileReader
             }
             catch (Exception ex)
             {
-                Log.Error($"Failed to create directory '{directoryPath}' { ex.Message}");
+                Log.Error($"Failed to create directory '{directoryPath}' {ex.Message}");
                 progress?.Report(new ProgressReport { IsSuccessful = false, StatusMessage = $"Failed to create directory '{directoryPath}'" });
             }
         }
 
         public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
-           
-
-            //progressbar ranges from 0 - 100: we need to know what value 1% is.
-            int stepVAlue = models.Count / 100;
-            int total = 0;
+            int totalModels = models.Count;
+            int currentModel = 0;
             bool hasErrors = false;
-            progress?.Report(new ProgressReport { StatusMessage = $"Number of LoRa's found: {models.Count}" });
+
             foreach (var model in models)
             {
-                int percentage = total / stepVAlue;
-                
+                // Update progress based on model index.
+                int percentage = (int)((double)currentModel / totalModels * 100);
 
                 if (model.NoMetaData)
                 {
@@ -85,9 +82,10 @@ namespace JsonFileReader
                     catch (Exception ex)
                     {
                         progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}': {ex.Message}" });
+                        hasErrors = true;
                     }
                 }
-                total++;
+                currentModel++;
             }
 
             return hasErrors;

@@ -9,6 +9,9 @@ using Serilog;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace JsonFileReader
 {
@@ -139,16 +142,23 @@ namespace JsonFileReader
             }
         }
 
-        public async Task<List<ModelClass>> GetModelData(string jsonFilePath)
+        public async Task<List<ModelClass>> GetModelData(IProgress<ProgressReport>? progress, string jsonFilePath)
         {
             
             List<ModelClass> modelDataList = new List<ModelClass>();
             modelDataList = GroupFilesByPrefix(jsonFilePath);
+            progress?.Report(new ProgressReport
+            {
+                Percentage = 0,
+                StatusMessage = $"Number of LoRa's found: {modelDataList.Count}"
+            });
+
             foreach (ModelClass model in modelDataList)
             {
                 if (model.NoMetaData == true)
                 {
-                    await UpdateModelDataFromCivitaiAPI(model);
+
+                    await UpdateModelDataFromCivitaiAPI(progress, model);
                 }
                 else
                 {
@@ -158,17 +168,22 @@ namespace JsonFileReader
                     // If local file info is insufficient try via online API
                     if (model.DiffusionBaseModel == "UNKNOWN" || model.CivitaiCategory == CivitaiBaseCategories.UNKNOWN)
                     {
-                        await UpdateModelDataFromCivitaiAPI(model);
+                        await UpdateModelDataFromCivitaiAPI(progress, model);
                     }
                 }
             }
             return modelDataList;
         }
 
-        private async Task UpdateModelDataFromCivitaiAPI(ModelClass model)
+        private async Task UpdateModelDataFromCivitaiAPI(IProgress<ProgressReport>? progress, ModelClass model)
         {
             try
             {
+                progress?.Report(new ProgressReport
+                {
+                    Percentage = 0,
+                    StatusMessage = $"Calling API for metadata of {model.ModelName}"
+                });
                 FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
                 if (SafetensorsFileInfo == null) { return; }
 

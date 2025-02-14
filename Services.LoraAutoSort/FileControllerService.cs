@@ -27,13 +27,8 @@ namespace Services.LoraAutoSort
             });
 
             var jsonReader = new JsonInfoFileReaderService(sourcePath);
-            List<ModelClass> models = await jsonReader.GetModelData(sourcePath);
+            List<ModelClass> models = await jsonReader.GetModelData(progress, sourcePath);
 
-            progress?.Report(new ProgressReport
-            {
-                Percentage = 0,
-                StatusMessage = $"Number of LoRa's found: {models.Count}"
-            });
 
             if (models == null || models.Count == 0)
             {

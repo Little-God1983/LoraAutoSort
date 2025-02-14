@@ -172,26 +172,15 @@ namespace UI.LoraSort
         {
             Dispatcher.Invoke(() =>
             {
-                // Create a new paragraph for each log entry
-                Paragraph paragraph = new Paragraph(new Run(message));
-
-                // Apply color based on error status
-                if (isError)
+                var paragraph = new Paragraph(new Run(message))
                 {
-                    paragraph.Foreground = Brushes.Red;
-                }
-                else
-                {
-                    paragraph.Foreground = Brushes.Black;
-                }
-
-                // Add the paragraph to the RichTextBox
+                    Foreground = isError ? Brushes.Red : Brushes.Black
+                };
                 rtbLog.Document.Blocks.Add(paragraph);
-
-                // Scroll to the end of the RichTextBox to ensure the last entry is visible
                 rtbLog.ScrollToEnd();
             });
         }
+
 
 
         private async void btnGo_Click(object sender, RoutedEventArgs e)

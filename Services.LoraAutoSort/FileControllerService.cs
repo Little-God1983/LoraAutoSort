@@ -16,21 +16,47 @@ namespace Services.LoraAutoSort
 
         }
 
-        public async Task<List<OperationResult>> ComputeFolder(string sourcePath, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
+        public async Task ComputeFolder(IProgress<ProgressReport> progress,
+                                        string sourcePath, string targetPath,
+                                        bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
-            JsonInfoFileReaderService jsonInfoFileReaderService = new JsonInfoFileReaderService(sourcePath);
-            List<ModelClass> models = await jsonInfoFileReaderService.GetModelData(sourcePath);
+            progress?.Report(new ProgressReport
+            {
+                Percentage = 0,
+                StatusMessage = "Starting processing..."
+            });
+
+            var jsonReader = new JsonInfoFileReaderService(sourcePath);
+            List<ModelClass> models = await jsonReader.GetModelData(sourcePath);
+
+            progress?.Report(new ProgressReport
+            {
+                Percentage = 0,
+                StatusMessage = $"Number of LoRa's found: {models.Count}"
+            });
 
             if (models == null || models.Count == 0)
             {
-                return new List<OperationResult>() { new OperationResult()
+                // Report error and stop processing.
+                progress?.Report(new ProgressReport
                 {
-                    IsSuccessful = false, Message = "No Models in selected folders" }
-                };
+                    Percentage = 0,
+                    StatusMessage = "No Models in selected folders",
+                    IsSuccessful = false
+                });
+                return;
             }
 
-            FileCopyService fileCopyServicere = new FileCopyService();
-            return fileCopyServicere.ProcessModelClasses(models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
+            var fileCopyService = new FileCopyService();
+            // ProcessModelClasses now reports progress and uses our new ProgressReport type.
+            fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles).ToList();
+
+            progress?.Report(new ProgressReport
+            {
+                Percentage = 100,
+                StatusMessage = "Finished processing.",
+                IsSuccessful = true
+            });
         }
 
         public bool EnoughFreeSpaceOnDisk(string sourcePath, string targetPath)

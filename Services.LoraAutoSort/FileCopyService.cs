@@ -3,6 +3,7 @@
  * For non-commercial use only. See LICENSE for details.
  */
 
+using Serilog;
 using Services.LoraAutoSort.Classes;
 
 namespace JsonFileReader
@@ -13,45 +14,56 @@ namespace JsonFileReader
         {
 
         }
-        private OperationResult EnsureFolderExists(string directoryPath)
+        private void EnsureFolderExists(IProgress<ProgressReport>? progress, string directoryPath)
         {
             try
             {
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
-                    return new OperationResult { IsSuccessful = true, Message = $"Directory '{directoryPath}' created successfully." };
+                    progress?.Report(new ProgressReport { IsSuccessful = true, StatusMessage = $"Directory '{directoryPath}' created successfully." });
                 }
                 else
                 {
-                    return new OperationResult { IsSuccessful = true, Message = $"Directory '{directoryPath}' already exists." };
+                    progress?.Report(new ProgressReport { IsSuccessful = true, StatusMessage = $"Directory '{directoryPath}' already exists." });
                 }
             }
             catch (Exception ex)
             {
-                return new OperationResult { IsSuccessful = false, Message = $"Failed to create directory '{directoryPath}': {ex.Message}" };
+                Log.Error($"Failed to create directory '{directoryPath}' { ex.Message}");
+                progress?.Report(new ProgressReport { IsSuccessful = false, StatusMessage = $"Failed to create directory '{directoryPath}'" });
             }
         }
 
-        public IEnumerable<OperationResult> ProcessModelClasses(List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
+        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles)
         {
-            List<OperationResult> operationResults = new List<OperationResult>();
+           
 
+            //progressbar ranges from 0 - 100: we need to know what value 1% is.
+            int stepVAlue = models.Count / 100;
+            int total = 0;
+            bool hasErrors = false;
+            progress?.Report(new ProgressReport { StatusMessage = $"Number of LoRa's found: {models.Count}" });
             foreach (var model in models)
             {
+                int percentage = total / stepVAlue;
+                
+
                 if (model.NoMetaData)
                 {
-                    operationResults.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' has no metaData => File is skipped." });
+                    progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' has no metaData => File is skipped." });
+                    hasErrors = true;
                     continue;
                 }
                 else if (model.ErrorOnRetrievingMetaData)
                 {
-                    operationResults.Add(new OperationResult { IsSuccessful = false, Message = $"File '{model.ModelName}' Error on retrieving Meta Data. Check application log for infos" });
+                    progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' Error on retrieving Meta Data. Check application log for infos" });
+                    hasErrors = true;
                     continue;
                 }
 
                 string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
-                operationResults.Add(EnsureFolderExists(modelDirectory));
+                EnsureFolderExists(progress, modelDirectory);
 
                 foreach (var modelFile in model.AssociatedFilesInfo)
                 {
@@ -62,21 +74,23 @@ namespace JsonFileReader
                         if (moveInsteadOfCopy)
                         {
                             File.Move(source, target, overrideExistingFiles);
-                            operationResults.Add(new OperationResult { IsSuccessful = true, Message = $"File '{modelFile.Name}' moved to '{modelDirectory}'." });
+                            progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' moved to '{modelDirectory}'." });
                         }
                         else
                         {
                             File.Copy(source, target, overrideExistingFiles);
-                            operationResults.Add(new OperationResult { IsSuccessful = true, Message = $"File '{modelFile.Name}' copied to '{modelDirectory}'." });
+                            progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' copied to '{modelDirectory}'." });
                         }
                     }
                     catch (Exception ex)
                     {
-                        operationResults.Add(new OperationResult { IsSuccessful = false, Message = $"Error copying file '{modelFile.Name}': {ex.Message}" });
+                        progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}': {ex.Message}" });
                     }
                 }
+                total++;
             }
-            return operationResults;
+
+            return hasErrors;
         }
     }
 }

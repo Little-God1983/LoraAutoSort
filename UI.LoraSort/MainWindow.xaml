@@ -180,11 +180,15 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <!-- Toggle for filtering -->
-            <CheckBox Content="Show errors only" IsChecked="{Binding ShowErrorsOnly}" Margin="0,0,0,5" Grid.Row="0"/>
-            <!-- ListView that displays log entries -->
-            <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}"
-            Grid.Row="1"
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <!-- Toggle for filtering errors -->
+                <CheckBox Content="Show errors only" IsChecked="{Binding ShowErrorsOnly}" Margin="0,0,10,0"/>
+                <!-- Buttons for copying and exporting error logs -->
+                <Button Content="Copy Errors to clipboard" Command="{Binding CopyErrorLogsCommand}" Margin="0,0,10,0"/>
+                <Button Content="Export Errors to file" Command="{Binding ExportErrorLogsCommand}"/>
+            </StackPanel>
+            <!-- ListView to display log entries -->
+            <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}" Grid.Row="1"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -204,6 +208,5 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-
     </Grid>
 </Window>

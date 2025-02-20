@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Win32;
 using Services.LoraAutoSort.Classes;
 
 namespace UI.LoraSort.ViewModels
@@ -12,6 +15,10 @@ namespace UI.LoraSort.ViewModels
         public ObservableCollection<CustomTagMap> CustomTagMappings { get; set; } = new ObservableCollection<CustomTagMap>();
         public ICommand MoveUpCommand { get; }
         public ICommand MoveDownCommand { get; }
+        public ICommand CopyErrorLogsCommand { get; }
+        public ICommand ExportErrorLogsCommand { get; }
+
+
 
         // New logging properties
         public ObservableCollection<ProgressReport> LogEntries { get; } = new ObservableCollection<ProgressReport>();
@@ -36,6 +43,37 @@ namespace UI.LoraSort.ViewModels
         {
             MoveUpCommand = new RelayCommand<CustomTagMap>(MoveMappingUp);
             MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown);
+
+            CopyErrorLogsCommand = new RelayCommand(() =>
+            {
+                var errorMessages = LogEntries
+                    .Where(e => e.IsSuccessful.HasValue && !e.IsSuccessful.Value)
+                    .Select(e => e.StatusMessage);
+                string textToCopy = string.Join(Environment.NewLine, errorMessages);
+                Clipboard.SetText(textToCopy);
+            });
+
+
+            ExportErrorLogsCommand = new RelayCommand(() =>
+            {
+                // Filter error messages
+                var errorMessages = LogEntries
+                    .Where(e => e.IsSuccessful.HasValue && !e.IsSuccessful.Value)
+                    .Select(e => e.StatusMessage);
+                string textToExport = string.Join(Environment.NewLine, errorMessages);
+
+                // Let the user choose where to save the file using a SaveFileDialog.
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    Filter = "Text File (*.txt)|*.txt",
+                    Title = "Export Error Logs"
+                };
+
+                if (sfd.ShowDialog() == true)
+                {
+                    File.WriteAllText(sfd.FileName, textToExport);
+                }
+            });
 
             // Set up the filtered view for logs.
             LogEntriesView = CollectionViewSource.GetDefaultView(LogEntries);

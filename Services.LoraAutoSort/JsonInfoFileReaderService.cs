@@ -9,9 +9,7 @@ using Serilog;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace JsonFileReader
 {
@@ -152,15 +150,18 @@ namespace JsonFileReader
                 Percentage = 0,
                 StatusMessage = $"Number of LoRa's found: {modelDataList.Count}"
             });
-
+            int count = 1;
             foreach (ModelClass model in modelDataList)
             {
+              
+                Log.Debug($"Processing Metadata: {count} of {modelDataList.Count} - {model.ModelName}");
+
                 // Throw if cancellation is requested
                 cancellationToken.ThrowIfCancellationRequested();
+                //if(model.AssociatedFilesInfo.Any(x => x.Extension == ))
 
                 if (model.NoMetaData == true)
                 {
-
                     await UpdateModelDataFromCivitaiAPI(progress, model);
                 }
                 else
@@ -174,7 +175,10 @@ namespace JsonFileReader
                         await UpdateModelDataFromCivitaiAPI(progress, model);
                     }
                 }
+                count++;
             }
+
+            Log.Debug($"Processing Metadata finished.");
             return modelDataList;
         }
 
@@ -182,13 +186,23 @@ namespace JsonFileReader
         {
             try
             {
+                FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
+                if (SafetensorsFileInfo == null) 
+                {
+                    progress?.Report(new ProgressReport
+                    {
+                        IsSuccessful = false,
+                        Percentage = 0,
+                        StatusMessage = $"API Call skipped for: {model.ModelName} - No safetensorsfile found"
+                    });
+                    return;
+                }
                 progress?.Report(new ProgressReport
                 {
                     Percentage = 0,
                     StatusMessage = $"Calling API for metadata of {model.ModelName}"
                 });
-                FileInfo SafetensorsFileInfo = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".safetensors");
-                if (SafetensorsFileInfo == null) { return; }
+
 
                 //string SafetensorModelHash = ParseSafetensorsMetadata(SafetensorsFileInfo);
                 string SHA256FromSafetensorsFile = ComputeSHA256(SafetensorsFileInfo.FullName);
@@ -207,6 +221,13 @@ namespace JsonFileReader
             }
             catch (Exception ex)
             {
+                progress?.Report(new ProgressReport
+                {
+                    IsSuccessful = false,
+                    Percentage = 0,
+                    StatusMessage = $"Error on Retrieving Meta Data from API for {model.ModelName} - {ex.Message}"
+                });
+
                 model.ErrorOnRetrievingMetaData = true;
             }
         }
@@ -352,25 +373,40 @@ namespace JsonFileReader
 
         private string GetBaseModelName(ModelClass model)
         {
-            var fileCivitai = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(".civitai.info"));
-            var fileJson = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".json");
-            if (fileCivitai != null)
+            try
             {
-                JsonDocument jdoc = LoadJsonDocument(fileCivitai.FullName);
-                JsonElement root = jdoc.RootElement;
-                return root.GetProperty("baseModel").GetString();
-            }
-            else if (fileJson != null)
-            {
-                JsonDocument jdoc = LoadJsonDocument(fileJson.FullName);
-                JsonElement root = jdoc.RootElement;
-                if (root.TryGetProperty("sd version", out JsonElement tagElement) && tagElement.ValueKind == JsonValueKind.String)
+                var fileCivitai = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(".civitai.info"));
+                var fileJson = model.AssociatedFilesInfo.FirstOrDefault(x => x.Extension == ".json");
+
+                if (fileCivitai != null)
                 {
-                    return tagElement.GetString();
+                    using (JsonDocument jdoc = LoadJsonDocument(fileCivitai.FullName))
+                    {
+                        JsonElement root = jdoc.RootElement;
+                        return root.GetProperty("baseModel").GetString();
+                    }
                 }
+                else if (fileJson != null)
+                {
+                    using (JsonDocument jdoc = LoadJsonDocument(fileJson.FullName))
+                    {
+                        JsonElement root = jdoc.RootElement;
+                        if (root.TryGetProperty("sd version", out JsonElement tagElement) && tagElement.ValueKind == JsonValueKind.String)
+                        {
+                            return tagElement.GetString();
+                        }
+                    }
+                }
+
+                return "UNKNOWN";
+            }
+            catch (Exception ex)
+            {
+                // Optionally log the exception, for example:
+                // Logger.LogError(ex, "Error retrieving base model");
+                return "UNKNOWN";
             }
 
-            return "UNKNOWN";
         }
 
         private HashSet<string> GetTagsFromJson(JsonElement root, string searchTerm)

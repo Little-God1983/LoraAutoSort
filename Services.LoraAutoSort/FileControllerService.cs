@@ -23,7 +23,7 @@ namespace Services.LoraAutoSort
             progress?.Report(new ProgressReport
             {
                 Percentage = 0,
-                StatusMessage = "Starting processing..."
+                StatusMessage = "Starting processing LoRA's"
             });
             // Throw if cancellation is requested
             cancellationToken.ThrowIfCancellationRequested();
@@ -46,6 +46,12 @@ namespace Services.LoraAutoSort
 
             var fileCopyService = new FileCopyService();
             // ProcessModelClasses now reports progress and uses our new ProgressReport type.
+            progress?.Report(new ProgressReport
+            {
+                Percentage = 0,
+                StatusMessage = "Starting processing copy/paste"
+            });
+
             await Task.Run(() =>
             {
                 fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles,cancellationToken);

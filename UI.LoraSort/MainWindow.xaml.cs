@@ -188,14 +188,6 @@ namespace UI.LoraSort
         {
             if(!_isProcessing)
             {
-                // Create a new CTS for this run
-                _cts = new CancellationTokenSource();
-                if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
-                {
-                    MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                    return;
-                }
-
                 // Switch UI states
                 _isProcessing = true;
                 btnGoCancel.Content = "Cancel"; // Button shows "Cancel" now
@@ -203,9 +195,20 @@ namespace UI.LoraSort
                 btnTargetPath.IsEnabled = false;
                 btnBasePath.IsEnabled = false;
 
+                // Create a new CTS for this run
+                _cts = new CancellationTokenSource();
+                if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
+                {
+                    MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                    ResetUI();
+                    return;
+                }
+               
+
                 if (IsPathTheSame())
                 {
                     MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                    ResetUI();
                     return;
                 }
                 FileControllerService controllerService = new FileControllerService();
@@ -213,6 +216,7 @@ namespace UI.LoraSort
                 if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
                 {
                     MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
+                    ResetUI();
                     return;
                 }
 
@@ -263,10 +267,7 @@ namespace UI.LoraSort
                 finally
                 {
                     // Reset UI
-                    _isProcessing = false;
-                    btnTargetPath.IsEnabled = true;
-                    btnBasePath.IsEnabled = true;
-                    btnGoCancel.Content = "Go";
+                    ResetUI();
                 }
                 // This is executed on the UI thread.
             }
@@ -274,6 +275,14 @@ namespace UI.LoraSort
             {
                 _cts.Cancel();
             }
+        }
+
+        private void ResetUI()
+        {
+            _isProcessing = false;
+            btnTargetPath.IsEnabled = true;
+            btnBasePath.IsEnabled = true;
+            btnGoCancel.Content = "Go";
         }
 
         private bool IsPathTheSame()

@@ -41,7 +41,21 @@ namespace UI.LoraSort
             MoveUpCommand = new RelayCommand<CustomTagMap>(MoveMappingUp, CanMoveUp);
             MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown, CanMoveDown);
 
-            this.DataContext = this;
+            var vm = new MainViewModel();
+            DataContext = vm; // Use a proper view model instance
+                              // Hook up the CollectionChanged event of LogEntries:
+            vm.LogEntries.CollectionChanged += LogEntries_CollectionChanged;
+        }
+        private void LogEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && logListView.Items.Count > 0)
+            {
+                // Use Dispatcher to ensure the ListView has updated its items.
+                logListView.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    logListView.ScrollIntoView(logListView.Items[logListView.Items.Count - 1]);
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
 
         private ObservableCollection<CustomTagMap> LoadMapping()
@@ -171,19 +185,6 @@ namespace UI.LoraSort
             return result == MessageBoxResult.Yes;
         }
 
-        private void AppendLog(string message, bool isError = false)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var paragraph = new Paragraph(new Run(message))
-                {
-                    Foreground = isError ? Brushes.Red : Brushes.Black
-                };
-                rtbLog.Document.Blocks.Add(paragraph);
-                rtbLog.ScrollToEnd();
-            });
-        }
-
         private async void btnGoCancel_Click(object sender, RoutedEventArgs e)
         {
             if(!_isProcessing)
@@ -191,7 +192,7 @@ namespace UI.LoraSort
                 // Switch UI states
                 _isProcessing = true;
                 btnGoCancel.Content = "Cancel"; // Button shows "Cancel" now
-                rtbLog.Document.Blocks.Clear(); // Clear old logs
+                ((MainViewModel)DataContext).ClearLogs(); // Clear old logs
                 btnTargetPath.IsEnabled = false;
                 btnBasePath.IsEnabled = false;
 
@@ -220,7 +221,7 @@ namespace UI.LoraSort
                     return;
                 }
 
-                rtbLog.Document.Blocks.Clear(); // Clear previous entries
+                ((MainViewModel)DataContext).ClearLogs(); // Clear previous entries
 
                 bool moveOperation = false;
                 if (!(bool)radioCopy.IsChecked)
@@ -249,7 +250,9 @@ namespace UI.LoraSort
                             }
                             txtStatus.Text = report.StatusMessage;
                             bool isError = report.IsSuccessful.HasValue && !report.IsSuccessful.Value;
-                            AppendLog(report.StatusMessage, isError);
+                            // Add the report to your log collection in the view model:
+                            var vm = DataContext as MainViewModel;
+                            vm?.LogEntries.Add(report);
                         });
                     });
                     await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token);
@@ -257,7 +260,7 @@ namespace UI.LoraSort
                 catch (OperationCanceledException)
                 {
                     // This is expected if user cancels
-                    AppendLog("Operation was canceled by user.", isError: false);
+                    ((MainViewModel)DataContext).AppendLog("Operation was canceled by user.", isError: false);
                 }
                 catch (Exception ex)
                 {

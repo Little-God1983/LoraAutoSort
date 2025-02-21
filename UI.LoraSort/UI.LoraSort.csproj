@@ -6,7 +6,19 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>youtubeAvatarRound.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\AIKnowledgeIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\OneDrive\AIKnowledge2Go\SocialMedia\Youtube\youtubeAvatarRound.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
@@ -16,6 +28,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Services.LoraAutoSort\Services.LoraAutoSort.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\AIKnowledgeIcon.ico" />
   </ItemGroup>
 
 </Project>

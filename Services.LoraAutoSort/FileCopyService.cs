@@ -57,7 +57,7 @@ namespace JsonFileReader
                 }
                 else if (model.ErrorOnRetrievingMetaData)
                 {
-                    progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' Error on retrieving Meta Data. Check application log for infos" });
+                    //No neeed to make a progress report since we allready display the failed API call
                     hasErrors = true;
                     continue;
                 }

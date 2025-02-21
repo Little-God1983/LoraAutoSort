@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -39,8 +40,22 @@ namespace UI.LoraSort.ViewModels
             }
         }
 
+        private string _buildNumber;
+        public string BuildNumber
+        {
+            get => _buildNumber;
+            set
+            {
+                _buildNumber = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BuildNumber)));
+            }
+        }
+
         public MainViewModel()
         {
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            BuildNumber = $"Build {version}";
+
             MoveUpCommand = new RelayCommand<CustomTagMap>(MoveMappingUp);
             MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown);
 

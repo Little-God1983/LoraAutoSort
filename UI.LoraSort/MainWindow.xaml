@@ -209,5 +209,10 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+        <TextBlock Text="{Binding BuildNumber}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="10"
+                   FontSize="12" />
     </Grid>
 </Window>

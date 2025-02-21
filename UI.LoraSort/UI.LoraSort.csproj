@@ -1,12 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
+  <PropertyGroup>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>0.2.1.0</AssemblyVersion>
+    <FileVersion>0.2.1.0</FileVersion>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>youtubeAvatarRound.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\AIKnowledgeIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\OneDrive\AIKnowledge2Go\SocialMedia\Youtube\youtubeAvatarRound.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
@@ -16,6 +34,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Services.LoraAutoSort\Services.LoraAutoSort.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\AIKnowledgeIcon.ico" />
   </ItemGroup>
 
 </Project>

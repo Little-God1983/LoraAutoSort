@@ -214,21 +214,34 @@ namespace Services.LoraAutoSort.Classes
             {
                 JsonElement root = doc.RootElement;
 
-                // Check if 'model' property exists and has a 'type' property inside it
-                if (root.TryGetProperty("model", out JsonElement modelElement) &&
-                    modelElement.TryGetProperty("type", out JsonElement typeElement) &&
+                // 1. Check if `type` is directly in the root
+                if (root.TryGetProperty("type", out JsonElement typeElement) &&
                     typeElement.ValueKind == JsonValueKind.String)
                 {
-                    string typeString = typeElement.GetString()?.Replace(" ", "").ToUpper(); // Remove spaces and convert to uppercase
+                    string typeString = typeElement.GetString()?.Replace(" ", "").ToUpper();
 
-                    if (Enum.TryParse(typeString, true, out DiffusionTypes modelType)) // `true` makes it case-insensitive
+                    if (Enum.TryParse(typeString, true, out DiffusionTypes modelType))
                     {
                         return modelType;
                     }
                 }
+
+                // 2. Check if `type` is inside `model`
+                if (root.TryGetProperty("model", out JsonElement modelElement) &&
+                    modelElement.TryGetProperty("type", out JsonElement nestedTypeElement) &&
+                    nestedTypeElement.ValueKind == JsonValueKind.String)
+                {
+                    string nestedTypeString = nestedTypeElement.GetString()?.Replace(" ", "").ToUpper();
+
+                    if (Enum.TryParse(nestedTypeString, true, out DiffusionTypes nestedModelType))
+                    {
+                        return nestedModelType;
+                    }
+                }
             }
-            return DiffusionTypes.OTHER; // Return Other if no valid match is found
+            return DiffusionTypes.OTHER; // Default if no match is found
         }
+
 
     }
 }

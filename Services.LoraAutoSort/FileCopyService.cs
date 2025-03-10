@@ -35,7 +35,7 @@ namespace JsonFileReader
             }
         }
 
-        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken)
+        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken, bool NoBaseModelFolders)
         {
             int totalModels = models.Count;
             int currentModel = 0;
@@ -43,12 +43,12 @@ namespace JsonFileReader
 
             foreach (var model in models)
             {
-                // Throw if cancellation is requested
-                cancellationToken.ThrowIfCancellationRequested();
-
                 // Update progress based on model index.
                 int percentage = (int)((double)currentModel / totalModels * 100);
 
+                // Throw if cancellation is requested
+                cancellationToken.ThrowIfCancellationRequested();
+         
                 if (model.NoMetaData)
                 {
                     progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' has no metaData => File is skipped." });
@@ -62,7 +62,23 @@ namespace JsonFileReader
                     continue;
                 }
 
-                string modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
+                if (model.ModelType != DiffusionTypes.LORA)
+                {
+                    progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' is not a Lora. It is of Type: {model.ModelType.ToString()} => File is skipped." });
+                    hasErrors = true;
+                    continue;
+                }
+
+                string modelDirectory;
+                if (NoBaseModelFolders)
+                {
+                    modelDirectory = Path.Combine(targetPath, model.CivitaiCategory.ToString());
+                }
+                else
+                {
+                    modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
+                }
+
                 EnsureFolderExists(progress, modelDirectory);
 
                 foreach (var modelFile in model.AssociatedFilesInfo)

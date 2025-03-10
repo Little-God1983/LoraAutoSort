@@ -207,5 +207,41 @@ namespace Services.LoraAutoSort.Classes
 
             return tags;
         }
+
+        internal DiffusionTypes GetModelType(string modelInfoApiResponse)
+        {
+            using (JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse))
+            {
+                JsonElement root = doc.RootElement;
+
+                // 1. Check if `type` is directly in the root
+                if (root.TryGetProperty("type", out JsonElement typeElement) &&
+                    typeElement.ValueKind == JsonValueKind.String)
+                {
+                    string typeString = typeElement.GetString()?.Replace(" ", "").ToUpper();
+
+                    if (Enum.TryParse(typeString, true, out DiffusionTypes modelType))
+                    {
+                        return modelType;
+                    }
+                }
+
+                // 2. Check if `type` is inside `model`
+                if (root.TryGetProperty("model", out JsonElement modelElement) &&
+                    modelElement.TryGetProperty("type", out JsonElement nestedTypeElement) &&
+                    nestedTypeElement.ValueKind == JsonValueKind.String)
+                {
+                    string nestedTypeString = nestedTypeElement.GetString()?.Replace(" ", "").ToUpper();
+
+                    if (Enum.TryParse(nestedTypeString, true, out DiffusionTypes nestedModelType))
+                    {
+                        return nestedModelType;
+                    }
+                }
+            }
+            return DiffusionTypes.OTHER; // Default if no match is found
+        }
+
+
     }
 }

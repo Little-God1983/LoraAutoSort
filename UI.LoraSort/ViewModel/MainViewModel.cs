@@ -25,7 +25,7 @@ namespace UI.LoraSort.ViewModels
         public ObservableCollection<ProgressReport> LogEntries { get; } = new ObservableCollection<ProgressReport>();
         public ICollectionView LogEntriesView { get; }
 
-        private bool _showErrorsOnly;
+        private bool _showErrorsOnly = true;
         public bool ShowErrorsOnly
         {
             get => _showErrorsOnly;

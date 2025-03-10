@@ -18,7 +18,7 @@ namespace Services.LoraAutoSort
 
         public async Task ComputeFolder(IProgress<ProgressReport> progress,
                                         string sourcePath, string targetPath,
-                                        bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken)
+                                        bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken, bool NoBaseModelFolders)
         {
             progress?.Report(new ProgressReport
             {
@@ -54,7 +54,7 @@ namespace Services.LoraAutoSort
 
             await Task.Run(() =>
             {
-                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles,cancellationToken);
+                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles,cancellationToken, NoBaseModelFolders);
             });
 
             progress?.Report(new ProgressReport

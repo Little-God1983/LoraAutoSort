@@ -207,5 +207,28 @@ namespace Services.LoraAutoSort.Classes
 
             return tags;
         }
+
+        internal DiffusionTypes GetModelType(string modelInfoApiResponse)
+        {
+            using (JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse))
+            {
+                JsonElement root = doc.RootElement;
+
+                // Check if 'model' property exists and has a 'type' property inside it
+                if (root.TryGetProperty("model", out JsonElement modelElement) &&
+                    modelElement.TryGetProperty("type", out JsonElement typeElement) &&
+                    typeElement.ValueKind == JsonValueKind.String)
+                {
+                    string typeString = typeElement.GetString()?.Replace(" ", "").ToUpper(); // Remove spaces and convert to uppercase
+
+                    if (Enum.TryParse(typeString, true, out DiffusionTypes modelType)) // `true` makes it case-insensitive
+                    {
+                        return modelType;
+                    }
+                }
+            }
+            return DiffusionTypes.OTHER; // Return Other if no valid match is found
+        }
+
     }
 }

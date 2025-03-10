@@ -169,6 +169,8 @@ namespace JsonFileReader
                     // Try to read from local file info first 
                     model.CivitaiCategory = GetMatchingCategory(model);
                     model.DiffusionBaseModel = GetBaseModelName(model);
+                    model.ModelType = GetModelType(model);
+
                     // If local file info is insufficient try via online API
                     if (model.DiffusionBaseModel == "UNKNOWN" || model.CivitaiCategory == CivitaiBaseCategories.UNKNOWN)
                     {
@@ -180,6 +182,21 @@ namespace JsonFileReader
 
             Log.Debug($"Processing Metadata finished.");
             return modelDataList;
+        }
+
+        private DiffusionTypes GetModelType(ModelClass model)
+        {
+            var fileCivitai = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(".civitai.info"));
+            if (fileCivitai != null)
+            {
+                CivitaiMetaDataService civitaiMetaDataService = new CivitaiMetaDataService();
+                // Read file content as a JSON string
+                string jsonContent = File.ReadAllText(fileCivitai.FullName);
+
+                // Pass JSON string to GetModelType
+                return civitaiMetaDataService.GetModelType(jsonContent);
+            }
+            return DiffusionTypes.OTHER;
         }
 
         private async Task UpdateModelDataFromCivitaiAPI(IProgress<ProgressReport>? progress, ModelClass model)
@@ -215,6 +232,7 @@ namespace JsonFileReader
                 //Second API call to get basic info about the model like tags etc. These are stored on the model page not on the version page
                 string modelInfoApiResponse = await service.GetModelInformationFromCivitaiAsync(modelId);
                 model.Tags = service.GetTagsFromModelInfo(modelInfoApiResponse);
+                model.ModelType = service.GetModelType(modelInfoApiResponse);
                 model.NoMetaData = false;
                 model.CivitaiCategory = GetCategoryFromTags(model.Tags);
 
@@ -403,7 +421,7 @@ namespace JsonFileReader
             catch (Exception ex)
             {
                 // Optionally log the exception, for example:
-                // Logger.LogError(ex, "Error retrieving base model");
+                //Logger.LogError(ex, "Error retrieving base model");
                 return "UNKNOWN";
             }
 

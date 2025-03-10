@@ -255,7 +255,7 @@ namespace UI.LoraSort
                             vm?.LogEntries.Add(report);
                         });
                     });
-                    await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token);
+                    await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token, (bool)chbNoBaseFolders.IsChecked);
                 }
                 catch (OperationCanceledException)
                 {

@@ -65,9 +65,12 @@
                             <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
                             <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox x:Name="chbNoBaseFolders" Content="Don't create Base Model Folder" FontSize="16" Margin="0,10,0,0"/>
+                        </StackPanel>
                         <Label Content="Special:" FontWeight="Bold" FontSize="14"/>
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16" Margin="20,0,0,0"/>
+                            <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>

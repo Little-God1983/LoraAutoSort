@@ -100,7 +100,7 @@ namespace JsonFileReader
                     }
                     catch (Exception ex)
                     {
-                        progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}': {ex.Message}" });
+                        progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}' Reason: {ex.Message}" });
                         hasErrors = true;
                     }
                 }

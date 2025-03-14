@@ -13,6 +13,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <PackageIcon>youtubeAvatarRound.png</PackageIcon>
+    <ApplicationIcon>Resources\AIKnowledgeIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

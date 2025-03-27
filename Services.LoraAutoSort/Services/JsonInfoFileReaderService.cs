@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Diagnostics;
 
-namespace JsonFileReader
+namespace Services.LoraAutoSort.Services
 {
     public class JsonInfoFileReaderService
     {
@@ -93,7 +93,7 @@ namespace JsonFileReader
                 if (root.TryGetProperty("__metadata__", out JsonElement metadata))
                 {
                     Log.Debug("Metadata found under '__metadata__' property. Returning metadata.");
-                    string modelHash = String.Empty;
+                    string modelHash = string.Empty;
                     if (metadata.TryGetProperty("ss_new_sd_model_hash", out JsonElement modelHashElement))
                     {
                         modelHash = modelHashElement.GetString();
@@ -282,7 +282,7 @@ namespace JsonFileReader
             //Implement CustomTag
             foreach (string tag in tags)
             {
-                if (Enum.TryParse<CivitaiBaseCategories>(tag.Replace(" ", "_").ToUpper(), out CivitaiBaseCategories category))
+                if (Enum.TryParse(tag.Replace(" ", "_").ToUpper(), out CivitaiBaseCategories category))
                 {
                     return category; // Return the first match
                 }

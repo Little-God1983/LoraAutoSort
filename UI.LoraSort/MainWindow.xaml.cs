@@ -3,17 +3,15 @@
  * For non-commercial use only. See LICENSE for details.
  */
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using UI.LoraSort.ViewModels;
 using Serilog;
+using Services.LoraAutoSort.Services;
 
 namespace UI.LoraSort
 {
@@ -60,7 +58,7 @@ namespace UI.LoraSort
 
         private ObservableCollection<CustomTagMap> LoadMapping()
         {
-           CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
+            CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
             return xmlService.LoadMappings();
         }
 
@@ -187,7 +185,7 @@ namespace UI.LoraSort
 
         private async void btnGoCancel_Click(object sender, RoutedEventArgs e)
         {
-            if(!_isProcessing)
+            if (!_isProcessing)
             {
                 // Switch UI states
                 _isProcessing = true;
@@ -204,7 +202,7 @@ namespace UI.LoraSort
                     ResetUI();
                     return;
                 }
-               
+
 
                 if (IsPathTheSame())
                 {
@@ -255,7 +253,16 @@ namespace UI.LoraSort
                             vm?.LogEntries.Add(report);
                         });
                     });
-                    await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token, (bool)chbNoBaseFolders.IsChecked);
+
+                    await controllerService.ComputeFolder(progressIndicator, cancellationToken: _cts.Token, new SelectedOptions()
+                    {
+                        BasePath = txtBasePath.Text,
+                        TargetPath = txtTargetPath.Text,
+                        IsMoveOperation = moveOperation,
+                        OverrideFiles = (bool)chbOverride.IsChecked,
+                        CreateBaseFolders = (bool)chbBaseFolders.IsChecked
+                    });
+                    //await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token, (bool)chbNoBaseFolders.IsChecked);
                 }
                 catch (OperationCanceledException)
                 {
@@ -265,7 +272,7 @@ namespace UI.LoraSort
                 catch (Exception ex)
                 {
                     // Other exceptions
-                   Log.Error($"Unexpected error: {ex.Message}");
+                    Log.Error($"Unexpected error: {ex.Message}");
                 }
                 finally
                 {
@@ -293,8 +300,7 @@ namespace UI.LoraSort
             return String.Compare(
                 Path.GetFullPath(txtBasePath.Text).TrimEnd('\\'),
                 Path.GetFullPath(txtTargetPath.Text).TrimEnd('\\'),
-                StringComparison.InvariantCultureIgnoreCase
-            ) == 0;
+                StringComparison.InvariantCultureIgnoreCase) == 0;
         }
 
 

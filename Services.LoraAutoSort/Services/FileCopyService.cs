@@ -6,7 +6,7 @@
 using Serilog;
 using Services.LoraAutoSort.Classes;
 
-namespace JsonFileReader
+namespace Services.LoraAutoSort.Services
 {
     public class FileCopyService
     {
@@ -35,7 +35,7 @@ namespace JsonFileReader
             }
         }
 
-        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, List<ModelClass> models, string sourcePaht, string targetPath, bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken, bool NoBaseModelFolders)
+        public bool ProcessModelClasses(IProgress<ProgressReport>? progress, CancellationToken cancellationToken, List<ModelClass> models, SelectedOptions options)
         {
             int totalModels = models.Count;
             int currentModel = 0;
@@ -70,13 +70,13 @@ namespace JsonFileReader
                 }
 
                 string modelDirectory;
-                if (NoBaseModelFolders)
+                if (options.CreateBaseFolders)
                 {
-                    modelDirectory = Path.Combine(targetPath, model.CivitaiCategory.ToString());
+                    modelDirectory = Path.Combine(options.TargetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString()); 
                 }
                 else
                 {
-                    modelDirectory = Path.Combine(targetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
+                    modelDirectory = Path.Combine(options.TargetPath, model.CivitaiCategory.ToString());
                 }
 
                 EnsureFolderExists(progress, modelDirectory);
@@ -87,14 +87,14 @@ namespace JsonFileReader
                     string target = Path.Combine(modelDirectory, modelFile.Name);
                     try
                     {
-                        if (moveInsteadOfCopy)
+                        if (options.IsMoveOperation)
                         {
-                            File.Move(source, target, overrideExistingFiles);
+                            File.Move(source, target, options.OverrideFiles);
                             progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' moved to '{modelDirectory}'." });
                         }
                         else
                         {
-                            File.Copy(source, target, overrideExistingFiles);
+                            File.Copy(source, target, options.OverrideFiles);
                             progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' copied to '{modelDirectory}'." });
                         }
                     }

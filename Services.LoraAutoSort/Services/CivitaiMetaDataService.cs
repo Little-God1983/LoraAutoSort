@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using Serilog;
 
-namespace Services.LoraAutoSort.Classes
+namespace Services.LoraAutoSort.Services
 {
     public class CivitaiMetaDataService
     {

@@ -40,8 +40,6 @@ namespace UI.LoraSort
             MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown, CanMoveDown);
 
             var vm = new MainViewModel();
-            DataContext = vm; // Use a proper view model instance
-                              // Hook up the CollectionChanged event of LogEntries:
             vm.LogEntries.CollectionChanged += LogEntries_CollectionChanged;
         }
         private void LogEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

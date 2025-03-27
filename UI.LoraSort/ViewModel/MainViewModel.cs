@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Services.LoraAutoSort.Classes;
+using Services.LoraAutoSort.Services;
 
 namespace UI.LoraSort.ViewModels
 {
@@ -53,6 +54,7 @@ namespace UI.LoraSort.ViewModels
 
         public MainViewModel()
         {
+            CustomTagMappings = new CustomTagMapXmlService().LoadMappings();
             var version = Assembly.GetExecutingAssembly().GetName().Version;
             BuildNumber = $"Build {version}";
 

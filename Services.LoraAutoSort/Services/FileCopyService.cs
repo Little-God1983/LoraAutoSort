@@ -62,7 +62,7 @@ namespace Services.LoraAutoSort.Services
                     continue;
                 }
 
-                if (model.ModelType != DiffusionTypes.LORA)
+                if (model.ModelType != DiffusionTypes.LORA && model.ModelType != DiffusionTypes.LOCON)
                 {
                     progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' is not a Lora. It is of Type: {model.ModelType.ToString()} => File is skipped." });
                     hasErrors = true;

@@ -17,5 +17,6 @@
         TEXTUALINVERSION,
         UPSCALER,
         DETECTION,
+        LOCON,
         OTHER
     }

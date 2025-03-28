@@ -42,6 +42,7 @@ namespace UI.LoraSort
             var vm = new MainViewModel();
             vm.LogEntries.CollectionChanged += LogEntries_CollectionChanged;
         }
+
         private void LogEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && logListView.Items.Count > 0)

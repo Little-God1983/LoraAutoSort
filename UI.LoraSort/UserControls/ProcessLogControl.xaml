@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="UI.LoraSort.ProcessLogControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Logger controls: error filter and buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <CheckBox Content="Show errors only" IsChecked="{Binding ShowErrorsOnly}" Margin="0,0,10,0"/>
+            <Button Content="Copy Errors to clipboard" Command="{Binding CopyErrorLogsCommand}" Margin="0,0,10,0"/>
+            <Button Content="Export Errors to file" Command="{Binding ExportErrorLogsCommand}"/>
+        </StackPanel>
+        <!-- ListView to display log entries -->
+        <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}" Grid.Row="1"
+              ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding StatusMessage}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsSuccessful}" Value="False">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

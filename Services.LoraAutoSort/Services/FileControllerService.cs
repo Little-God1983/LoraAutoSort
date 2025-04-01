@@ -3,11 +3,10 @@
  * For non-commercial use only. See LICENSE for details.
  */
 
-using JsonFileReader;
 using Services.LoraAutoSort.Classes;
 using System.Security.Cryptography;
 
-namespace Services.LoraAutoSort
+namespace Services.LoraAutoSort.Services
 {
     public class FileControllerService
     {
@@ -16,9 +15,7 @@ namespace Services.LoraAutoSort
 
         }
 
-        public async Task ComputeFolder(IProgress<ProgressReport> progress,
-                                        string sourcePath, string targetPath,
-                                        bool moveInsteadOfCopy, bool overrideExistingFiles, CancellationToken cancellationToken, bool NoBaseModelFolders)
+        public async Task ComputeFolder(IProgress<ProgressReport> progress, CancellationToken cancellationToken, SelectedOptions options)
         {
             progress?.Report(new ProgressReport
             {
@@ -28,8 +25,8 @@ namespace Services.LoraAutoSort
             // Throw if cancellation is requested
             cancellationToken.ThrowIfCancellationRequested();
 
-            var jsonReader = new JsonInfoFileReaderService(sourcePath);
-            List<ModelClass> models = await jsonReader.GetModelData(progress, sourcePath, cancellationToken);
+            var jsonReader = new JsonInfoFileReaderService(options.BasePath);
+            List<ModelClass> models = await jsonReader.GetModelData(progress, options.BasePath, cancellationToken);
 
 
             if (models == null || models.Count == 0)
@@ -54,7 +51,7 @@ namespace Services.LoraAutoSort
 
             await Task.Run(() =>
             {
-                fileCopyService.ProcessModelClasses(progress, models, sourcePath, targetPath, moveInsteadOfCopy, overrideExistingFiles,cancellationToken, NoBaseModelFolders);
+                fileCopyService.ProcessModelClasses(progress, cancellationToken, models, options);
             });
 
             progress?.Report(new ProgressReport

@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 
-namespace Services.LoraAutoSort
+namespace Services.LoraAutoSort.Services
 {
     public class CustomTagMapXmlService
     {

@@ -3,17 +3,15 @@
  * For non-commercial use only. See LICENSE for details.
  */
 using Microsoft.WindowsAPICodePack.Dialogs;
-using Services.LoraAutoSort;
 using Services.LoraAutoSort.Classes;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using UI.LoraSort.ViewModels;
 using Serilog;
+using Services.LoraAutoSort.Services;
 
 namespace UI.LoraSort
 {
@@ -42,10 +40,9 @@ namespace UI.LoraSort
             MoveDownCommand = new RelayCommand<CustomTagMap>(MoveMappingDown, CanMoveDown);
 
             var vm = new MainViewModel();
-            DataContext = vm; // Use a proper view model instance
-                              // Hook up the CollectionChanged event of LogEntries:
             vm.LogEntries.CollectionChanged += LogEntries_CollectionChanged;
         }
+
         private void LogEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && logListView.Items.Count > 0)
@@ -60,7 +57,7 @@ namespace UI.LoraSort
 
         private ObservableCollection<CustomTagMap> LoadMapping()
         {
-           CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
+            CustomTagMapXmlService xmlService = new CustomTagMapXmlService();
             return xmlService.LoadMappings();
         }
 
@@ -187,97 +184,112 @@ namespace UI.LoraSort
 
         private async void btnGoCancel_Click(object sender, RoutedEventArgs e)
         {
-            if(!_isProcessing)
+            if (!_isProcessing)
             {
-                // Switch UI states
-                _isProcessing = true;
-                btnGoCancel.Content = "Cancel"; // Button shows "Cancel" now
-                ((MainViewModel)DataContext).ClearLogs(); // Clear old logs
-                btnTargetPath.IsEnabled = false;
-                btnBasePath.IsEnabled = false;
+                await StartProcessingAsync();
+            }
+            else
+            {
+                _cts?.Cancel();
+            }
+        }
 
-                // Create a new CTS for this run
-                _cts = new CancellationTokenSource();
-                if (String.IsNullOrEmpty(txtBasePath.Text) || String.IsNullOrEmpty(txtTargetPath.Text))
+        private async Task StartProcessingAsync()
+        {
+            try
+            {
+                SetProcessingUIState();
+
+                if (!ValidatePaths())
                 {
-                    MessageBox.Show("No path selected", "No Path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                    ResetUI();
+                    ShowMessageAndResetUI("No path selected", "No Path");
                     return;
                 }
-               
 
                 if (IsPathTheSame())
                 {
-                    MessageBox.Show("Select a different target than the source path.", "Source cannot be targe path", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                    ResetUI();
+                    ShowMessageAndResetUI("Select a different target than the source path.", "Source cannot be target path");
                     return;
                 }
-                FileControllerService controllerService = new FileControllerService();
 
+                var controllerService = new FileControllerService();
                 if ((bool)radioCopy.IsChecked && !controllerService.EnoughFreeSpaceOnDisk(txtBasePath.Text, txtTargetPath.Text))
                 {
-                    MessageBox.Show("You don't have enough disk space to copy the files.", "Insuficcent Diskspace", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.Yes);
-                    ResetUI();
+                    ShowMessageAndResetUI("You don't have enough disk space to copy the files.", "Insuficcent Diskspace");
                     return;
                 }
-
-                ((MainViewModel)DataContext).ClearLogs(); // Clear previous entries
 
                 bool moveOperation = false;
                 if (!(bool)radioCopy.IsChecked)
                 {
                     if (!ShowConfirmationDialog("Moving instead of copying means that the original file order cannot be restored. Continue anyways?", "Are you sure?"))
                     {
+                        ResetUI();
                         return;
                     }
-                    else
-                    {
-                        moveOperation = true;
-                    }
+                    moveOperation = true;
                 }
 
-                try
+                var progressIndicator = CreateProgressIndicator();
+                await controllerService.ComputeFolder(progressIndicator, _cts.Token, new SelectedOptions()
                 {
-                    var progressIndicator = new Progress<ProgressReport>(report =>
-                    {
-                        // Even though Progress<T> should already marshal back to the UI thread,
-                        // we explicitly ensure it by using the Dispatcher.
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            if (report.Percentage.HasValue)
-                            {
-                                progressBar.Value = report.Percentage.Value;
-                            }
-                            txtStatus.Text = report.StatusMessage;
-                            bool isError = report.IsSuccessful.HasValue && !report.IsSuccessful.Value;
-                            // Add the report to your log collection in the view model:
-                            var vm = DataContext as MainViewModel;
-                            vm?.LogEntries.Add(report);
-                        });
-                    });
-                    await controllerService.ComputeFolder(progressIndicator, txtBasePath.Text, txtTargetPath.Text, moveOperation, (bool)chbOverride.IsChecked, cancellationToken: _cts.Token, (bool)chbNoBaseFolders.IsChecked);
-                }
-                catch (OperationCanceledException)
-                {
-                    // This is expected if user cancels
-                    ((MainViewModel)DataContext).AppendLog("Operation was canceled by user.", isError: false);
-                }
-                catch (Exception ex)
-                {
-                    // Other exceptions
-                   Log.Error($"Unexpected error: {ex.Message}");
-                }
-                finally
-                {
-                    // Reset UI
-                    ResetUI();
-                }
-                // This is executed on the UI thread.
+                    BasePath = txtBasePath.Text,
+                    TargetPath = txtTargetPath.Text,
+                    IsMoveOperation = moveOperation,
+                    OverrideFiles = (bool)chbOverride.IsChecked,
+                    CreateBaseFolders = (bool)chbBaseFolders.IsChecked
+                });
             }
-            else
+            catch (OperationCanceledException)
             {
-                _cts.Cancel();
+                ((MainViewModel)DataContext).AppendLog("Operation was canceled by user.", isError: false);
             }
+            catch (Exception ex)
+            {
+                Log.Error($"Unexpected error: {ex.Message}");
+            }
+            finally
+            {
+                ResetUI();
+            }
+        }
+
+        private bool ValidatePaths()
+        {
+            return !string.IsNullOrEmpty(txtBasePath.Text) && !string.IsNullOrEmpty(txtTargetPath.Text);
+        }
+
+        private void ShowMessageAndResetUI(string message, string caption)
+        {
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Warning);
+            ResetUI();
+        }
+
+        private void SetProcessingUIState()
+        {
+            _isProcessing = true;
+            btnGoCancel.Content = "Cancel";
+            ((MainViewModel)DataContext).ClearLogs();
+            btnTargetPath.IsEnabled = false;
+            btnBasePath.IsEnabled = false;
+            _cts = new CancellationTokenSource();
+        }
+
+        private IProgress<ProgressReport> CreateProgressIndicator()
+        {
+            return new Progress<ProgressReport>(report =>
+            {
+                // Ensure UI updates are on the UI thread.
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (report.Percentage.HasValue)
+                    {
+                        progressBar.Value = report.Percentage.Value;
+                    }
+                    txtStatus.Text = report.StatusMessage;
+                    ((MainViewModel)DataContext)?.LogEntries.Add(report);
+                });
+            });
         }
 
         private void ResetUI()
@@ -293,8 +305,7 @@ namespace UI.LoraSort
             return String.Compare(
                 Path.GetFullPath(txtBasePath.Text).TrimEnd('\\'),
                 Path.GetFullPath(txtTargetPath.Text).TrimEnd('\\'),
-                StringComparison.InvariantCultureIgnoreCase
-            ) == 0;
+                StringComparison.InvariantCultureIgnoreCase) == 0;
         }
 
 

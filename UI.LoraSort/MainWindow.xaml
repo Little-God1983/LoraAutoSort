@@ -66,7 +66,7 @@
                             <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <CheckBox x:Name="chbNoBaseFolders" Content="Don't create Base Model Folder" FontSize="16" Margin="0,10,0,0"/>
+                            <CheckBox x:Name="chbBaseFolders" Content="Create Base Model Folder" FontSize="16" Margin="0,10,0,0" IsChecked="True"/>
                         </StackPanel>
                         <Label Content="Special:" FontWeight="Bold" FontSize="14"/>
                         <StackPanel Orientation="Horizontal">
@@ -86,7 +86,7 @@
 
                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
                     <StackPanel>
-                        <Button x:Name="btnGoCancel" Height="50" Content="Go" Margin="0,10" Click="btnGoCancel_Click"/>
+                        <Button x:Name="btnGoCancel" Content="Go" Margin="0,10" Click="btnGoCancel_Click"/>
                         <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Height="25" />
                         <TextBlock x:Name="txtStatus" Margin="0,35,0,0" FontSize="14"/>
                     </StackPanel>
@@ -163,14 +163,14 @@
 
                 <!-- First row: Add and Remove -->
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnAddMapping" Content="Add Mapping" Width="100" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
-                    <Button x:Name="btnDeleteMapping" Content="Remove Mapping" Width="100" Click="btnDeleteMapping_Click"/>
+                    <Button x:Name="btnAddMapping" Content="Add Mapping" Width="130" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
+                    <Button x:Name="btnDeleteMapping" Content="Remove Mapping" Width="130" Click="btnDeleteMapping_Click"/>
                 </StackPanel>
 
                 <!-- Second row: Save and Load -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <Button x:Name="btnSaveMapping" Content="Save All Mappings" Width="100" Margin="0,0,10,0" Click="btnSaveMapping_Click"/>
-                    <Button x:Name="btnLDeleteMapping" Content="Delete All Mappings" Width="100" Click="btnDeleteAllMappings_Click"/>
+                    <Button x:Name="btnSaveMapping" Content="Save All Mappings" Width="130" Margin="0,0,10,0" Click="btnSaveMapping_Click"/>
+                    <Button x:Name="btnLDeleteMapping" Content="Delete All" Width="130" Click="btnDeleteAllMappings_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

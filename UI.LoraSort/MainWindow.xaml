@@ -11,11 +11,11 @@
         MinHeight="900" MinWidth="1200"
         Icon="Resources/AIKnowledgeIcon.ico">
 
-    <Window.Resources>
-        <!-- Converters -->
+    <!--<Window.Resources>
+        --><!-- Converters --><!--
         <conv:TagsDisplayConverter x:Key="TagsDisplayConverter" />
         <conv:IndexToPriorityConverter x:Key="IndexToPriorityConverter" />
-    </Window.Resources>
+    </Window.Resources>-->
 
     <Window.DataContext>
         <local:MainViewModel />
@@ -37,85 +37,15 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Left side: Extracted AppSettingsTopLeftControl -->
+        <!-- Left side: AppSettingsTopLeftControl remains unchanged -->
         <controls:AppSettingsTopLeftControl Grid.Row="0" Grid.Column="0" Margin="10" />
 
-        <!-- Right side: Custom Mappings List and Buttons -->
-        <Grid Grid.Row="0" Grid.Column="1" Margin="10">
-            <Grid.RowDefinitions>
-                <!-- Row 0: ListView -->
-                <RowDefinition Height="*" />
-                <!-- Row 1: Button Panel -->
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <!-- ListView for mappings -->
-            <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}" IsEnabled="{Binding ElementName=chbCustom, Path=IsChecked}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Tags">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding LookForTag, Converter={StaticResource TagsDisplayConverter}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
-                        <GridViewColumn Header="Priority">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding Converter="{StaticResource IndexToPriorityConverter}">
-                                                <Binding />
-                                                <Binding RelativeSource="{RelativeSource AncestorType=ListView}" Path="ItemsSource" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Actions">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Content="Up" 
-                                                Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}" />
-                                        <Button Content="Down" 
-                                                Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}" Margin="5,0,0,0" />
-                                        <Button Content="Edit" Click="btnEditMapping_Click" 
-                                                CommandParameter="{Binding}" Margin="5,0,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <!-- Button Panel -->
-            <Grid Grid.Row="1" Margin="0,10,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <!-- Add and Remove -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnAddMapping" Content="Add Mapping" Width="130" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
-                    <Button x:Name="btnDeleteMapping" Content="Remove Mapping" Width="130" Click="btnDeleteMapping_Click"/>
-                </StackPanel>
-                <!-- Save and Delete All -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <Button x:Name="btnSaveMapping" Content="Save All Mappings" Width="130" Margin="0,0,10,0" Click="btnSaveMapping_Click"/>
-                    <Button x:Name="btnLDeleteMapping" Content="Delete All" Width="130" Click="btnDeleteAllMappings_Click"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
+        <!-- Right side: Now using the extracted CustomMappingsTopRightControl -->
+        <controls:CustomMappingsTopRightControl Grid.Row="0" Grid.Column="1" Margin="10" />
 
         <!-- GridSplitter -->
-        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
 
         <!-- Logs Section -->
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="10">
@@ -128,7 +58,8 @@
                 <Button Content="Copy Errors to clipboard" Command="{Binding CopyErrorLogsCommand}" Margin="0,0,10,0"/>
                 <Button Content="Export Errors to file" Command="{Binding ExportErrorLogsCommand}"/>
             </StackPanel>
-            <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}" Grid.Row="1" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding StatusMessage}">

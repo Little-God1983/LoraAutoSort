@@ -5,22 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI.LoraSort.ViewModels"
         xmlns:conv="clr-namespace:UI.LoraSort"
+        xmlns:controls="clr-namespace:UI.LoraSort"
         mc:Ignorable="d"
         Title="Lora Auto Sort - By AIKnowledge2Go" Height="800" Width="1000"
         MinHeight="900" MinWidth="1200"
         Icon="Resources/AIKnowledgeIcon.ico">
 
-    <Window.Resources>
-        <!-- Use the converter from the 'conv' namespace -->
-        <conv:TagsDisplayConverter x:Key="TagsDisplayConverter" />
-        <conv:IndexToPriorityConverter x:Key="IndexToPriorityConverter" />
-    </Window.Resources>
-
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
 
-    <!-- Main Grid with three rows and two columns -->
     <Grid>
         <Grid.RowDefinitions>
             <!-- Row 0: Main content -->
@@ -37,181 +31,21 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Left side: Controls -->
-        <ScrollViewer Grid.Row="0" Grid.Column="0" Margin="10" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <!-- Existing controls here -->
-                <TextBlock Text="No Warranty: This software is provided 'as is', without any warranty of any kind, express or implied."
-                         Foreground="Red"
-                         FontWeight="Bold"
-                         TextWrapping="Wrap"
-                         Margin="10" />
+        <!-- Left side: AppSettingsTopLeftControl remains unchanged -->
+        <controls:AppSettingsTopLeftControl Grid.Row="0" Grid.Column="0" Margin="10" />
 
-                <!-- LoRA Source Path Group -->
-                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                    <StackPanel>
-                        <Label Content="Your LoRA Source Path (e.g.:&quot;D:\stable-diffusion-webui\models\Lora&quot;):"/>
-                        <Button x:Name ="btnBasePath" Content="Select LoRA Path..." Click="SelectBasePath"/>
-                        <TextBox x:Name="txtBasePath" IsReadOnly="True" Margin="0,5"/>
-                    </StackPanel>
-                </Border>
+        <!-- Right side: Now using the extracted CustomMappingsTopRightControl -->
+        <controls:CustomMappingsTopRightControl Grid.Row="0" Grid.Column="1" Margin="10" />
+        
 
-                <!-- Operation Type Group -->
-                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                    <StackPanel>
-                        <Label Content="Operation Type:" FontWeight="Bold" FontSize="14"/>
-                        <StackPanel Orientation="Horizontal">
-                            <RadioButton x:Name="radioCopy" Content="Copy Files (Keeps originals)" IsChecked="True" GroupName="OperationType" FontSize="16"/>
-                            <RadioButton x:Name="radioMove" Content="Move Files" GroupName="OperationType" FontSize="16" Margin="20,0,0,0"/>
-                            <CheckBox x:Name="chbOverride" Content="Override Files with same name" FontSize="16" Margin="20,0,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox x:Name="chbBaseFolders" Content="Create Base Model Folder" FontSize="16" Margin="0,10,0,0" IsChecked="True"/>
-                        </StackPanel>
-                        <Label Content="Special:" FontWeight="Bold" FontSize="14"/>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
+        <!-- GridSplitter -->
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
 
-                <!-- LoRA Target Path Group -->
-                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                    <StackPanel>
-                        <Label Content="LoRA Target Path:"/>
-                        <Button x:Name="btnTargetPath" Content="Select Target Path..." Click="SelectTargetPath"/>
-                        <TextBox x:Name="txtTargetPath" Margin="0,5" IsReadOnly="True"/>
-                    </StackPanel>
-                </Border>
-
-                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="0,0,0,10" Padding="10">
-                    <StackPanel>
-                        <Button x:Name="btnGoCancel" Content="Go" Margin="0,10" Click="btnGoCancel_Click"/>
-                        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Height="25" />
-                        <TextBlock x:Name="txtStatus" Margin="0,35,0,0" FontSize="14"/>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </ScrollViewer>
-
-        <!-- Right side: Custom Mappings List and Buttons -->
-        <Grid Grid.Row="0" Grid.Column="1" Margin="10">
-            <Grid.RowDefinitions>
-                <!-- Row 0: ListView -->
-                <RowDefinition Height="*" />
-                <!-- Row 1: Buttons -->
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <!-- ListView in row 0 -->
-            <ListView x:Name="lvMappings" Grid.Row="0" ItemsSource="{Binding CustomTagMappings}" IsEnabled="{Binding ElementName=chbCustom, Path=IsChecked}">
-                <ListView.View>
-                    <GridView>
-                        <!-- Use a CellTemplate for the Tags column with our converter -->
-                        <GridViewColumn Header="Tags">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding LookForTag, Converter={StaticResource TagsDisplayConverter}}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Target Folder" DisplayMemberBinding="{Binding MapToFolder}" />
-                        <GridViewColumn Header="Priority">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding Converter="{StaticResource IndexToPriorityConverter}">
-                                                <!-- Binding to the current item -->
-                                                <Binding />
-                                                <!-- Binding to the ItemsSource of the ListView (the entire collection) -->
-                                                <Binding RelativeSource="{RelativeSource AncestorType=ListView}" Path="ItemsSource" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <!-- Actions column: Up, Down, and Edit -->
-                        <GridViewColumn Header="Actions">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Content="Up" 
-                                              Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                              CommandParameter="{Binding}" />
-                                        <Button Content="Down" 
-                                              Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                              CommandParameter="{Binding}" Margin="5,0,0,0" />
-                                        <Button Content="Edit" Click="btnEditMapping_Click" 
-                                              CommandParameter="{Binding}" Margin="5,0,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <!-- Button Panel in row 1 -->
-            <Grid Grid.Row="1" Margin="0,10,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <!-- First row: Add and Remove -->
-                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnAddMapping" Content="Add Mapping" Width="130" Margin="0,0,10,0" Click="btnAddMapping_Click"/>
-                    <Button x:Name="btnDeleteMapping" Content="Remove Mapping" Width="130" Click="btnDeleteMapping_Click"/>
-                </StackPanel>
-
-                <!-- Second row: Save and Load -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                    <Button x:Name="btnSaveMapping" Content="Save All Mappings" Width="130" Margin="0,0,10,0" Click="btnSaveMapping_Click"/>
-                    <Button x:Name="btnLDeleteMapping" Content="Delete All" Width="130" Click="btnDeleteAllMappings_Click"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
-
-        <!-- GridSplitter spanning both columns, placed in main grid row 1 -->
-        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
-
-        <!-- Logs at the bottom, spanning both columns, in main grid row 2 -->
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <!-- Toggle for filtering errors -->
-                <CheckBox Content="Show errors only" IsChecked="{Binding ShowErrorsOnly}" Margin="0,0,10,0"/>
-                <!-- Buttons for copying and exporting error logs -->
-                <Button Content="Copy Errors to clipboard" Command="{Binding CopyErrorLogsCommand}" Margin="0,0,10,0"/>
-                <Button Content="Export Errors to file" Command="{Binding ExportErrorLogsCommand}"/>
-            </StackPanel>
-            <!-- ListView to display log entries -->
-            <ListView x:Name="logListView" ItemsSource="{Binding LogEntriesView}" Grid.Row="1"
-            ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding StatusMessage}">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="Black"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSuccessful}" Value="False">
-                                            <Setter Property="Foreground" Value="Red"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        <!-- Logs Section -->
+        <controls:ProcessLogControl Grid.Row="2" Grid.ColumnSpan="2" Margin="10" />
+        
+        <!-- Build Number Display -->
         <TextBlock Text="{Binding BuildNumber}"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"

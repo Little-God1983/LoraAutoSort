@@ -106,7 +106,8 @@ namespace UI.LoraSort
                     TargetPath = txtTargetPath.Text,
                     IsMoveOperation = moveOperation,
                     OverrideFiles = (bool)chbOverride.IsChecked,
-                    CreateBaseFolders = (bool)chbBaseFolders.IsChecked
+                    CreateBaseFolders = (bool)chbBaseFolders.IsChecked,
+                    UseCustomMappings = (bool)chbCustom.IsChecked
                 });
             }
             catch (OperationCanceledException)

@@ -241,7 +241,5 @@ namespace Services.LoraAutoSort.Services
             }
             return DiffusionTypes.OTHER; // Default if no match is found
         }
-
-
     }
 }

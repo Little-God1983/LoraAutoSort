@@ -13,5 +13,16 @@ namespace UI.LoraSort
         {
             InitializeComponent();
         }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SettingsDialog { Owner = this };
+            if (dlg.ShowDialog() == true)
+            {
+                // Save dlg.ApiKey to settings or ViewModel as needed
+                // Example: Properties.Settings.Default.CivitAiApiKey = dlg.ApiKey;
+                // Properties.Settings.Default.Save();
+            }
+        }
     }
 }

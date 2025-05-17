@@ -7,8 +7,8 @@ namespace UI.LoraSort.UserControls
     {
         public string ApiKey
         {
-            get => ApiKeyTextBox.Text;
-            set => ApiKeyTextBox.Text = value;
+            get => ApiKeyBox.Password;
+            set => ApiKeyBox.Password = value;
         }
 
         public event RoutedEventHandler SaveClicked;

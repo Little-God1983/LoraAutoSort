@@ -19,9 +19,8 @@ namespace UI.LoraSort
             var dlg = new SettingsDialog { Owner = this };
             if (dlg.ShowDialog() == true)
             {
-                // Save dlg.ApiKey to settings or ViewModel as needed
-                // Example: Properties.Settings.Default.CivitAiApiKey = dlg.ApiKey;
-                // Properties.Settings.Default.Save();
+                // Save encrypted API key to settings
+                SettingsManager.SaveApiKey(dlg.ApiKey);
             }
         }
     }

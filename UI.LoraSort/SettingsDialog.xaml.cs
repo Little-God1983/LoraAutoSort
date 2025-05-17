@@ -16,5 +16,12 @@ namespace UI.LoraSort
             SettingsUC.SaveClicked += (s, e) => { this.DialogResult = true; };
             SettingsUC.CancelClicked += (s, e) => { this.DialogResult = false; };
         }
+
+        protected override void OnContentRendered(System.EventArgs e)
+        {
+            base.OnContentRendered(e);
+            // Load and decrypt API key on dialog open
+            ApiKey = SettingsManager.LoadApiKey();
+        }
     }
 }

@@ -12,6 +12,12 @@ namespace UI.LoraSort
         public MainWindow()
         {
             InitializeComponent();
+            AppSettingsUC.CustomMappingsCheckedChanged += AppSettingsUC_CustomMappingsCheckedChanged;
+        }
+
+        private void AppSettingsUC_CustomMappingsCheckedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+        {
+            CustomMappingsUC.IsCustomEnabled = e.NewValue;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)

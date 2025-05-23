@@ -21,8 +21,15 @@ namespace UI.LoraSort
         public ICommand MoveUpCommand { get; private set; }
         public ICommand MoveDownCommand { get; private set; }
 
-        // Property to control whether the ListView is enabled.
-        public bool IsCustomEnabled { get; set; } = true;
+        // DependencyProperty for IsCustomEnabled.
+        public static readonly DependencyProperty IsCustomEnabledProperty = DependencyProperty.Register(
+            nameof(IsCustomEnabled), typeof(bool), typeof(CustomMappingsTopRightControl), new PropertyMetadata(true));
+
+        public bool IsCustomEnabled
+        {
+            get => (bool)GetValue(IsCustomEnabledProperty);
+            set => SetValue(IsCustomEnabledProperty, value);
+        }
 
         public CustomMappingsTopRightControl()
         {

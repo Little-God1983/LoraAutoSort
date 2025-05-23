@@ -43,10 +43,10 @@
                 Click="SettingsButton_Click"/>
 
         <!-- Left side: AppSettingsTopLeftControl remains unchanged -->
-        <controls:AppSettingsTopLeftControl Grid.Row="0" Grid.Column="0" Margin="10" />
+        <controls:AppSettingsTopLeftControl x:Name="AppSettingsUC" Grid.Row="0" Grid.Column="0" Margin="10" />
 
         <!-- Right side: Now using the extracted CustomMappingsTopRightControl -->
-        <controls:CustomMappingsTopRightControl Grid.Row="0" Grid.Column="1" Margin="10" />
+        <controls:CustomMappingsTopRightControl x:Name="CustomMappingsUC" Grid.Row="0" Grid.Column="1" Margin="10" IsCustomEnabled="False" />
         
         <!-- GridSplitter -->
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" 

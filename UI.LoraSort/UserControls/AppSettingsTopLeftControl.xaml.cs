@@ -20,6 +20,8 @@ namespace UI.LoraSort
         private CancellationTokenSource _cts;
         private bool _isProcessing = false;
 
+        public event RoutedPropertyChangedEventHandler<bool> CustomMappingsCheckedChanged;
+
         public AppSettingsTopLeftControl()
         {
             InitializeComponent();
@@ -190,6 +192,16 @@ namespace UI.LoraSort
         {
             MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
             return result == MessageBoxResult.Yes;
+        }
+
+        private void chbCustom_Checked(object sender, RoutedEventArgs e)
+        {
+            CustomMappingsCheckedChanged?.Invoke(this, new RoutedPropertyChangedEventArgs<bool>(false, true));
+        }
+
+        private void chbCustom_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CustomMappingsCheckedChanged?.Invoke(this, new RoutedPropertyChangedEventArgs<bool>(true, false));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace Services.LoraAutoSort.Classes
+﻿namespace Services.LoraAutoSort.Classes
 {
     public class SelectedOptions
     {
@@ -8,5 +7,6 @@ namespace Services.LoraAutoSort.Classes
         public bool IsMoveOperation { get; set; }
         public bool OverrideFiles { get; set; }
         public bool CreateBaseFolders { get; set; }
+        public bool UseCustomMappings { get; set; }
     }
 }

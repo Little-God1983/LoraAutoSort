@@ -2,9 +2,9 @@
  * Licensed under the terms found in the LICENSE file in the root directory.
  * For non-commercial use only. See LICENSE for details.
  */
-
 using Serilog;
 using Services.LoraAutoSort.Classes;
+using System.Collections.ObjectModel;
 
 namespace Services.LoraAutoSort.Services
 {
@@ -48,7 +48,7 @@ namespace Services.LoraAutoSort.Services
 
                 // Throw if cancellation is requested
                 cancellationToken.ThrowIfCancellationRequested();
-         
+
                 if (model.NoMetaData)
                 {
                     progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"File '{model.ModelName}' has no metaData => File is skipped." });
@@ -68,46 +68,82 @@ namespace Services.LoraAutoSort.Services
                     hasErrors = true;
                     continue;
                 }
-
-                string modelDirectory;
-                if (options.CreateBaseFolders)
-                {
-                    modelDirectory = Path.Combine(options.TargetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString()); 
-                }
-                else
-                {
-                    modelDirectory = Path.Combine(options.TargetPath, model.CivitaiCategory.ToString());
-                }
+                string modelDirectory = GetTargetDirectoryPath(options, model);
 
                 EnsureFolderExists(progress, modelDirectory);
-
-                foreach (var modelFile in model.AssociatedFilesInfo)
-                {
-                    string source = modelFile.FullName;
-                    string target = Path.Combine(modelDirectory, modelFile.Name);
-                    try
-                    {
-                        if (options.IsMoveOperation)
-                        {
-                            File.Move(source, target, options.OverrideFiles);
-                            progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' moved to '{modelDirectory}'." });
-                        }
-                        else
-                        {
-                            File.Copy(source, target, options.OverrideFiles);
-                            progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' copied to '{modelDirectory}'." });
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}' Reason: {ex.Message}" });
-                        hasErrors = true;
-                    }
-                }
+                hasErrors = ExecuteCopyMove(progress, options, hasErrors, model, percentage, modelDirectory);
                 currentModel++;
             }
 
             return hasErrors;
+        }
+
+        private static bool ExecuteCopyMove(IProgress<ProgressReport>? progress, SelectedOptions options, bool hasErrors, ModelClass model, int percentage, string modelDirectory)
+        {
+            foreach (var modelFile in model.AssociatedFilesInfo)
+            {
+                string source = modelFile.FullName;
+                string target = Path.Combine(modelDirectory, modelFile.Name);
+                try
+                {
+                    if (options.IsMoveOperation)
+                    {
+                        File.Move(source, target, options.OverrideFiles);
+                        progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' moved to '{modelDirectory}'." });
+                    }
+                    else
+                    {
+                        File.Copy(source, target, options.OverrideFiles);
+                        progress?.Report(new ProgressReport { IsSuccessful = true, Percentage = percentage, StatusMessage = $"File '{modelFile.Name}' copied to '{modelDirectory}'." });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    progress?.Report(new ProgressReport { IsSuccessful = false, Percentage = percentage, StatusMessage = $"Error copying file '{modelFile.Name}' Reason: {ex.Message}" });
+                    hasErrors = true;
+                }
+            }
+
+            return hasErrors;
+        }
+
+        private static string GetTargetDirectoryPath(SelectedOptions options, ModelClass model)
+        {
+            if (options.UseCustomMappings)
+            {
+                // Check if any of the CustomTagMaps Tags match the model tags.
+                // This has to be done in order by custom mapping priority; the first match wins.
+                // and returns the Path.Combine(options.TargetPath, model.DiffusionBaseModel, PathToFolder);
+                CustomTagMapXmlService customTagMapXmlService = new CustomTagMapXmlService();
+                ObservableCollection<CustomTagMap> tagMaps = (ObservableCollection<CustomTagMap>)customTagMapXmlService.LoadMappings().OrderBy(m => m.Priority);
+                if (tagMaps.Count != 0 && model.Tags.Count != 0)
+                {
+                    foreach (var map in tagMaps)
+                    {
+                        if (map.LookForTag.Count != 0 && map.LookForTag.Intersect(model.Tags, StringComparer.OrdinalIgnoreCase).Any())
+                        {
+                            // If CreateBaseFolders is true, include DiffusionBaseModel in the path
+                            if (options.CreateBaseFolders)
+                            {
+                                return Path.Combine(options.TargetPath, model.DiffusionBaseModel, map.MapToFolder);
+                            }
+                            else
+                            {
+                                return Path.Combine(options.TargetPath, map.MapToFolder);
+                            }
+                        }
+                    }
+                }
+            }
+            // Default behavior if no custom mappings are used or no match is found
+            if (options.CreateBaseFolders)
+            {
+                return Path.Combine(options.TargetPath, model.DiffusionBaseModel, model.CivitaiCategory.ToString());
+            }
+            else
+            {
+                return Path.Combine(options.TargetPath, model.CivitaiCategory.ToString());
+            }
         }
     }
 }

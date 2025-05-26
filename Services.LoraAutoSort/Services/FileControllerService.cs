@@ -2,7 +2,6 @@
  * Licensed under the terms found in the LICENSE file in the root directory.
  * For non-commercial use only. See LICENSE for details.
  */
-
 using Services.LoraAutoSort.Classes;
 using System.Security.Cryptography;
 
@@ -10,24 +9,18 @@ namespace Services.LoraAutoSort.Services
 {
     public class FileControllerService
     {
-        public FileControllerService()
-        {
-
-        }
-
         public async Task ComputeFolder(IProgress<ProgressReport> progress, CancellationToken cancellationToken, SelectedOptions options)
         {
             progress?.Report(new ProgressReport
             {
                 Percentage = 0,
-                StatusMessage = "Starting processing LoRA's"
+                StatusMessage = "Start processing LoRA's"
             });
             // Throw if cancellation is requested
             cancellationToken.ThrowIfCancellationRequested();
 
             var jsonReader = new JsonInfoFileReaderService(options.BasePath);
             List<ModelClass> models = await jsonReader.GetModelData(progress, options.BasePath, cancellationToken);
-
 
             if (models == null || models.Count == 0)
             {

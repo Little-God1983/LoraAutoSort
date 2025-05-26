@@ -17,6 +17,9 @@ namespace Services.LoraAutoSort.Helper
 
         public static readonly string[] GeneralExtensions = [
         ".preview.png",
+        ".preview.webp",
+        ".metadata.json",
+        ".mp4",
         ".png",
         ".preview.jpeg",
         ".preview.jpg",

@@ -35,7 +35,7 @@
                     </StackPanel>
                     <Label Content="Special:" FontWeight="Bold" FontSize="14"/>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16"/>
+                        <CheckBox x:Name="chbCustom" Content="Use Custom Mappings" FontSize="16" IsChecked="False" Checked="chbCustom_Checked" Unchecked="chbCustom_Unchecked"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

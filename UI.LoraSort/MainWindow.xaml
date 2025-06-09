@@ -50,7 +50,7 @@
         
         <!-- GridSplitter -->
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Center" Background="Gray" IsEnabled="False"/>
+                      VerticalAlignment="Center" Background="Gray" IsEnabled="False"/> 
 
         <!-- Logs Section -->
         <controls:ProcessLogControl Grid.Row="2" Grid.ColumnSpan="2" Margin="10" />

@@ -19,6 +19,7 @@ namespace Services.LoraAutoSort.Helper
         ".preview.png",
         ".preview.webp",
         ".metadata.json",
+        ".webp",
         ".mp4",
         ".png",
         ".preview.jpeg",

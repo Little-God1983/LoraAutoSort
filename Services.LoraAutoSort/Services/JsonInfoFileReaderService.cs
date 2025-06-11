@@ -16,10 +16,12 @@ namespace Services.LoraAutoSort.Services
     public class JsonInfoFileReaderService
     {
         private readonly string _loraInfoBasePath;
+        private readonly string _apiKey;
 
-        public JsonInfoFileReaderService(string jsonFilePath)
+        public JsonInfoFileReaderService(string jsonFilePath, string apiKey)
         {
             _loraInfoBasePath = jsonFilePath;
+            _apiKey = apiKey;
         }
         /// <summary>
         /// Parses the safetensor file at the given path and returns the __metadata__ JSON element.
@@ -189,7 +191,7 @@ namespace Services.LoraAutoSort.Services
             var fileCivitai = model.AssociatedFilesInfo.FirstOrDefault(x => x.FullName.Contains(".civitai.info"));
             if (fileCivitai != null)
             {
-                CivitaiMetaDataService civitaiMetaDataService = new CivitaiMetaDataService();
+                CivitaiMetaDataService civitaiMetaDataService = new CivitaiMetaDataService(_apiKey);
                 // Read file content as a JSON string
                 string jsonContent = File.ReadAllText(fileCivitai.FullName);
 
@@ -223,7 +225,7 @@ namespace Services.LoraAutoSort.Services
 
                 //string SafetensorModelHash = ParseSafetensorsMetadata(SafetensorsFileInfo);
                 string SHA256FromSafetensorsFile = ComputeSHA256(SafetensorsFileInfo.FullName);
-                CivitaiMetaDataService service = new CivitaiMetaDataService();
+                CivitaiMetaDataService service = new CivitaiMetaDataService(_apiKey);
                 //First API call to get info from the specific model version, some loras have a Pony, Flux, SDXL version
                 string modelVersionInfoApiResponse = await service.GetModelVersionInformationFromCivitaiAsync(SHA256FromSafetensorsFile);
                 string modelId = service.GetModelId(modelVersionInfoApiResponse);

@@ -9,14 +9,19 @@ namespace Services.LoraAutoSort.Services
     public class CivitaiMetaDataService
     {
         private readonly ICivitaiApiClient _apiClient;
+        private readonly string _apiKey;
 
-        public CivitaiMetaDataService() : this(new CivitaiApiClient(new HttpClient()))
+        public CivitaiMetaDataService() : this(new CivitaiApiClient(new HttpClient()), string.Empty)
+        {
+        }
+        public CivitaiMetaDataService(string apiKey) : this(new CivitaiApiClient(new HttpClient()), apiKey)
         {
         }
 
-        public CivitaiMetaDataService(ICivitaiApiClient apiClient)
+        public CivitaiMetaDataService(ICivitaiApiClient apiClient, string apiKey = "")
         {
             _apiClient = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
+            _apiKey = apiKey;
         }
         /// <summary>
         /// Extracts JSON metadata from a safetensors file, retrieves the Civitai URL (from "__metadata__" or "modelUrl"),
@@ -30,15 +35,16 @@ namespace Services.LoraAutoSort.Services
         /// <returns>A JSON string containing the model information from the Civitai API.</returns>
         public Task<string> GetModelVersionInformationFromCivitaiAsync(string sha256Hash)
         {
-            return _apiClient.GetModelVersionByHashAsync(sha256Hash);
+            return _apiClient.GetModelVersionByHashAsync(sha256Hash, _apiKey);
         }
-        public async Task<string> GetModelInformationAsync(string safetensorsFilePath, string apiKey = null)
+
+        public async Task<string> GetModelInformationAsync(string safetensorsFilePath)
         {
             string metadataJson = ExtractMetadata(safetensorsFilePath);
             string civitaiUrl = ExtractModelUrl(metadataJson);
             string modelId = ParseModelId(civitaiUrl);
 
-            return await _apiClient.GetModelAsync(modelId);
+            return await _apiClient.GetModelAsync(modelId, _apiKey);
         }
 
         /// <summary>
@@ -120,7 +126,7 @@ namespace Services.LoraAutoSort.Services
 
         internal Task<string> GetModelInformationFromCivitaiAsync(string modelId)
         {
-            return _apiClient.GetModelAsync(modelId);
+            return _apiClient.GetModelAsync(modelId, _apiKey);
         }
 
         internal List<string> GetTagsFromModelInfo(string modelInfoApiResponse)

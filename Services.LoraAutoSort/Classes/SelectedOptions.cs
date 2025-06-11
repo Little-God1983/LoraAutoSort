@@ -8,5 +8,10 @@
         public bool OverrideFiles { get; set; }
         public bool CreateBaseFolders { get; set; }
         public bool UseCustomMappings { get; set; }
+        /// <summary>
+        /// Optional Civitai API key used for authenticated requests.
+        /// Leave empty to perform anonymous requests.
+        /// </summary>
+        public string ApiKey { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Services.LoraAutoSort.Services
@@ -20,18 +21,76 @@ namespace Services.LoraAutoSort.Services
             }
         }
 
-        public async Task<string> GetModelVersionByHashAsync(string sha256Hash)
+        private async Task<string> SendGetAsync(string url, string apiKey)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"model-versions/by-hash/{sha256Hash}");
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("ApiKey", apiKey);
+            }
+
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> GetModelAsync(string modelId)
+        public Task<string> GetModelVersionByHashAsync(string sha256Hash, string apiKey = "")
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"models/{modelId}");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync();
+            return SendGetAsync($"model-versions/by-hash/{sha256Hash}", apiKey);
+        }
+
+        public Task<string> GetModelAsync(string modelId, string apiKey = "")
+        {
+            return SendGetAsync($"models/{modelId}", apiKey);
+        }
+
+        public Task<string> GetModelsAsync(string query = "", string apiKey = "")
+        {
+            var path = string.IsNullOrWhiteSpace(query) ? "models" : $"models?{query}";
+            return SendGetAsync(path, apiKey);
+        }
+
+        public Task<string> GetModelVersionAsync(string versionId, string apiKey = "")
+        {
+            return SendGetAsync($"model-versions/{versionId}", apiKey);
+        }
+
+        public Task<string> GetModelVersionsByModelIdAsync(string modelId, string apiKey = "")
+        {
+            return SendGetAsync($"models/{modelId}/versions", apiKey);
+        }
+
+        public Task<string> GetImagesAsync(string query = "", string apiKey = "")
+        {
+            var path = string.IsNullOrWhiteSpace(query) ? "images" : $"images?{query}";
+            return SendGetAsync(path, apiKey);
+        }
+
+        public Task<string> GetImageAsync(string imageId, string apiKey = "")
+        {
+            return SendGetAsync($"images/{imageId}", apiKey);
+        }
+
+        public Task<string> GetTagsAsync(string query = "", string apiKey = "")
+        {
+            var path = string.IsNullOrWhiteSpace(query) ? "tags" : $"tags?{query}";
+            return SendGetAsync(path, apiKey);
+        }
+
+        public Task<string> GetUserAsync(string userId, string apiKey = "")
+        {
+            return SendGetAsync($"users/{userId}", apiKey);
+        }
+
+        public Task<string> GetPostsAsync(string query = "", string apiKey = "")
+        {
+            var path = string.IsNullOrWhiteSpace(query) ? "posts" : $"posts?{query}";
+            return SendGetAsync(path, apiKey);
+        }
+
+        public Task<string> GetPostAsync(string postId, string apiKey = "")
+        {
+            return SendGetAsync($"posts/{postId}", apiKey);
         }
     }
 }

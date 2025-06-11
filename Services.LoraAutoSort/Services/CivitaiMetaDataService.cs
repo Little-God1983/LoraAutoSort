@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 using Serilog;
@@ -7,6 +8,16 @@ namespace Services.LoraAutoSort.Services
 {
     public class CivitaiMetaDataService
     {
+        private readonly ICivitaiApiClient _apiClient;
+
+        public CivitaiMetaDataService() : this(new CivitaiApiClient(new HttpClient()))
+        {
+        }
+
+        public CivitaiMetaDataService(ICivitaiApiClient apiClient)
+        {
+            _apiClient = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
+        }
         /// <summary>
         /// Extracts JSON metadata from a safetensors file, retrieves the Civitai URL (from "__metadata__" or "modelUrl"),
         /// extracts the model id from that URL, constructs the API endpoint URL, and calls the Civitai API to retrieve
@@ -17,100 +28,17 @@ namespace Services.LoraAutoSort.Services
         /// (Optional) Your Civitai API key; if provided, it will be used in the Authorization header.
         /// </param>
         /// <returns>A JSON string containing the model information from the Civitai API.</returns>
-        public async Task<string> GetModelVersionInformationFromCivitaiAsync(string sha256Hash)
+        public Task<string> GetModelVersionInformationFromCivitaiAsync(string sha256Hash)
         {
-
-            // Step 4: Build the API endpoint URL.
-            string apiUrl = $"https://civitai.com/api/v1/model-versions/by-hash/{sha256Hash}";
-            Log.Debug("Constructed API URL: " + apiUrl);
-
-            // Step 5: Call the Civitai API.
-            using (HttpClient client = new HttpClient())
-            {
-
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                if (!response.IsSuccessStatusCode)
-                {
-                    Log.Error("API call failed with status code: " + response.StatusCode + $"for SHA256Hash {sha256Hash}");
-                    throw new Exception("API call failed with status code: " + response.StatusCode);
-                }
-
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                return apiResponse;
-            }
+            return _apiClient.GetModelVersionByHashAsync(sha256Hash);
         }
         public async Task<string> GetModelInformationAsync(string safetensorsFilePath, string apiKey = null)
         {
-            // Step 1: Extract the JSON metadata from the safetensors file.
             string metadataJson = ExtractMetadata(safetensorsFilePath);
-            Console.WriteLine("Extracted Metadata JSON:");
-            Console.WriteLine(metadataJson);
-            Console.WriteLine();
+            string civitaiUrl = ExtractModelUrl(metadataJson);
+            string modelId = ParseModelId(civitaiUrl);
 
-            // Step 2: Parse the JSON metadata using System.Text.Json.
-            using (JsonDocument doc = JsonDocument.Parse(metadataJson))
-            {
-                JsonElement root = doc.RootElement;
-                string civitaiUrl = null;
-
-                // Try to retrieve the URL from "__metadata__"->"civitai"
-                if (root.TryGetProperty("__metadata__", out JsonElement metaElement))
-                {
-                    if (metaElement.TryGetProperty("civitai", out JsonElement civitaiElement))
-                    {
-                        civitaiUrl = civitaiElement.GetString();
-                    }
-                }
-
-                // Fallback: Try the "modelUrl" property.
-                if (string.IsNullOrEmpty(civitaiUrl) && root.TryGetProperty("modelUrl", out JsonElement modelUrlElement))
-                {
-                    civitaiUrl = modelUrlElement.GetString();
-                }
-
-                if (string.IsNullOrEmpty(civitaiUrl))
-                {
-                    throw new Exception("No Civitai URL found in metadata.");
-                }
-                Console.WriteLine("Found Civitai URL: " + civitaiUrl);
-
-                // Step 3: Extract the model id using a regular expression.
-                // Expected URL format: https://civitai.com/models/1234
-                Regex regex = new Regex(@"civitai\.com/models/(\d+)", RegexOptions.IgnoreCase);
-                Match match = regex.Match(civitaiUrl);
-                if (!match.Success)
-                {
-                    throw new Exception("Failed to extract model id from the Civitai URL.");
-                }
-                string modelId = match.Groups[1].Value;
-                Console.WriteLine("Extracted Model ID: " + modelId);
-
-                // Step 4: Build the API endpoint URL.
-                string apiUrl = $"https://civitai.com/api/v1/models/{modelId}";
-                Console.WriteLine("Constructed API URL: " + apiUrl);
-                Console.WriteLine();
-
-                // Step 5: Call the Civitai API.
-                using (HttpClient client = new HttpClient())
-                {
-                    if (!string.IsNullOrEmpty(apiKey))
-                    {
-                        client.DefaultRequestHeaders.Authorization =
-                            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-                    }
-
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new Exception("API call failed with status code: " + response.StatusCode);
-                    }
-
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Civitai API Response:");
-                    Console.WriteLine(apiResponse);
-                    return apiResponse;
-                }
-            }
+            return await _apiClient.GetModelAsync(modelId);
         }
 
         /// <summary>
@@ -148,6 +76,36 @@ namespace Services.LoraAutoSort.Services
             }
         }
 
+        private static string ExtractModelUrl(string metadataJson)
+        {
+            using JsonDocument doc = JsonDocument.Parse(metadataJson);
+            JsonElement root = doc.RootElement;
+
+            if (root.TryGetProperty("__metadata__", out JsonElement metaElement) &&
+                metaElement.TryGetProperty("civitai", out JsonElement civitaiElement))
+            {
+                return civitaiElement.GetString() ?? string.Empty;
+            }
+
+            if (root.TryGetProperty("modelUrl", out JsonElement modelUrlElement))
+            {
+                return modelUrlElement.GetString() ?? string.Empty;
+            }
+
+            return string.Empty;
+        }
+
+        private static string ParseModelId(string civitaiUrl)
+        {
+            var match = Regex.Match(civitaiUrl, @"civitai\.com/models/(\d+)", RegexOptions.IgnoreCase);
+            if (!match.Success)
+            {
+                throw new InvalidOperationException("Failed to extract model id from the Civitai URL.");
+            }
+
+            return match.Groups[1].Value;
+        }
+
         internal string GetBaseModelName(string modelInfoApiResponse)
         {
             using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
@@ -160,26 +118,9 @@ namespace Services.LoraAutoSort.Services
             return doc.RootElement.GetProperty("modelId").ToString();
         }
 
-        internal async Task<string> GetModelInformationFromCivitaiAsync(string modelId)
+        internal Task<string> GetModelInformationFromCivitaiAsync(string modelId)
         {
-            // Step 4: Build the API endpoint URL.
-            string apiUrl = $"https://civitai.com/api/v1/models/{modelId}";
-            Log.Debug("Constructed API URL: " + apiUrl);
-
-            // Step 5: Call the Civitai API.
-            using (HttpClient client = new HttpClient())
-            {
-
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                if (!response.IsSuccessStatusCode)
-                {
-                    Log.Error("API call failed with status code: " + response.StatusCode + $"for ModelId {modelId}");
-                    throw new Exception("API call failed with status code: " + response.StatusCode);
-                }
-
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                return apiResponse;
-            }
+            return _apiClient.GetModelAsync(modelId);
         }
 
         internal List<string> GetTagsFromModelInfo(string modelInfoApiResponse)

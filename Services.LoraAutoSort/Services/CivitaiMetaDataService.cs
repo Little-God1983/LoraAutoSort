@@ -11,10 +11,12 @@ namespace Services.LoraAutoSort.Services
         private readonly ICivitaiApiClient _apiClient;
         private readonly string _apiKey;
 
-        public CivitaiMetaDataService() : this(new CivitaiApiClient(new HttpClient()), string.Empty)
+        public CivitaiMetaDataService() 
+            : this(new CivitaiApiClient(new HttpClient()), string.Empty)
         {
         }
-        public CivitaiMetaDataService(string apiKey) : this(new CivitaiApiClient(new HttpClient()), apiKey)
+
+        public CivitaiMetaDataService(string apiKey) : this(new CivitaiApiClient(new HttpClient()), apiKey) 
         {
         }
 
@@ -112,24 +114,24 @@ namespace Services.LoraAutoSort.Services
             return match.Groups[1].Value;
         }
 
-        internal string GetBaseModelName(string modelInfoApiResponse)
+        public string GetBaseModelName(string modelInfoApiResponse)
         {
             using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
             return doc.RootElement.GetProperty("baseModel").ToString();
         }
 
-        internal string GetModelId(string modelInfoApiResponse)
+        public string GetModelId(string modelInfoApiResponse)
         {
             using JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse);
             return doc.RootElement.GetProperty("modelId").ToString();
         }
 
-        internal Task<string> GetModelInformationFromCivitaiAsync(string modelId)
+        public Task<string> GetModelInformationFromCivitaiAsync(string modelId)
         {
             return _apiClient.GetModelAsync(modelId, _apiKey);
         }
 
-        internal List<string> GetTagsFromModelInfo(string modelInfoApiResponse)
+        public List<string> GetTagsFromModelInfo(string modelInfoApiResponse)
         {
             var tags = new List<string>();
 
@@ -143,7 +145,7 @@ namespace Services.LoraAutoSort.Services
                 {
                     foreach (JsonElement tagValue in tagsElement.EnumerateArray())
                     {
-                        string tagString = tagValue.GetString();
+                        string? tagString = tagValue.GetString();
                         if (!string.IsNullOrWhiteSpace(tagString))
                         {
                             tags.Add(tagString);
@@ -155,7 +157,7 @@ namespace Services.LoraAutoSort.Services
             return tags;
         }
 
-        internal DiffusionTypes GetModelType(string modelInfoApiResponse)
+        public DiffusionTypes GetModelType(string modelInfoApiResponse)
         {
             using (JsonDocument doc = JsonDocument.Parse(modelInfoApiResponse))
             {
@@ -165,9 +167,9 @@ namespace Services.LoraAutoSort.Services
                 if (root.TryGetProperty("type", out JsonElement typeElement) &&
                     typeElement.ValueKind == JsonValueKind.String)
                 {
-                    string typeString = typeElement.GetString()?.Replace(" ", "").ToUpper();
+                    string? typeString = typeElement.GetString()?.Replace(" ", "").ToUpper();
 
-                    if (Enum.TryParse(typeString, true, out DiffusionTypes modelType))
+                    if (typeString != null && Enum.TryParse(typeString, true, out DiffusionTypes modelType))
                     {
                         return modelType;
                     }
@@ -178,9 +180,9 @@ namespace Services.LoraAutoSort.Services
                     modelElement.TryGetProperty("type", out JsonElement nestedTypeElement) &&
                     nestedTypeElement.ValueKind == JsonValueKind.String)
                 {
-                    string nestedTypeString = nestedTypeElement.GetString()?.Replace(" ", "").ToUpper();
+                    string? nestedTypeString = nestedTypeElement.GetString()?.Replace(" ", "").ToUpper();
 
-                    if (Enum.TryParse(nestedTypeString, true, out DiffusionTypes nestedModelType))
+                    if (nestedTypeString != null && Enum.TryParse(nestedTypeString, true, out DiffusionTypes nestedModelType))
                     {
                         return nestedModelType;
                     }

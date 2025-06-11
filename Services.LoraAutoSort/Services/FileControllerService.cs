@@ -19,7 +19,7 @@ namespace Services.LoraAutoSort.Services
             // Throw if cancellation is requested
             cancellationToken.ThrowIfCancellationRequested();
 
-            var jsonReader = new JsonInfoFileReaderService(options.BasePath);
+            var jsonReader = new JsonInfoFileReaderService(options.BasePath, options.ApiKey);
             List<ModelClass> models = await jsonReader.GetModelData(progress, options.BasePath, cancellationToken);
 
             if (models == null || models.Count == 0)

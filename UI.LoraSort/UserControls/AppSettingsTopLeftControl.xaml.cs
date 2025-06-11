@@ -109,7 +109,8 @@ namespace UI.LoraSort
                     IsMoveOperation = moveOperation,
                     OverrideFiles = (bool)chbOverride.IsChecked,
                     CreateBaseFolders = (bool)chbBaseFolders.IsChecked,
-                    UseCustomMappings = (bool)chbCustom.IsChecked
+                    UseCustomMappings = (bool)chbCustom.IsChecked,
+                    ApiKey = SettingsManager.LoadApiKey()
                 });
             }
             catch (OperationCanceledException)

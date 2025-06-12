@@ -161,16 +161,27 @@ namespace UI.LoraSort.Views.UserControls
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+                    string msg = String.Empty;
                     if (report.Percentage.HasValue)
                     {
                         progressBar.Value = report.Percentage.Value;
+                        msg = $"Progress: {report.Percentage.Value}% - ";
                     }
                     txtStatus.Text = report.StatusMessage;
                     if (DataContext is MainViewModel vm)
                     {
                         vm.LogEntries.Add(report);
                     }
+                    if (report.IsSuccessful.HasValue && !report.IsSuccessful.Value)
+                    {
+                        Log.Error($"Error: {report.StatusMessage}");
+                    }
+                    else
+                    {
+                        Log.Information($"{msg}{report.StatusMessage}");
+                    }
                 });
+                
             });
         }
 

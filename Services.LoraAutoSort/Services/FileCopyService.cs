@@ -4,7 +4,6 @@
  */
 using Serilog;
 using Services.LoraAutoSort.Classes;
-using System.Collections.ObjectModel;
 
 namespace Services.LoraAutoSort.Services
 {
@@ -22,10 +21,6 @@ namespace Services.LoraAutoSort.Services
                 {
                     Directory.CreateDirectory(directoryPath);
                     progress?.Report(new ProgressReport { IsSuccessful = true, StatusMessage = $"Directory '{directoryPath}' created successfully." });
-                }
-                else
-                {
-                    progress?.Report(new ProgressReport { IsSuccessful = true, StatusMessage = $"Directory '{directoryPath}' already exists." });
                 }
             }
             catch (Exception ex)

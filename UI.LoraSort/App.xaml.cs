@@ -14,7 +14,7 @@ namespace UI.LoraSort
 
             // Configure Serilog directly in code
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Verbose()
                 .WriteTo.File("Logs/LoraSort-log.txt",       // Writes to rolling file
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();

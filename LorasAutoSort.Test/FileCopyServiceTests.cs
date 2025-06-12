@@ -303,12 +303,22 @@ namespace LorasAutoSort.Test
                     DiffusionBaseModel = "SD 1.5",
                     CivitaiCategory = CivitaiBaseCategories.CHARACTER,
                     ModelType = DiffusionTypes.LORA,
-                    Tags = new List<string> { "priority_tag" }
+                    Tags = new List<string> { "foo", "priority_tag", "bar" }
                 }
             };
 
-            var mapping1 = new CustomTagMap { LookForTag = new List<string> { "priority_tag" }, MapToFolder = "Folder1", Priority = 3 };
-            var mapping2 = new CustomTagMap { LookForTag = new List<string> { "priority_tag" }, MapToFolder = "Folder2", Priority = 2 };
+            var mapping1 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "x", "priority_tag", "y" },
+                MapToFolder = "Folder1",
+                Priority = 3
+            };
+            var mapping2 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "z", "priority_tag", "w" },
+                MapToFolder = "Folder2",
+                Priority = 2
+            };
 
             var options = new SelectedOptions
             {
@@ -329,6 +339,186 @@ namespace LorasAutoSort.Test
 
             result.Should().BeFalse();
             var expectedPath = Path.Combine(_testTargetPath, "SD 1.5", "Folder2", modelFile);
+            File.Exists(expectedPath).Should().BeTrue();
+        }
+
+        [Fact]
+        public void ProcessModelClasses_ThreeMappings_SecondMapMatches()
+        {
+            var modelFile = "test_model.safetensors";
+            var modelFilePath = Path.Combine(_testSourcePath, modelFile);
+            File.WriteAllText(modelFilePath, "test content");
+
+            var models = new List<ModelClass>
+            {
+                new ModelClass
+                {
+                    ModelName = "test_model",
+                    AssociatedFilesInfo = new List<FileInfo> { new FileInfo(modelFilePath) },
+                    NoMetaData = false,
+                    DiffusionBaseModel = "SD 1.5",
+                    CivitaiCategory = CivitaiBaseCategories.CHARACTER,
+                    ModelType = DiffusionTypes.LORA,
+                    Tags = new List<string> { "alpha", "beta", "gamma" }
+                }
+            };
+
+            var mapping1 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "one", "two", "three" },
+                MapToFolder = "Folder1",
+                Priority = 1
+            };
+            var mapping2 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "beta", "four", "five" },
+                MapToFolder = "MatchSecond",
+                Priority = 2
+            };
+            var mapping3 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "six", "seven", "eight" },
+                MapToFolder = "Folder3",
+                Priority = 3
+            };
+
+            var options = new SelectedOptions
+            {
+                TargetPath = _testTargetPath,
+                CreateBaseFolders = true,
+                IsMoveOperation = false,
+                OverrideFiles = true,
+                UseCustomMappings = true
+            };
+
+            var xmlService = new CustomTagMapXmlService();
+            xmlService.SaveMappings(new ObservableCollection<CustomTagMap> { mapping1, mapping2, mapping3 });
+
+            var progress = new Progress<ProgressReport>();
+            var cts = new CancellationTokenSource();
+
+            bool result = _service.ProcessModelClasses(progress, cts.Token, models, options);
+
+            result.Should().BeFalse();
+            var expectedPath = Path.Combine(_testTargetPath, "SD 1.5", "MatchSecond", modelFile);
+            File.Exists(expectedPath).Should().BeTrue();
+        }
+
+        [Fact]
+        public void ProcessModelClasses_MultipleTags_SecondModelTagMatches()
+        {
+            var modelFile = "test_model.safetensors";
+            var modelFilePath = Path.Combine(_testSourcePath, modelFile);
+            File.WriteAllText(modelFilePath, "test content");
+
+            var models = new List<ModelClass>
+            {
+                new ModelClass
+                {
+                    ModelName = "test_model",
+                    AssociatedFilesInfo = new List<FileInfo> { new FileInfo(modelFilePath) },
+                    NoMetaData = false,
+                    DiffusionBaseModel = "SD 1.5",
+                    CivitaiCategory = CivitaiBaseCategories.CHARACTER,
+                    ModelType = DiffusionTypes.LORA,
+                    Tags = new List<string> { "first", "special", "third" }
+                }
+            };
+
+            var mapping1 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "special", "foo", "bar" },
+                MapToFolder = "SpecialFolder",
+                Priority = 1
+            };
+            var mapping2 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "x", "y", "z" },
+                MapToFolder = "OtherFolder",
+                Priority = 2
+            };
+
+            var options = new SelectedOptions
+            {
+                TargetPath = _testTargetPath,
+                CreateBaseFolders = true,
+                IsMoveOperation = false,
+                OverrideFiles = true,
+                UseCustomMappings = true
+            };
+
+            var xmlService = new CustomTagMapXmlService();
+            xmlService.SaveMappings(new ObservableCollection<CustomTagMap> { mapping1, mapping2 });
+
+            var progress = new Progress<ProgressReport>();
+            var cts = new CancellationTokenSource();
+
+            bool result = _service.ProcessModelClasses(progress, cts.Token, models, options);
+
+            result.Should().BeFalse();
+            var expectedPath = Path.Combine(_testTargetPath, "SD 1.5", "SpecialFolder", modelFile);
+            File.Exists(expectedPath).Should().BeTrue();
+        }
+
+        [Fact]
+        public void ProcessModelClasses_AllMappingsMatch_ShouldUseHighestPriority()
+        {
+            var modelFile = "test_model.safetensors";
+            var modelFilePath = Path.Combine(_testSourcePath, modelFile);
+            File.WriteAllText(modelFilePath, "test content");
+
+            var models = new List<ModelClass>
+            {
+                new ModelClass
+                {
+                    ModelName = "test_model",
+                    AssociatedFilesInfo = new List<FileInfo> { new FileInfo(modelFilePath) },
+                    NoMetaData = false,
+                    DiffusionBaseModel = "SD 1.5",
+                    CivitaiCategory = CivitaiBaseCategories.CHARACTER,
+                    ModelType = DiffusionTypes.LORA,
+                    Tags = new List<string> { "tagA", "tagB", "tagC" }
+                }
+            };
+
+            var mapping1 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "tagA", "x", "y" },
+                MapToFolder = "Folder1",
+                Priority = 3
+            };
+            var mapping2 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "tagB", "m", "n" },
+                MapToFolder = "Folder2",
+                Priority = 2
+            };
+            var mapping3 = new CustomTagMap
+            {
+                LookForTag = new List<string> { "tagC", "p", "q" },
+                MapToFolder = "Folder3",
+                Priority = 1
+            };
+
+            var options = new SelectedOptions
+            {
+                TargetPath = _testTargetPath,
+                CreateBaseFolders = true,
+                IsMoveOperation = false,
+                OverrideFiles = true,
+                UseCustomMappings = true
+            };
+
+            var xmlService = new CustomTagMapXmlService();
+            xmlService.SaveMappings(new ObservableCollection<CustomTagMap> { mapping1, mapping2, mapping3 });
+
+            var progress = new Progress<ProgressReport>();
+            var cts = new CancellationTokenSource();
+
+            bool result = _service.ProcessModelClasses(progress, cts.Token, models, options);
+
+            result.Should().BeFalse();
+            var expectedPath = Path.Combine(_testTargetPath, "SD 1.5", "Folder3", modelFile);
             File.Exists(expectedPath).Should().BeTrue();
         }
 

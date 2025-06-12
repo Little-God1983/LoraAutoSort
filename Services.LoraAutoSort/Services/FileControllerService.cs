@@ -39,7 +39,7 @@ namespace Services.LoraAutoSort.Services
             progress?.Report(new ProgressReport
             {
                 Percentage = 0,
-                StatusMessage = "Starting processing copy/paste"
+                StatusMessage = "Starting processing copy/paste <=========="
             });
 
             await Task.Run(() =>
@@ -50,7 +50,7 @@ namespace Services.LoraAutoSort.Services
             progress?.Report(new ProgressReport
             {
                 Percentage = 100,
-                StatusMessage = "Finished processing.",
+                StatusMessage = "==========> Finished processing.",
                 IsSuccessful = true
             });
         }

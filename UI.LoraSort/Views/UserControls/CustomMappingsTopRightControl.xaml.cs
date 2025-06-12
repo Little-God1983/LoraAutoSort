@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Services;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.UserControls
 {
     /// <summary>
     /// Interaction logic for CustomMappingsTopRightControl.xaml

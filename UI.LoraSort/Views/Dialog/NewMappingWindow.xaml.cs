@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.Dialog
 {
     /// <summary>
     /// Interaction logic for NewMappingWindow.xaml

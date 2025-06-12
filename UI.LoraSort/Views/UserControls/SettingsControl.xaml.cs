@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace UI.LoraSort.UserControls
+namespace UI.LoraSort.Views.UserControls
 {
     public partial class SettingsControl : UserControl
     {

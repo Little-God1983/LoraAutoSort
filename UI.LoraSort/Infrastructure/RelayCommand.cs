@@ -1,4 +1,6 @@
-﻿using System;
+namespace UI.LoraSort.Infrastructure
+{
+using System;
 using System.Windows.Input;
 
 public class RelayCommand<T> : ICommand

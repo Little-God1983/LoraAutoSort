@@ -1,7 +1,7 @@
-﻿<Window x:Class="UI.LoraSort.EditMappingWindow"
+﻿<Window x:Class="UI.LoraSort.Views.Dialog.NewMappingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Edit Mapping" Height="200" Width="400" WindowStartupLocation="CenterOwner">
+        Title="New Mapping" Height="200" Width="400" WindowStartupLocation="CenterOwner">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

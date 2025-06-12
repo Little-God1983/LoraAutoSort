@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text.Json;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Services
 {
     public static class SettingsManager
     {

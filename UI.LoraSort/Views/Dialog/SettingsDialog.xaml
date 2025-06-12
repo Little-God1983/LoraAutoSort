@@ -1,7 +1,7 @@
-<Window x:Class="UI.LoraSort.SettingsDialog"
+<Window x:Class="UI.LoraSort.Views.Dialog.SettingsDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:UI.LoraSort.UserControls"
+        xmlns:controls="clr-namespace:UI.LoraSort.Views.UserControls"
         Title="Settings" Height="220" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <controls:SettingsControl x:Name="SettingsUC" />
 </Window>

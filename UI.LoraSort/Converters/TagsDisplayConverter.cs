@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Converters
 {
     /// <summary>
     /// Converts a List of tags into a friendly display string.

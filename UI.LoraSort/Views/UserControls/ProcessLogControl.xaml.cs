@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using UI.LoraSort.ViewModels;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.UserControls
 {
     /// <summary>
     /// Interaction logic for ProcessLogControl.xaml

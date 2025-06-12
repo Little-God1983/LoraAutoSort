@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Services;
+using UI.LoraSort.Infrastructure;
 
 namespace UI.LoraSort.ViewModels
 {

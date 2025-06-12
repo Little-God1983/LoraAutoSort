@@ -6,8 +6,10 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Services.LoraAutoSort.Classes;
 using Services.LoraAutoSort.Services;
+using UI.LoraSort.Infrastructure;
+using UI.LoraSort.Views.Dialog;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.UserControls
 {
     /// <summary>
     /// Interaction logic for CustomMappingsTopRightControl.xaml

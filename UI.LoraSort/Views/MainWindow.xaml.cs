@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows;
-using UI.LoraSort.ViewModels;
-
-namespace UI.LoraSort
+﻿using System.Windows;
+using UI.LoraSort.Views.Dialog;
+using UI.LoraSort.Services;
+namespace UI.LoraSort.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

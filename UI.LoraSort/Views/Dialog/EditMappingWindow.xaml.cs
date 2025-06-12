@@ -1,7 +1,7 @@
 ﻿using Services.LoraAutoSort.Classes;
 using System.Windows;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.Dialog
 {
     /// <summary>
     /// Interaction logic for EditMappingWindow.xaml

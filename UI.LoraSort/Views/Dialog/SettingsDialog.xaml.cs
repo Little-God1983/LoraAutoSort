@@ -1,6 +1,7 @@
 using System.Windows;
 
-namespace UI.LoraSort
+using UI.LoraSort.Services;
+namespace UI.LoraSort.Views.Dialog
 {
     public partial class SettingsDialog : Window
     {

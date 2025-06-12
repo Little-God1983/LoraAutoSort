@@ -9,8 +9,9 @@ using Services.LoraAutoSort.Services;
 using Services.LoraAutoSort.Classes;
 using UI.LoraSort.ViewModels;
 using Serilog;
+using UI.LoraSort.Services;
 
-namespace UI.LoraSort
+namespace UI.LoraSort.Views.UserControls
 {
     /// <summary>
     /// Interaction logic for AppSettingsTopLeftControl.xaml

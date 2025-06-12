@@ -115,7 +115,9 @@ namespace Services.LoraAutoSort.Services
                 // This has to be done in order by custom mapping priority; the first match wins.
                 // and returns the Path.Combine(options.TargetPath, model.DiffusionBaseModel, PathToFolder);
                 CustomTagMapXmlService customTagMapXmlService = new CustomTagMapXmlService();
-                ObservableCollection<CustomTagMap> tagMaps = (ObservableCollection<CustomTagMap>)customTagMapXmlService.LoadMappings().OrderBy(m => m.Priority);
+                var tagMaps = customTagMapXmlService.LoadMappings()
+                                            .OrderBy(m => m.Priority)
+                                            .ToList();
                 if (tagMaps.Count != 0 && model.Tags.Count != 0)
                 {
                     foreach (var map in tagMaps)

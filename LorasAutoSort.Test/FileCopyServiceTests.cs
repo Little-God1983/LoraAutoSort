@@ -371,7 +371,7 @@ namespace LorasAutoSort.Test
             };
             var mapping2 = new CustomTagMap
             {
-                LookForTag = new List<string> { "beta", "four", "five" },
+                LookForTag = new List<string> { "four", "beta", "five" },
                 MapToFolder = "MatchSecond",
                 Priority = 2
             };
